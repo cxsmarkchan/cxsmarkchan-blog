@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>cxsmarkchan的博客</title>
+  <subtitle>cxsmarkchan的博客</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://cxsmarkchan.github.com/"/>
+  <updated>2016-03-30T15:14:05.555Z</updated>
+  <id>http://cxsmarkchan.github.com/</id>
+  
+  <author>
+    <name>cxsmarkchan</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>第一篇博客</title>
+    <link href="http://cxsmarkchan.github.com/2016/03/30/firstblog/"/>
+    <id>http://cxsmarkchan.github.com/2016/03/30/firstblog/</id>
+    <published>2016-03-29T16:27:55.000Z</published>
+    <updated>2016-03-30T15:14:05.555Z</updated>
+    
+    <content type="html">&lt;p&gt;&amp;emsp;&amp;emsp;博士入学已经一年半了，走过不少弯路，也算有一些成长。一直想抽时间做个博客，记录自己的学习和科研生活，最近终于付诸行动。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;电气工程是一个和计算机结合紧密的专业，我在做电力系统方向的科研时，也常常需要设计算法、编写程序。不过，直到去年，在董老师和浩哥的带领下，我才对码农的世界有了更多的了解，也越来越觉得自己如井底之蛙一般。因此，也希望更系统、更深入地学习计算机科学的知识，并将其融入到自己的科研中。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;我会在这里记录自己的学习和思考，努力进步。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;最后，希望自己能坚持下去^_^&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;PS: 该博客用&lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;搭建。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;PPS: 之前在csdn上写过几篇博客，如果有空的话也会迁移过来。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;emsp;&amp;emsp;博士入学已经一年半了，走过不少弯路，也算有一些成长。一直想抽时间做个博客，记录自己的学习和科研生活，最近终于付诸行动。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="生活" scheme="http://cxsmarkchan.github.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="博客" scheme="http://cxsmarkchan.github.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="hexo" scheme="http://cxsmarkchan.github.com/tags/hexo/"/>
+    
+  </entry>
+  
+</feed>
