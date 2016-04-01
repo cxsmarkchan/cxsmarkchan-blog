@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2016-03-30T15:14:05.555Z</updated>
+  <updated>2016-04-01T08:23:12.458Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用asm内联汇编实现系统调用</title>
+    <link href="http://cxsmarkchan.github.com/2016/04/01/asm-syscall/"/>
+    <id>http://cxsmarkchan.github.com/2016/04/01/asm-syscall/</id>
+    <published>2016-04-01T08:23:12.000Z</published>
+    <updated>2016-04-01T08:23:12.458Z</updated>
+    
+    <content type="html">&lt;p&gt;CPU运行状态被分为内核态和用户态。操作系统在内核态下运行，拥有所有计算机资源的操作权限。而一般的应用程序则在用户态下运行，它们不能直接操作底层的硬件设备。应用程序在需要使用硬件资源时，可通过系统调用（system call）切换到内核态。本文通过asm内联汇编，分析系统调用的全过程。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;原创内容：cxsmarkchan&lt;br&gt;转载请注明出处&lt;br&gt;首次发表于csdn：&lt;a href=&quot;http://blog.csdn.net/cxsmarkchan/article/details/50939769&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;用asm内联汇编实现系统调用&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://mooc.study.163.com/course/USTC-1000029000&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Linux内核分析》MOOC课程&lt;/a&gt;学习笔记&lt;/p&gt;
+&lt;h1 id=&quot;1-系统调用的概念&quot;&gt;&lt;a href=&quot;#1-系统调用的概念&quot; class=&quot;headerlink&quot; title=&quot;1 系统调用的概念&quot;&gt;&lt;/a&gt;1 系统调用的概念&lt;/h1&gt;&lt;p&gt;下图是一个典型的系统调用图示：&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160320231125982&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;br&gt;从该函数可以看到，系统调用分成如下过程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户态程序调用API函数&lt;code&gt;xyz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在&lt;code&gt;xyz&lt;/code&gt;接口函数内部，通过中断号&lt;code&gt;0x80&lt;/code&gt;进入系统调用，此时CPU进入内核态。&lt;/li&gt;
+&lt;li&gt;CPU开始执行中断处理程序，根据用户传入的信息（系统调用号和相关参数），执行相应的内核态函数，并返回结果。&lt;br&gt;这里有两个问题：&lt;/li&gt;
+&lt;li&gt;内核态的切换是通过中断方式进入的，而产生中断时只能传入一个中断向量（即&lt;code&gt;0x80&lt;/code&gt;），而系统调用有大量的API函数，系统如何知道调用哪一个函数呢？&lt;/li&gt;
+&lt;li&gt;有一些API函数带有参数，而系统调用并没有才有函数调用（&lt;code&gt;call&lt;/code&gt;）方式，那么参数如何传递到被调用函数？&lt;br&gt;答案是：在调用&lt;code&gt;int 0x80&lt;/code&gt;进入系统调用前，预先把系统调用号和相关参数存入指定的寄存器中。这样，系统调用函数只需要访问相应的寄存器，就可以获得所有的信息。&lt;br&gt;事实上，在进入系统调用前，首先需要将系统调用号传入&lt;code&gt;eax&lt;/code&gt;寄存器中，并将参数依次传入&lt;code&gt;ebx&lt;/code&gt;、&lt;code&gt;ecx&lt;/code&gt;、&lt;code&gt;edx&lt;/code&gt;、&lt;code&gt;esi&lt;/code&gt;、&lt;code&gt;edi&lt;/code&gt;、&lt;code&gt;ebp&lt;/code&gt;寄存器中。系统调用最多只能传入6个参数，如果参数多于6个，则需要将参数预存在内存中，然后将参数指针传入寄存器。系统调用结束后，&lt;code&gt;eax&lt;/code&gt;会被替换为系统调用返回值。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;2-用asm实现系统调用的实例&quot;&gt;&lt;a href=&quot;#2-用asm实现系统调用的实例&quot; class=&quot;headerlink&quot; title=&quot;2 用asm实现系统调用的实例&quot;&gt;&lt;/a&gt;2 用asm实现系统调用的实例&lt;/h1&gt;&lt;p&gt;本文运行平台为&lt;a href=&quot;https://www.shiyanlou.com/courses/195&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;实验楼Linux内核分析&lt;/a&gt;的第4个实验，运行环境为linux系统。&lt;br&gt;为了验证系统调用的全过程，我们以exit函数为例，给出代码如下：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int main()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    int id;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    scanf(&amp;quot;%d&amp;quot;, &amp;amp;id);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    switch(id)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        case 0:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	        //用C语言的方式调用exit函数&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            printf(&amp;quot;C exit\n&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            exit(0);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            break;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        case 1:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	        //用内联汇编的方式调用exit函数&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            printf(&amp;quot;asm exit\n&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            asm volatile(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &amp;quot;mov $0, %%ebx\n\t&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &amp;quot;mov $0x1, %%eax\n\t&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &amp;quot;int $0x80\n\t&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    :&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    :&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            break;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        default:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            printf(&amp;quot;others\n&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            break;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    printf(&amp;quot;before return\n&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return 0;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;该函数中，首先输入参数id。如果id为0，则调用C代码的exit函数。如果id为1，则调用汇编代码的exit函数。如果id为其他值，则顺序执行至main函数结尾。&lt;br&gt;事实上，上文的代码采用C代码和内联汇编实现了等价的功能，即&lt;code&gt;exit(0)&lt;/code&gt;功能。可以分析一下内联汇编的工作方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;mov $0, %ebx&lt;/code&gt;：exit函数的第1个参数（也是唯一一个参数）为0，按照寄存器顺序，应该放在&lt;code&gt;ebx&lt;/code&gt;中。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mov $0x1, %eax&lt;/code&gt;：exit函数的系统调用号为&lt;code&gt;0x1&lt;/code&gt;，因此把系统调用号放入&lt;code&gt;eax&lt;/code&gt;中。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int 0x80&lt;/code&gt;：产生中断，中断号&lt;code&gt;0x80&lt;/code&gt;表示系统调用。&lt;br&gt;执行了以上3步，即为执行了exit(0)函数。程序的运行结果如下：&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160320233359080&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;br&gt;可见，输入0或1时，都没有输出&lt;code&gt;&amp;quot;before return&amp;quot;&lt;/code&gt;，说明exit被成功调用，程序提前退出。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;3-小结&quot;&gt;&lt;a href=&quot;#3-小结&quot; class=&quot;headerlink&quot; title=&quot;3 小结&quot;&gt;&lt;/a&gt;3 小结&lt;/h1&gt;&lt;p&gt;系统调用既保证了操作系统的安全运行，也方便了用户态程序使用系统资源。用内联汇编的方式处理系统调用，可以很清晰地看出系统调用的过程，以及系统调用的参数传递方式。系统调用通过寄存器传递参数，因此在进行系统调用前，通常还需要备份相关寄存器中的信息。不过，在内联汇编中，这个工作会被编译器代劳。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;CPU运行状态被分为内核态和用户态。操作系统在内核态下运行，拥有所有计算机资源的操作权限。而一般的应用程序则在用户态下运行，它们不能直接操作底层的硬件设备。应用程序在需要使用硬件资源时，可通过系统调用（system call）切换到内核态。本文通过asm内联汇编，分析系统调用的全过程。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+    
+      <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
+    
+    
+      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
+    
+      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+    
+      <category term="操作系统" scheme="http://cxsmarkchan.github.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+      <category term="汇编" scheme="http://cxsmarkchan.github.com/tags/%E6%B1%87%E7%BC%96/"/>
+    
+  </entry>
   
   <entry>
     <title>第一篇博客</title>
