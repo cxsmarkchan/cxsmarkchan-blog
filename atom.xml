@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2016-04-01T08:23:12.458Z</updated>
+  <updated>2016-04-02T02:45:20.436Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux系统调用：32位和64位的区别</title>
+    <link href="http://cxsmarkchan.github.com/2016/04/02/asm-syscall-64/"/>
+    <id>http://cxsmarkchan.github.com/2016/04/02/asm-syscall-64/</id>
+    <published>2016-04-02T02:45:20.000Z</published>
+    <updated>2016-04-02T02:45:20.436Z</updated>
+    
+    <content type="html">&lt;p&gt;最近在学习系统调用，一段用asm内联汇编写的简单程序始终得不出正确的结果，后来了解到这是32位平台和64位平台的系统调用方法不同的原因。在此列出相关的程序和我的理解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;原创内容：cxsmarkchan&lt;br&gt;转载请注明出处&lt;br&gt;首次发表于csdn：&lt;a href=&quot;http://blog.csdn.net/cxsmarkchan/article/details/50987222&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Linux asm系统调用：32位和64位的区别&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;程序代码和问题&quot;&gt;&lt;a href=&quot;#程序代码和问题&quot; class=&quot;headerlink&quot; title=&quot;程序代码和问题&quot;&gt;&lt;/a&gt;程序代码和问题&lt;/h1&gt;&lt;p&gt;首先看如下一段简单的C程序（&lt;code&gt;test.cpp&lt;/code&gt;）：&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; str[] = &lt;span class=&quot;string&quot;&gt;&quot;Hello\n&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	write(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, str, &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这段程序调用了write函数，其接口为：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;int write(int fd /*输出位置句柄*/, const char* src /*输出首地址*/， int len /*长度*/)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;fd为0则表示输出到控制台。因此上述程序的执行结果为：向控制台输出一个长度为6的字符串&lt;code&gt;&amp;quot;Hello\n&amp;quot;&lt;/code&gt;。&lt;br&gt;在控制台调用&lt;code&gt;gcc test.cpp&lt;/code&gt;，可以正确输出。&lt;br&gt;为了更好地理解在汇编代码下的系统调用过程，可把上述代码改写成内联汇编的格式（具体语法可参考上一篇博客：&lt;a href=&quot;http://cxsmarkchan.github.io/2016/04/01/asm-syscall&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;用asm内联汇编实现系统调用&lt;/a&gt;）：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//test_asm_A.cpp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int main()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	char str[] = &amp;quot;Hello\n&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	asm volatile(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;quot;int $0x80\n\t&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		:&amp;quot;a&amp;quot;(4), &amp;quot;b&amp;quot;(0), &amp;quot;c&amp;quot;(str), &amp;quot;d&amp;quot;(6)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	return 0;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;其中，4是write函数的系统调用号，ebx/ecx/edx是系统调用的前三个参数。&lt;br&gt;&lt;strong&gt;然而，执行&lt;code&gt;gcc test_asm_A.cpp&lt;/code&gt;编译后，再运行程序，发现程序没有任何输出&lt;/strong&gt;。一个很奇怪的问题是，如果采用如下&lt;code&gt;test_asm_B.cpp&lt;/code&gt;的写法，则程序可以正常地输出：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//test_asm_B.cpp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#include &amp;lt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int main()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	char *str = (char*)malloc(7 * sizeof(char));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	strcpy(str, &amp;quot;Hello\n&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	asm volatile(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;quot;int $0x80\n\t&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		:&amp;quot;a&amp;quot;(4), &amp;quot;b&amp;quot;(0), &amp;quot;c&amp;quot;(str), &amp;quot;d&amp;quot;(6)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	free(str);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	return 0;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两段代码唯一的区别，是&lt;code&gt;test_asm_A.cpp&lt;/code&gt;中的&lt;code&gt;str&lt;/code&gt;存储在栈空间，而&lt;code&gt;test_asm_B.cpp&lt;/code&gt;中的&lt;code&gt;str&lt;/code&gt;存储在堆空间。&lt;/strong&gt;&lt;br&gt;那么，为什么存储位置的不同会造成完全不同的结果呢？&lt;/p&gt;
+&lt;h1 id=&quot;原因分析&quot;&gt;&lt;a href=&quot;#原因分析&quot; class=&quot;headerlink&quot; title=&quot;原因分析&quot;&gt;&lt;/a&gt;原因分析&lt;/h1&gt;&lt;p&gt;经过提醒，将上述代码用32位的方式编译，即&lt;code&gt;gcc test_asm_A.cpp -m32&lt;/code&gt;和&lt;code&gt;gcc test_asm_B.cpp -m32&lt;/code&gt;，可以发现两段代码都能正确输出。这说明，上述代码按32位编译，可以得到正确的结果。&lt;br&gt;如果没有&lt;code&gt;-m32&lt;/code&gt;标志，则gcc默认按照64位方式编译。32位和64位程序在编译时有如下区别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;32位和64位程序的地址空间范围不同。&lt;/li&gt;
+&lt;li&gt;32位和64位程序的系统调用号不同，如本例中的write，在32位系统中调用号为4，在64位系统中则为1。&lt;/li&gt;
+&lt;li&gt;对于32位程序，应调用&lt;code&gt;int $0x80&lt;/code&gt;进入系统调用，将系统调用号传入&lt;code&gt;eax&lt;/code&gt;，各个参数按照&lt;code&gt;ebx&lt;/code&gt;、&lt;code&gt;ecx&lt;/code&gt;、&lt;code&gt;edx&lt;/code&gt;的顺序传递到寄存器中，系统调用返回值储存到&lt;code&gt;eax&lt;/code&gt;寄存器。&lt;/li&gt;
+&lt;li&gt;对于64位程序，应调用&lt;code&gt;syscall&lt;/code&gt;进入系统调用，将系统调用号传入&lt;code&gt;rax&lt;/code&gt;，各个参数按照&lt;code&gt;rdi&lt;/code&gt;、&lt;code&gt;rsi&lt;/code&gt;、&lt;code&gt;rdx&lt;/code&gt;的顺序传递到寄存器中，系统调用返回值储存到&lt;code&gt;rax&lt;/code&gt;寄存器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;再看上面两段代码，它们都是调用&lt;code&gt;int $0x80&lt;/code&gt;进入系统调用，却按照64位方式编译，则会出现如下不正常情形：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;程序的地址空间是64位地址空间。&lt;/li&gt;
+&lt;li&gt;0x80号中断进入的是32位系统调用函数，因此仍按照32位的方式来解释系统调用，即所有寄存器只考虑低32位的值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;再看程序中传入的各个参数，系统调用号（4），第1个和第3个参数（0和6）都是32位以内的，但是&lt;strong&gt;str的地址是64位地址，在0x80系统调用中只有低32位会被考虑。&lt;/strong&gt;&lt;br&gt;这样，&lt;code&gt;test_asm_A.cpp&lt;/code&gt;不能正确执行，而&lt;code&gt;test_asm_B.cpp&lt;/code&gt;可以正确执行的原因就很明确了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在&lt;code&gt;test_asm_A.cpp&lt;/code&gt;中，str存储在栈空间中，而&lt;strong&gt;栈空间在系统的高位，只取低32位地址，得到的是错误地址。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;在&lt;code&gt;test_asm_B.cpp&lt;/code&gt;中，str存储在堆空间中，而&lt;strong&gt;堆空间在系统的低位开始，在这样一个小程序中，str地址的高32位为0，只有低32位存在非零值，因此不会出现截断错误。&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可见，&lt;code&gt;test_asm_B.cpp&lt;/code&gt;正确执行只是一个假象。由于堆空间从低位开始，如果开辟空间过多，堆空间也进入高位的时候，这段代码同样可能出错。&lt;/p&gt;
+&lt;h1 id=&quot;64位系统的系统调用代码&quot;&gt;&lt;a href=&quot;#64位系统的系统调用代码&quot; class=&quot;headerlink&quot; title=&quot;64位系统的系统调用代码&quot;&gt;&lt;/a&gt;64位系统的系统调用代码&lt;/h1&gt;&lt;p&gt;最后，给出64位系统下可正确输出的asm系统调用代码：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//test_asm_C.cpp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int main()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	char str[] = &quot;Hello\n&quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	//注意：64位系统调用中，write函数调用号为1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	asm volatile(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&quot;mov %2, %%rsi\n\t&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&quot;syscall&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		:&quot;a&quot;(1), &quot;D&quot;(0), &quot;b&quot;(str), &quot;d&quot;(6)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	return 0;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在学习系统调用，一段用asm内联汇编写的简单程序始终得不出正确的结果，后来了解到这是32位平台和64位平台的系统调用方法不同的原因。在此列出相关的程序和我的理解。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+    
+      <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
+    
+    
+      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
+    
+      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
+    
+      <category term="64位" scheme="http://cxsmarkchan.github.com/tags/64%E4%BD%8D/"/>
+    
+      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+    
+  </entry>
   
   <entry>
     <title>用asm内联汇编实现系统调用</title>
