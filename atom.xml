@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2016-04-17T16:44:59.317Z</updated>
+  <updated>2016-05-12T12:40:32.159Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>双线性约束的精确松弛</title>
+    <link href="http://cxsmarkchan.github.com/2016/05/12/bilinear/"/>
+    <id>http://cxsmarkchan.github.com/2016/05/12/bilinear/</id>
+    <published>2016-05-12T12:40:32.000Z</published>
+    <updated>2016-05-12T12:40:32.159Z</updated>
+    
+    <content type="html">&lt;p&gt;今天想谈一个研究中常见的问题，即含有双线性约束的优化问题。&lt;br&gt;双线性约束即形为$z=xy$的约束，这是一类在电力领域中很常见的约束。对于含有一般双线性约束的优化问题，目前还没有很好的求解方法，不过，有一些特殊的双线性约束是可以被等价转化成线性约束的，本文即讨论这些约束形式以及相应的转化技巧。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;原创内容: cxsmarkchan&lt;/p&gt;
+&lt;h1 id=&quot;1-双线性约束举例&quot;&gt;&lt;a href=&quot;#1-双线性约束举例&quot; class=&quot;headerlink&quot; title=&quot;1 双线性约束举例&quot;&gt;&lt;/a&gt;1 双线性约束举例&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;之所以说双线性约束$z=xy$难以求解，是因为它不仅是非线性的，而且是非凸的。&lt;/strong&gt;关于凸性可以参考&lt;a href=&quot;https://en.wikipedia.org/wiki/Convex_set&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Wikipedia&lt;/a&gt;的解释。对于这个问题，简单来说，是指如果三维空间中的两个点$x_1,y_1,z_1$和$x_2,y_2,z_2$都满足约束，即$z_1=x_1y_1,z_2=x_2y_2$，那么这两点所连接的线段上的点$\left(x,y,z\right)$是否也满足$\left(z=xy\right)$。很明显，双线性约束不满足这个条件。例如，$(1,2,2)$和$(2,4,8)$都满足$z=xy$的条件，但是它们的中点$(1.5,3,5)$显然不满足条件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;目前，我们的数学工具能在很大程度上求解凸优化问题，但对于非凸优化问题，目前还没有很成熟的求解方法。&lt;/strong&gt;这也是含双线性约束的优化问题让人头疼的原因。不巧的是，在电力领域的研究中，很难回避双线性问题。举几个简单的例子：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;功率约束$P=UI$本身就是双线性的，这意味着所有的交流潮流问题都是双线性问题。&lt;/li&gt;
+&lt;li&gt;电网中，上网电价和用电电价是不相等的。在这种情况下，储能系统充电和放电的情况要分开考虑。储能从电网充电的成本是$\lambda^+ P^+$，其中$\lambda^+$是用电电价，$P^+$是充电功率。而储能向电网放电的收益是$\lambda^- P^-$，其中$\lambda^-$是上网电价，$P^-$是放电功率。很明显，同一个时刻，储能要么充电、要么放电，因此必然有$P^+P^-=0$，这也是个双线性问题。&lt;/li&gt;
+&lt;li&gt;电力市场中的博弈行为常常涉及多层优化问题，动态博弈的均衡点求解需要用到互补松弛条件，这也是一个双线性的条件。&lt;/li&gt;
+&lt;li&gt;在电网规划或者状态估计中，会遇到一些含逆运算的约束问题（例如导纳和阻抗的关系），即$z=y^{-1}$的问题。这里的$y$会受到一个操作的影响，即$y=y_0+b\Delta y$，其中b是0-1变量，表示我们是否执行了该操作。未执行操作时，$y=y_0$；执行操作时，$y=y_0+\Delta y$。这样，约束就变成了$z=(y_0+b\Delta y)^{-1}$，即$y_0z+bz\Delta y=1$。其中的$bz$就是双线性项。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中，第一个问题可以说是电力系统稳态分析的一个痛点。对于辐射网，目前已经有了一些比较好的解决方法，可以参考Steven Low关于最优潮流的研究成果。但对于一般的网络，只能考虑求取次优解。这篇博客不打算讨论该问题，但以后有时间的话，我会争取把我了解到的相关研究整理出来。&lt;/p&gt;
+&lt;p&gt;问题2到问题4都可以通过一定的技巧转化成（含整数的）线性问题，这也是后文讨论的重点。&lt;/p&gt;
+&lt;h1 id=&quot;2-双线性约束的标准形式&quot;&gt;&lt;a href=&quot;#2-双线性约束的标准形式&quot; class=&quot;headerlink&quot; title=&quot;2 双线性约束的标准形式&quot;&gt;&lt;/a&gt;2 双线性约束的标准形式&lt;/h1&gt;&lt;p&gt;双线性在优化问题中可以有多种形式，以下面的优化问题为例：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\begin{aligned}&lt;br&gt;\text{min } &amp;amp; x_1 + x_2x_3 \\&lt;br&gt;\text{s.t. } &amp;amp; x_2 \leq x_4x_5 \\&lt;br&gt;&amp;amp; x_3 = x_6\left(x_7 + 2\right)&lt;br&gt;\end{aligned}&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这个方程里面含有三个双线性部分，第一个在目标函数中，第二个在不等式约束中，第三个则在等式约束中。粗略看来，在不同位置的非线性量通常要用不同的方法来处理，但事实上，我们可以通过一定的变换，把这些双线性部分用标准形式来表达。&lt;/p&gt;
+&lt;p&gt;所谓标准形式，是指形如$z=xy$的约束。例如上述优化问题，我们也可以用如下形式表达：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\begin{aligned}&lt;br&gt;\text{min } &amp;amp; x_1 + z_1 \\&lt;br&gt;\text{s.t. } &amp;amp; x_2 \leq z_2 \\&lt;br&gt;&amp;amp; x_3 = x_6z_3 \\&lt;br&gt;&amp;amp; z_1 = x_2x_3 \\&lt;br&gt;&amp;amp; z_2 = x_4x_5 \\&lt;br&gt;&amp;amp; z_3 = x_7 + 2 \\&lt;br&gt;\end{aligned}&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;很容易看出，转化后的形式和转化前的形式相比，实际上只是做了几个变量替换，但目标函数中已经不存在双线性量，而且所有的双线性量都出现在了等式约束中。通过这样的转化，我们就可以把主要精力集中在对标准双线性形式的处理上。&lt;/p&gt;
+&lt;h1 id=&quot;3-双线性约束的精确松弛&quot;&gt;&lt;a href=&quot;#3-双线性约束的精确松弛&quot; class=&quot;headerlink&quot; title=&quot;3 双线性约束的精确松弛&quot;&gt;&lt;/a&gt;3 双线性约束的精确松弛&lt;/h1&gt;&lt;h2 id=&quot;3-1-利用目标函数实现精确松弛&quot;&gt;&lt;a href=&quot;#3-1-利用目标函数实现精确松弛&quot; class=&quot;headerlink&quot; title=&quot;3.1 利用目标函数实现精确松弛&quot;&gt;&lt;/a&gt;3.1 利用目标函数实现精确松弛&lt;/h2&gt;&lt;p&gt;对于第1节提到的问题2，其约束为$P^+P^-=0$。这个约束并不是单独出现的，而是一般会出现在和储能有关的优化问题中。这类优化问题的一般形式如下：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\begin{aligned}&lt;br&gt;\text{min } &amp;amp; \lambda^+P^+ - \lambda^-P^- \\&lt;br&gt;\text{s.t.} &amp;amp; P^+ \geq 0,P^- \geq 0 \\&lt;br&gt;&amp;amp; P^+P^-=0 \\&lt;br&gt;&amp;amp; f\left(P^+ - P^-\right) \leq 0&lt;br&gt;\end{aligned}&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中，最后一个条件表示，对于外界来说，只有储能实际的出力，即$P^+ - P^-$是受到关心的。也就是说，在不考虑前两个约束时，$P^+$和$P^-$同时增加或降低一个数，对外界来说是没有影响的。&lt;/p&gt;
+&lt;p&gt;同时，一般来说，上网电价会低于用电电价，即$\lambda^+ &amp;gt; \lambda^- $。其直观的意义是：储能在某个时刻，充一定量的电，再把这些点送回电网，那么电网会收取过网费，因此储能会亏损。&lt;/p&gt;
+&lt;p&gt;在这两个条件下，我们会发现，双线性的互补松弛约束完全可以删去。这是因为，储能把最小化成本作为目标函数，那么它一定不会选择在同一时刻“既充电又放电”的决策，因为这个决策是亏损的。既然优化问题的目标函数使得这种决策不会被选择，我们就没必要在约束条件中禁止这种决策的出现——即使出现了，也不会成为最优策略！&lt;/p&gt;
+&lt;p&gt;因此，利用目标函数的特性，我们把问题改写成了如下格式：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\begin{aligned}&lt;br&gt;\text{min } &amp;amp; \lambda^+P^+ - \lambda^-P^- \\&lt;br&gt;\text{s.t.} &amp;amp; P^+ \geq 0,P^- \geq 0 \\&lt;br&gt;&amp;amp; f\left(P^+ - P^-\right) \leq 0&lt;br&gt;\end{aligned}&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这个方法的关键在于：我们一般会在约束条件中禁止一些不合要求的策略（例如储能既充电又放电是不符合实际的），但如果这个策略本身不可能是最优策略，那么我们也就没必要在约束条件中禁止它了。&lt;/p&gt;
+&lt;h2 id=&quot;3-2-利用大数实现精确松弛&quot;&gt;&lt;a href=&quot;#3-2-利用大数实现精确松弛&quot; class=&quot;headerlink&quot; title=&quot;3.2 利用大数实现精确松弛&quot;&gt;&lt;/a&gt;3.2 利用大数实现精确松弛&lt;/h2&gt;&lt;p&gt;3.1节的方法只适合于目标函数“比较配合”的情形，对于一般的互补松弛约束（如问题3）是不适用的。这种情况下，我们还可以采用大数的方法松弛。&lt;/p&gt;
+&lt;p&gt;例如一个$xy=0,x \geq 0, y \geq 0$的约束，我们可以引入两个0-1整数变量$b_1,b_2$和一个很大的数$M$，并把约束改写成如下形式：&lt;br&gt;\[&lt;br&gt;0 \leq x \leq b_1M \\&lt;br&gt;0 \leq y \leq b_2M \\&lt;br&gt;b_1 + b_2 \leq 1&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;以上形式是含整数的线性约束。注意到$b_1,b_2$是0-1变量，因此第3个约束保证了$b_1$和$b_2$最多只有1个是1，或者说，至少有1个是0。&lt;/p&gt;
+&lt;p&gt;那么$b_1$和$b_2$的值有什么意义呢？我们以$b_1$为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果$b_1=0$，第1个约束变成了$0 \leq x \leq 0$，也就是$x=0$&lt;/li&gt;
+&lt;li&gt;如果$b_1=1$，第1个约束变成了$0 \leq x \leq M$，由于$M$是一个很大的数，超过了$x$可能的取值返回，我们可以认为$M$对$x$不产生约束。因此，该约束就变成了$x \geq 0$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由此可见，$b_1$和$b_2$最少有1个是0，也就意味着$x$和$y$最少有1个是0，因此互补松弛约束也就满足了。这样，互补松弛约束就被等价变换成了含整数的线性约束。&lt;/p&gt;
+&lt;p&gt;大数和整数变量还可以用于问题4的精确松弛。问题4中的关键部分在于$bz$，我们可以写成$w=bz$的形式，其中$w$和$z$是连续变量，$b$是0-1变量。$w=bz$可以被改写成如下形式：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\left| w \right| \leq bM \\&lt;br&gt;\left| w - z \right| \leq (1-b)M \\&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;注意到$b=0$时，第1个约束收紧为$w=0$，第2个约束因为$M$很大而不起作用；$b=1$时，第1个约束不起作用，第2个约束收紧为$w-z=0$。因此，这两个式子和$w=bz$是等价的：在$b=0$时，$w=0$；在$b=1$时，$w=z$。&lt;/p&gt;
+&lt;p&gt;相关参考文献：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;关于问题1中非线性约束在辐射网中的求解，可参考：M. Farivar and S. H. Low, “Branch Flow Model: Relaxations and Convexification—Part I,” in IEEE Transactions on Power Systems, vol. 28, no. 3, pp. 2554-2564, Aug. 2013.&lt;/li&gt;
+&lt;li&gt;关于问题3中互补松弛约束的求解，可参考：C. Ruiz and A. J. Conejo, “Pool Strategy of a Producer With Endogenous Formation of Locational Marginal Prices,” in IEEE Transactions on Power Systems, vol. 24, no. 4, pp. 1855-1866, Nov. 2009.&lt;/li&gt;
+&lt;li&gt;关于问题4中求逆问题的求解，可参考：X. Chen; J. Lin; C. Wan; Y. Song; S. You; Y. Zong; W. Guo; Y. Li, “Optimal Meter Placement for Distribution Network State Estimation: A Circuit Representation Based MILP Approach,” in IEEE Transactions on Power Systems (Early Access)&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天想谈一个研究中常见的问题，即含有双线性约束的优化问题。&lt;br&gt;双线性约束即形为$z=xy$的约束，这是一类在电力领域中很常见的约束。对于含有一般双线性约束的优化问题，目前还没有很好的求解方法，不过，有一些特殊的双线性约束是可以被等价转化成线性约束的，本文即讨论这些约束形式以及相应的转化技巧。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="科研" scheme="http://cxsmarkchan.github.com/categories/%E7%A7%91%E7%A0%94/"/>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E7%A7%91%E7%A0%94/%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="松弛" scheme="http://cxsmarkchan.github.com/tags/%E6%9D%BE%E5%BC%9B/"/>
+    
+  </entry>
   
   <entry>
     <title>linux源码分析：schedule进程调度</title>
