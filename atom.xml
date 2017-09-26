@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2016-05-12T12:40:32.159Z</updated>
+  <updated>2017-09-25T22:52:57.010Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>双线性约束的精确松弛</title>
     <link href="http://cxsmarkchan.github.com/2016/05/12/bilinear/"/>
     <id>http://cxsmarkchan.github.com/2016/05/12/bilinear/</id>
-    <published>2016-05-12T12:40:32.000Z</published>
-    <updated>2016-05-12T12:40:32.159Z</updated>
+    <published>2016-05-13T00:40:32.000Z</published>
+    <updated>2017-09-25T22:52:57.010Z</updated>
     
     <content type="html">&lt;p&gt;今天想谈一个研究中常见的问题，即含有双线性约束的优化问题。&lt;br&gt;双线性约束即形为$z=xy$的约束，这是一类在电力领域中很常见的约束。对于含有一般双线性约束的优化问题，目前还没有很好的求解方法，不过，有一些特殊的双线性约束是可以被等价转化成线性约束的，本文即讨论这些约束形式以及相应的转化技巧。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;原创内容: cxsmarkchan&lt;/p&gt;
@@ -91,8 +91,8 @@
     <title>linux源码分析：schedule进程调度</title>
     <link href="http://cxsmarkchan.github.com/2016/04/18/linux-schedule/"/>
     <id>http://cxsmarkchan.github.com/2016/04/18/linux-schedule/</id>
-    <published>2016-04-17T16:44:59.000Z</published>
-    <updated>2016-04-17T16:44:59.317Z</updated>
+    <published>2016-04-18T04:44:59.000Z</published>
+    <updated>2017-09-25T22:52:56.978Z</updated>
     
     <content type="html">&lt;p&gt;schedule是linux中的一个内核函数，用于实现进程调度。该函数由内核线程在合适的时机调用，完成进程上下文的切换。本文从源码的角度分析了schedule函数的执行过程，尤其是进程上下文的切换过程。本文所分析的源码来自&lt;a href=&quot;http://codelab.shiyanlou.com/xref/linux-3.18.6/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -168,8 +168,8 @@
     <title>linux源码分析：execve加载可执行文件</title>
     <link href="http://cxsmarkchan.github.com/2016/04/10/linux-execve/"/>
     <id>http://cxsmarkchan.github.com/2016/04/10/linux-execve/</id>
-    <published>2016-04-09T18:29:42.000Z</published>
-    <updated>2016-04-09T18:29:42.137Z</updated>
+    <published>2016-04-10T06:29:42.000Z</published>
+    <updated>2017-09-25T22:52:56.950Z</updated>
     
     <content type="html">&lt;p&gt;execve是linux中一个重要的系统调用，它用于将一个可执行文件加载如内存中并执行。在执行shell命令时，就会调用execve函数。有意思的是，execve并未创建新的进程，而是会把当前进程覆盖。本文分析execve的实现过程，以加深对linux可执行文件加载过程的理解。本文分析的源码来自&lt;a href=&quot;http://codelab.shiyanlou.com/xref/linux-3.18.6&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;原创内容： cxsmarkchan 陈晓爽&lt;br&gt;转载请注明出处&lt;br&gt;&lt;a href=&quot;http://www.xuetangx.com/courses/course-v1:ustcX+USTC001+_/about&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Linux内核分析&lt;/a&gt;学习笔记&lt;/p&gt;
@@ -236,8 +236,8 @@
     <title>linux源码分析：fork复制进程</title>
     <link href="http://cxsmarkchan.github.com/2016/04/03/linux-fork/"/>
     <id>http://cxsmarkchan.github.com/2016/04/03/linux-fork/</id>
-    <published>2016-04-03T13:04:54.000Z</published>
-    <updated>2016-04-04T04:41:01.901Z</updated>
+    <published>2016-04-04T01:04:54.000Z</published>
+    <updated>2017-09-25T22:52:56.938Z</updated>
     
     <content type="html">&lt;p&gt;fork函数是linux系统的一个API，用于将当前进程复制，并创建一个新的进程。本文从linux源码的角度分析fork的实现过程，并学习linux创建新进程的过程。本文分析的源码来自&lt;a href=&quot;http://codelab.shiyanlou.com/xref/linux-3.18.6&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;原创内容：cxsmarkchan 陈晓爽&lt;br&gt;转载请注明出处&lt;br&gt;&lt;a href=&quot;http://mooc.study.163.com/course/USTC-1000029000&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Linux内核分析》MOOC课程&lt;/a&gt;学习笔记&lt;/p&gt;
@@ -310,8 +310,8 @@
     <title>Linux系统调用：32位和64位的区别</title>
     <link href="http://cxsmarkchan.github.com/2016/04/02/asm-syscall-64/"/>
     <id>http://cxsmarkchan.github.com/2016/04/02/asm-syscall-64/</id>
-    <published>2016-04-02T02:45:20.000Z</published>
-    <updated>2016-04-02T02:45:20.436Z</updated>
+    <published>2016-04-02T14:45:20.000Z</published>
+    <updated>2017-09-25T22:52:56.926Z</updated>
     
     <content type="html">&lt;p&gt;最近在学习系统调用，一段用asm内联汇编写的简单程序始终得不出正确的结果，后来了解到这是32位平台和64位平台的系统调用方法不同的原因。在此列出相关的程序和我的理解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;原创内容：cxsmarkchan&lt;br&gt;转载请注明出处&lt;br&gt;首次发表于csdn：&lt;a href=&quot;http://blog.csdn.net/cxsmarkchan/article/details/50987222&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Linux asm系统调用：32位和64位的区别&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;程序代码和问题&quot;&gt;&lt;a href=&quot;#程序代码和问题&quot; class=&quot;headerlink&quot; title=&quot;程序代码和问题&quot;&gt;&lt;/a&gt;程序代码和问题&lt;/h1&gt;&lt;p&gt;首先看如下一段简单的C程序（&lt;code&gt;test.cpp&lt;/code&gt;）：&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; str[] = &lt;span class=&quot;string&quot;&gt;&quot;Hello\n&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	write(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, str, &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -365,8 +365,8 @@
     <title>用asm内联汇编实现系统调用</title>
     <link href="http://cxsmarkchan.github.com/2016/04/01/asm-syscall/"/>
     <id>http://cxsmarkchan.github.com/2016/04/01/asm-syscall/</id>
-    <published>2016-04-01T08:23:12.000Z</published>
-    <updated>2016-04-01T08:23:12.458Z</updated>
+    <published>2016-04-01T20:23:12.000Z</published>
+    <updated>2017-09-25T22:52:56.918Z</updated>
     
     <content type="html">&lt;p&gt;CPU运行状态被分为内核态和用户态。操作系统在内核态下运行，拥有所有计算机资源的操作权限。而一般的应用程序则在用户态下运行，它们不能直接操作底层的硬件设备。应用程序在需要使用硬件资源时，可通过系统调用（system call）切换到内核态。本文通过asm内联汇编，分析系统调用的全过程。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;原创内容：cxsmarkchan&lt;br&gt;转载请注明出处&lt;br&gt;首次发表于csdn：&lt;a href=&quot;http://blog.csdn.net/cxsmarkchan/article/details/50939769&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;用asm内联汇编实现系统调用&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://mooc.study.163.com/course/USTC-1000029000&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Linux内核分析》MOOC课程&lt;/a&gt;学习笔记&lt;/p&gt;
@@ -413,8 +413,8 @@
     <title>第一篇博客</title>
     <link href="http://cxsmarkchan.github.com/2016/03/30/firstblog/"/>
     <id>http://cxsmarkchan.github.com/2016/03/30/firstblog/</id>
-    <published>2016-03-29T16:27:55.000Z</published>
-    <updated>2016-03-30T15:14:05.555Z</updated>
+    <published>2016-03-30T04:27:55.000Z</published>
+    <updated>2017-09-25T22:52:56.986Z</updated>
     
     <content type="html">&lt;p&gt;&amp;emsp;&amp;emsp;博士入学已经一年半了，走过不少弯路，也算有一些成长。一直想抽时间做个博客，记录自己的学习和科研生活，最近终于付诸行动。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&amp;emsp;&amp;emsp;电气工程是一个和计算机结合紧密的专业，我在做电力系统方向的科研时，也常常需要设计算法、编写程序。不过，直到去年，在董老师和浩哥的带领下，我才对码农的世界有了更多的了解，也越来越觉得自己如井底之蛙一般。因此，也希望更系统、更深入地学习计算机科学的知识，并将其融入到自己的科研中。&lt;/p&gt;
