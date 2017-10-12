@@ -7,7 +7,7 @@
 
     
 
-    <title>归档 | cxsmarkchan的博客</title>
+    <title>优化模型（一）：优化的要素 | cxsmarkchan的博客</title>
     <meta name="author" content="cxsmarkchan">
     
     <meta name="description" content="Ph.D. Electrical Engineering">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="优化模型（一）：优化的要素"/>
     <meta property="og:site_name" content="cxsmarkchan的博客"/>
 
     
@@ -187,93 +187,106 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper indigo">
-        <span class="breadcrumb">当前位置（归档）</span>
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/优化/">优化</a>
+
+
         
 
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>优化模型（一）：优化的要素</h1>
+    
 
 
-    <ul class="collapsible mt-0" data-collapsible="accordion">
+            </div>
+            <time class="pink-link-context" datetime="2017-10-12T04:39:11.000Z"><a href="/2017/10/12/20171007-optimization-config/">2017-10-12</a></time>
+
+            
+    <div class="tags-row">
         
+            <a href="/tags/优化/" class="chip pink lighten-1">优化</a>
         
-            <li>
-                <div class="collapsible-header active">
-                    <i class="fa fa-archive"></i>2017
-                </div>
-                <div class="collapsible-body">
-                    <div class="collection">
-                        
-                            <a href="/2017/10/12/20171007-optimization-config/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2017-10-12T04:39:11.000Z">2017-10-12</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                优化模型（一）：优化的要素
-                            </a>
-                        
-                    </div>
-                </div>
-            </li>
+            <a href="/tags/模型/" class="chip pink lighten-1">模型</a>
         
-            <li>
-                <div class="collapsible-header ">
-                    <i class="fa fa-archive"></i>2016
-                </div>
-                <div class="collapsible-body">
-                    <div class="collection">
-                        
-                            <a href="/2016/05/12/bilinear/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-05-13T00:40:32.000Z">2016-05-12</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                双线性约束的精确松弛
-                            </a>
-                        
-                            <a href="/2016/04/18/linux-schedule/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-04-18T04:44:59.000Z">2016-04-18</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                linux源码分析：schedule进程调度
-                            </a>
-                        
-                            <a href="/2016/04/10/linux-execve/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-04-10T06:29:42.000Z">2016-04-10</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                linux源码分析：execve加载可执行文件
-                            </a>
-                        
-                            <a href="/2016/04/03/linux-fork/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-04-04T01:04:54.000Z">2016-04-03</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                linux源码分析：fork复制进程
-                            </a>
-                        
-                            <a href="/2016/04/02/asm-syscall-64/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-04-02T14:45:20.000Z">2016-04-02</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                Linux系统调用：32位和64位的区别
-                            </a>
-                        
-                            <a href="/2016/04/01/asm-syscall/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-04-01T20:23:12.000Z">2016-04-01</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                用asm内联汇编实现系统调用
-                            </a>
-                        
-                            <a href="/2016/03/30/firstblog/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-03-30T04:27:55.000Z">2016-03-30</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                第一篇博客
-                            </a>
-                        
-                    </div>
-                </div>
-            </li>
-        
-    </ul>
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、最简单的优化问题"><span class="section table-of-contents-text">一、最简单的优化问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、优化问题的一般形式"><span class="section table-of-contents-text">二、优化问题的一般形式</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#三、小结"><span class="section table-of-contents-text">三、小结</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。</p>
+<a id="more"></a>
+<h1 id="一、最简单的优化问题"><a href="#一、最简单的优化问题" class="headerlink" title="一、最简单的优化问题"></a>一、最简单的优化问题</h1><p>最简单的优化问题在中学课本中就已经出现，例如初中学二次函数时，必然会讨论其极值问题，这是最简单的无约束优化问题。而下面的例子来源于高中课本，可以算最简单的约束优化问题：</p>
+<blockquote>
+<p>（摘自人教版高中数学必修5）某工厂用A、B两种配件生产甲乙两种产品，每生产一件甲产品使用4个A配件，耗时1h；每生产一件乙产品使用4个B配件，耗时2h。该厂每天最多可从配件厂获得16个A配件和12个B配件，每天工作8h。生产一件甲产品获利2万元，生产一件乙产品获利3万元，应该如何安排生产，使得总收益最大？</p>
+</blockquote>
+<p>这个问题虽然简单，但已经具备了一个优化问题的必备条件。首先是<strong>决策变量</strong>，也就是我们可以调整的变量，此处为“每天生产甲乙两种产品的数量”。然后是<strong>目标函数</strong>，即我们希望最小化（或最大化）的目标，此处为“每天生产的净收益”。最后，如果因为现实因素，我们的决策变量不能任意选取，那么还需要考虑<strong>约束条件</strong>，此处为“每天的A、B两种配料的供给和工作时长限制”。</p>
+<p>如果我们设每天生产甲产品$x_1$件，生产乙产品$x_2$件，那么很容易列出下面的方程：<br>\begin{align*}<br>\max_{x_1,x_2} 2x_1&amp;+3x_2 \\<br>4x_1&amp;\leq 16 （约束：A配件）\\<br>4x_2&amp;\leq 12 （约束：B配件）\\<br>x_1+2x_2&amp;\leq 8 （约束：工作时间）<br>\end{align*}</p>
+<h1 id="二、优化问题的一般形式"><a href="#二、优化问题的一般形式" class="headerlink" title="二、优化问题的一般形式"></a>二、优化问题的一般形式</h1><p>由此可见，确定了决策变量、目标函数、约束这三个要素之后，即可将优化问题转化为数学形式，而列出数学形式是求解优化问题的前提条件。我们可以将上面的例子作一般化的推广，把优化问题描述为如下形式：<br>\begin{equation*}<br>\min_x f(x) \\<br>\text{s.t. }x\in \mathcal{X}<br>\end{equation*}</p>
+<p>其中$x$为决策变量，$f(x)$为目标函数；而$\mathcal{X}$则是约束。所谓优化问题的建模，不过是回答如下问题：决策变量$x$有哪些？目标函数$f(x)$如何描述？约束$\mathcal{X}$是什么形式？解决了这几个问题，我们就可以把优化问题描述成标准的数学形式。</p>
+<p>在这三个要素中，决策变量和目标函数是必须存在的，约束则不一定（或许不应该称作“要素”）。也有很多优化问题，其决策变量并不受约束，或者约束很宽松，可以忽略，我们称作“无优化约束”，它们的求解是解决含优化约束问题的基础。</p>
+<p>当然，上面的例子只是实际问题的一个特例，甚至算特例中的特例。为什么这么说？首先，这是一个<strong>确定性规划</strong>，我们生产$x_1$件甲产品，$x_2$件乙产品，那么获得的利润一定是$2x_1+3x_2$，同时，每天都是严格的8小时工作制，配件厂每天提供的配件也是固定的。那么有没有可能每天的客户需求是有变化的？工厂的设备和工人的工作效率都是恒定的吗？配件厂每天都有足量的配件吗？诚然，在实际生产中，我们有诸多措施（例如合同等）来保障意外情况不会发生，但在有的生产环境中，这些不确定性是有必要考虑的。</p>
+<p>不仅如此，这个问题还是一个<strong>线性规划</strong>——目标函数和约束都是线性的。同样，我们可以提出一些问题：生产产品的总利润是正比于产品数量的吗？有没有规模效应？生产产品数量多的时候，速度会不会加快？诸如此类，都会让问题变得更加复杂。</p>
+<p>如何选取模型是一个很复杂的问题，难以用统一的标准来衡量。简单来说，越精细的模型，通常计算难度越大，甚至有的模型目前为止还没有很好的求解方法。因此，选取模型的时候需要在准确性和求解难度之间进行权衡。</p>
+<h1 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h1><p>决策变量、目标函数、约束，这些内容对于做优化的人来说，是很基础的内容，每个人都耳熟能详。在优化的教科书中，这几个术语也不过是几行定义。但在科研和交流的过程中，我曾见到过一些甚至研究生高年级的同学，在这个方面仍然会犯常识性错误。参加我们学科（电力系统）最大的学术年会，也看到一些做系统优化的人对研究成果中的明显错误毫无概念——以为自己做了随机优化，实际上是确定性优化；以为自己的结果是解复杂优化算出来的，实际上问题只有平凡解，诸如此类。</p>
+<p>每个人都知道怎么用商业软件求解优化问题，但商业软件并不能告诉我们优化目标是否合理，约束形式是否正确，以及一个变量该不该作为决策变量。我曾经看到过一类很热门的研究，采用的优化模型和实际并不相符。当然，采用简化的模型无可厚非。但令人吃惊的是，绝大多数用这个模型做研究的人，丝毫没有意识到这是一个有很大程度简化的模型——他们只是很放心大胆地在使用。</p>
+<p>对于做工程学科的人来说，掌握数学工具当然是好的，但在使用数学工具之前，总得明白自己的问题是什么。所以，我们在做优化之前，还是要牢记这样几个问题：<strong>决策变量是什么？目标是什么？约束是什么？</strong></p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2017/10/12/20171007-optimization-config/" data-title="优化模型（一）：优化的要素" data-url="http://cxsmarkchan.github.com/2017/10/12/20171007-optimization-config/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'cxsmarkchan-github'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
 
 
 </div>

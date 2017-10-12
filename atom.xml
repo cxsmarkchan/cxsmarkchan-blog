@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-09-25T22:52:57.010Z</updated>
+  <updated>2017-10-12T04:42:35.754Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -16,11 +16,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>优化模型（一）：优化的要素</title>
+    <link href="http://cxsmarkchan.github.com/2017/10/12/20171007-optimization-config/"/>
+    <id>http://cxsmarkchan.github.com/2017/10/12/20171007-optimization-config/</id>
+    <published>2017-10-12T04:39:11.000Z</published>
+    <updated>2017-10-12T04:42:35.754Z</updated>
+    
+    <content type="html">&lt;p&gt;在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;一、最简单的优化问题&quot;&gt;&lt;a href=&quot;#一、最简单的优化问题&quot; class=&quot;headerlink&quot; title=&quot;一、最简单的优化问题&quot;&gt;&lt;/a&gt;一、最简单的优化问题&lt;/h1&gt;&lt;p&gt;最简单的优化问题在中学课本中就已经出现，例如初中学二次函数时，必然会讨论其极值问题，这是最简单的无约束优化问题。而下面的例子来源于高中课本，可以算最简单的约束优化问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;（摘自人教版高中数学必修5）某工厂用A、B两种配件生产甲乙两种产品，每生产一件甲产品使用4个A配件，耗时1h；每生产一件乙产品使用4个B配件，耗时2h。该厂每天最多可从配件厂获得16个A配件和12个B配件，每天工作8h。生产一件甲产品获利2万元，生产一件乙产品获利3万元，应该如何安排生产，使得总收益最大？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这个问题虽然简单，但已经具备了一个优化问题的必备条件。首先是&lt;strong&gt;决策变量&lt;/strong&gt;，也就是我们可以调整的变量，此处为“每天生产甲乙两种产品的数量”。然后是&lt;strong&gt;目标函数&lt;/strong&gt;，即我们希望最小化（或最大化）的目标，此处为“每天生产的净收益”。最后，如果因为现实因素，我们的决策变量不能任意选取，那么还需要考虑&lt;strong&gt;约束条件&lt;/strong&gt;，此处为“每天的A、B两种配料的供给和工作时长限制”。&lt;/p&gt;
+&lt;p&gt;如果我们设每天生产甲产品$x_1$件，生产乙产品$x_2$件，那么很容易列出下面的方程：&lt;br&gt;\begin{align*}&lt;br&gt;\max_{x_1,x_2} 2x_1&amp;amp;+3x_2 \\&lt;br&gt;4x_1&amp;amp;\leq 16 （约束：A配件）\\&lt;br&gt;4x_2&amp;amp;\leq 12 （约束：B配件）\\&lt;br&gt;x_1+2x_2&amp;amp;\leq 8 （约束：工作时间）&lt;br&gt;\end{align*}&lt;/p&gt;
+&lt;h1 id=&quot;二、优化问题的一般形式&quot;&gt;&lt;a href=&quot;#二、优化问题的一般形式&quot; class=&quot;headerlink&quot; title=&quot;二、优化问题的一般形式&quot;&gt;&lt;/a&gt;二、优化问题的一般形式&lt;/h1&gt;&lt;p&gt;由此可见，确定了决策变量、目标函数、约束这三个要素之后，即可将优化问题转化为数学形式，而列出数学形式是求解优化问题的前提条件。我们可以将上面的例子作一般化的推广，把优化问题描述为如下形式：&lt;br&gt;\begin{equation*}&lt;br&gt;\min_x f(x) \\&lt;br&gt;\text{s.t. }x\in \mathcal{X}&lt;br&gt;\end{equation*}&lt;/p&gt;
+&lt;p&gt;其中$x$为决策变量，$f(x)$为目标函数；而$\mathcal{X}$则是约束。所谓优化问题的建模，不过是回答如下问题：决策变量$x$有哪些？目标函数$f(x)$如何描述？约束$\mathcal{X}$是什么形式？解决了这几个问题，我们就可以把优化问题描述成标准的数学形式。&lt;/p&gt;
+&lt;p&gt;在这三个要素中，决策变量和目标函数是必须存在的，约束则不一定（或许不应该称作“要素”）。也有很多优化问题，其决策变量并不受约束，或者约束很宽松，可以忽略，我们称作“无优化约束”，它们的求解是解决含优化约束问题的基础。&lt;/p&gt;
+&lt;p&gt;当然，上面的例子只是实际问题的一个特例，甚至算特例中的特例。为什么这么说？首先，这是一个&lt;strong&gt;确定性规划&lt;/strong&gt;，我们生产$x_1$件甲产品，$x_2$件乙产品，那么获得的利润一定是$2x_1+3x_2$，同时，每天都是严格的8小时工作制，配件厂每天提供的配件也是固定的。那么有没有可能每天的客户需求是有变化的？工厂的设备和工人的工作效率都是恒定的吗？配件厂每天都有足量的配件吗？诚然，在实际生产中，我们有诸多措施（例如合同等）来保障意外情况不会发生，但在有的生产环境中，这些不确定性是有必要考虑的。&lt;/p&gt;
+&lt;p&gt;不仅如此，这个问题还是一个&lt;strong&gt;线性规划&lt;/strong&gt;——目标函数和约束都是线性的。同样，我们可以提出一些问题：生产产品的总利润是正比于产品数量的吗？有没有规模效应？生产产品数量多的时候，速度会不会加快？诸如此类，都会让问题变得更加复杂。&lt;/p&gt;
+&lt;p&gt;如何选取模型是一个很复杂的问题，难以用统一的标准来衡量。简单来说，越精细的模型，通常计算难度越大，甚至有的模型目前为止还没有很好的求解方法。因此，选取模型的时候需要在准确性和求解难度之间进行权衡。&lt;/p&gt;
+&lt;h1 id=&quot;三、小结&quot;&gt;&lt;a href=&quot;#三、小结&quot; class=&quot;headerlink&quot; title=&quot;三、小结&quot;&gt;&lt;/a&gt;三、小结&lt;/h1&gt;&lt;p&gt;决策变量、目标函数、约束，这些内容对于做优化的人来说，是很基础的内容，每个人都耳熟能详。在优化的教科书中，这几个术语也不过是几行定义。但在科研和交流的过程中，我曾见到过一些甚至研究生高年级的同学，在这个方面仍然会犯常识性错误。参加我们学科（电力系统）最大的学术年会，也看到一些做系统优化的人对研究成果中的明显错误毫无概念——以为自己做了随机优化，实际上是确定性优化；以为自己的结果是解复杂优化算出来的，实际上问题只有平凡解，诸如此类。&lt;/p&gt;
+&lt;p&gt;每个人都知道怎么用商业软件求解优化问题，但商业软件并不能告诉我们优化目标是否合理，约束形式是否正确，以及一个变量该不该作为决策变量。我曾经看到过一类很热门的研究，采用的优化模型和实际并不相符。当然，采用简化的模型无可厚非。但令人吃惊的是，绝大多数用这个模型做研究的人，丝毫没有意识到这是一个有很大程度简化的模型——他们只是很放心大胆地在使用。&lt;/p&gt;
+&lt;p&gt;对于做工程学科的人来说，掌握数学工具当然是好的，但在使用数学工具之前，总得明白自己的问题是什么。所以，我们在做优化之前，还是要牢记这样几个问题：&lt;strong&gt;决策变量是什么？目标是什么？约束是什么？&lt;/strong&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="模型" scheme="http://cxsmarkchan.github.com/tags/%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>双线性约束的精确松弛</title>
     <link href="http://cxsmarkchan.github.com/2016/05/12/bilinear/"/>
     <id>http://cxsmarkchan.github.com/2016/05/12/bilinear/</id>
     <published>2016-05-13T00:40:32.000Z</published>
-    <updated>2017-09-25T22:52:57.010Z</updated>
+    <updated>2017-09-26T00:15:12.454Z</updated>
     
     <content type="html">&lt;p&gt;今天想谈一个研究中常见的问题，即含有双线性约束的优化问题。&lt;br&gt;双线性约束即形为$z=xy$的约束，这是一类在电力领域中很常见的约束。对于含有一般双线性约束的优化问题，目前还没有很好的求解方法，不过，有一些特殊的双线性约束是可以被等价转化成线性约束的，本文即讨论这些约束形式以及相应的转化技巧。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;原创内容: cxsmarkchan&lt;/p&gt;
@@ -74,9 +115,7 @@
     
     </summary>
     
-      <category term="科研" scheme="http://cxsmarkchan.github.com/categories/%E7%A7%91%E7%A0%94/"/>
-    
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E7%A7%91%E7%A0%94/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
     
     
       <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
@@ -158,9 +197,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
-    
       <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
+    
+      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
@@ -226,9 +265,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
-    
       <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+      <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
     
   </entry>
   

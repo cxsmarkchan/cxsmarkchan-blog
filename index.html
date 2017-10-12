@@ -59,7 +59,7 @@
                         <a class="menu-archive " href="/archives" >
                             <i class="fa fa-archive "></i>
                             
-                            归档
+                            目录
                         </a>
                     </li>
                 
@@ -111,7 +111,7 @@
                 <a class="waves-effect menu-archive " href="/archives" >
                     <i class="fa fa-archive "></i>
                     
-                    归档
+                    目录
                 </a>
             </li>
         
@@ -137,22 +137,6 @@
     
 
             
-
-            <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/科研/">
-                    科研 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/科研/优化/">
-                    优化 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
 
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/生活/">
@@ -186,6 +170,14 @@
 
         
 
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/优化/">
+                    优化 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
     </ul>
 </div>
 
@@ -199,6 +191,47 @@
 
 
 <div id="article-list" class="container main-container">
+    
+        <article class="simple-article">
+        <div class="card">
+            <div class="card-content">
+                <div class="article-title">
+                    
+    
+        <h1 class="indigo-link-context"><a href="/2017/10/12/20171007-optimization-config/">优化模型（一）：优化的要素</a></h1>
+    
+
+
+                </div>
+
+                <time class="pink-link-context" datetime="2017-10-12T04:39:11.000Z"><a href="/2017/10/12/20171007-optimization-config/">2017-10-12</a></time>
+
+                
+    <div class="tags-row">
+        
+            <a href="/tags/优化/" class="chip pink lighten-1">优化</a>
+        
+            <a href="/tags/模型/" class="chip pink lighten-1">模型</a>
+        
+    </div>
+
+
+
+                
+                    <div class="entry pink-link-context">
+                        <p>在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。</p>
+                    </div>
+                
+            </div>
+
+            
+            <div class="card-action pink-link-context">
+                <a href="2017/10/12/20171007-optimization-config/">READ MORE</a>
+            </div>
+            
+        </div>
+</article>
+
     
         <article class="simple-article">
         <div class="card">
@@ -264,9 +297,9 @@
         
             <a href="/tags/源码/" class="chip pink lighten-1">源码</a>
         
-            <a href="/tags/进程/" class="chip pink lighten-1">进程</a>
-        
             <a href="/tags/schedule/" class="chip pink lighten-1">schedule</a>
+        
+            <a href="/tags/进程/" class="chip pink lighten-1">进程</a>
         
     </div>
 
@@ -309,9 +342,9 @@
         
             <a href="/tags/源码/" class="chip pink lighten-1">源码</a>
         
-            <a href="/tags/execve/" class="chip pink lighten-1">execve</a>
-        
             <a href="/tags/进程/" class="chip pink lighten-1">进程</a>
+        
+            <a href="/tags/execve/" class="chip pink lighten-1">execve</a>
         
     </div>
 
@@ -647,7 +680,7 @@
 
         
         // 添加new标签
-        $('.menu-reading,.menu-about').append('<span class="new badge pink"></span>');
+        $('.menu-reading').append('<span class="new badge pink"></span>');
         
     });
 })(jQuery);
