@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-10-12T04:42:35.754Z</updated>
+  <updated>2017-10-27T04:29:33.508Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -16,9 +16,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>凸性对于优化问题的意义</title>
+    <link href="http://cxsmarkchan.github.com/2017/10/20/optimization-convex/"/>
+    <id>http://cxsmarkchan.github.com/2017/10/20/optimization-convex/</id>
+    <published>2017-10-21T02:57:12.000Z</published>
+    <updated>2017-10-27T04:29:33.508Z</updated>
+    
+    <content type="html">&lt;p&gt;在优化问题中，凸优化问题很重要的一类子问题。一般来说，凸优化问题的求解无论在理论上，还是在算法上，都比非凸优化问题要成熟很多。可以证明，凸优化问题的局部最优即为全局最优，这使得凸优化问题的全局最优解的寻找更为简单。但凸性的意义不止于此。一个有意思的结论是：一般的非凸问题不仅全局最优难以求解，甚至局部最优的求解也非常困难！这篇文章会简要介绍相关的结论。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、凸性的基本定义&quot;&gt;&lt;a href=&quot;#一、凸性的基本定义&quot; class=&quot;headerlink&quot; title=&quot;一、凸性的基本定义&quot;&gt;&lt;/a&gt;一、凸性的基本定义&lt;/h1&gt;&lt;p&gt;优化问题的基本形式为：&lt;br&gt;\[&lt;br&gt;\min_x f(x) \\&lt;br&gt;\text{s.t. } g(x)\leq 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;以$f(x)$为例，我们可以按如下方式定义凸性：任取定义域中的两个点$x_1$和$x_2$，计算它们的函数值$f(x_1)$和$f(x_2)$，并计算它们的中点的函数值$f(\frac{x_1+x_2}{2})$，如果中点的函数值不大于两个端点的函数值的均值，即：&lt;br&gt;\[&lt;br&gt;f\left(\frac{x_1+x_2}{2}\right) \leq \frac{f(x_1)+f(x_2)}{2}&lt;br&gt;\]&lt;br&gt;我们就称$f(x)$为凸函数。凸函数的图像是一个向下凸出的图像。&lt;/p&gt;
+&lt;p&gt;如果$f(x)$和$g(x)$都是凸函数，那么这个优化问题就称为凸优化问题。&lt;/p&gt;
+&lt;p&gt;当然，对于$g(x)$，我们还有另一种更一般化的定义方式。观察$g(x)\leq 0$的图像，可以发现，如果任意两个点$x_1$和$x_2$在这个集合内，那么它们的中点同样在这个集合内部。满足这种性质的集合，我们称为凸集。事实上，凸优化问题可以定义为：约束为凸集，目标函数为凸函数的最小化问题。这个定义比前面的定义会更加广泛一些，因为有的时候，约束并不能写成$g(x)\leq 0$的形式。&lt;/p&gt;
+&lt;h1 id=&quot;二、凸优化问题的性质&quot;&gt;&lt;a href=&quot;#二、凸优化问题的性质&quot; class=&quot;headerlink&quot; title=&quot;二、凸优化问题的性质&quot;&gt;&lt;/a&gt;二、凸优化问题的性质&lt;/h1&gt;&lt;h2 id=&quot;2-1-局部最优和全局最优&quot;&gt;&lt;a href=&quot;#2-1-局部最优和全局最优&quot; class=&quot;headerlink&quot; title=&quot;2.1 局部最优和全局最优&quot;&gt;&lt;/a&gt;2.1 局部最优和全局最优&lt;/h2&gt;&lt;p&gt;这里首先需要说明局部最优和全局最优的概念。&lt;/p&gt;
+&lt;p&gt;全局最优的概念很简单，如果有一个$x_0$满足约束，并且在约束成立的范围内，没有其他$x$，使$f(x)&amp;lt;f(x_0)$，就把$x_0$称为全局最优。简单来说，全局最优就是在约束满足的范围内的最小值。&lt;br&gt;局部最优的要求松一些，如果有一个$x_0$满足约束，并且在$x_0$附近（严格的说是&lt;strong&gt;邻域&lt;/strong&gt;），没有其他满足约束的$x$，使$f(x)&amp;lt;f(x_0)$，就把$x_0$称为局部最优。简单来说，局部最优只需要保证在该点附近（可能范围很小）保证最优即可。&lt;/p&gt;
+&lt;p&gt;由此可见，为了确保局部最优，只需要在一个点的附近检查即可。如果目标函数满足一些可微性条件，这个“局部”甚至可以用该点的微分性质来判定。很容易想象，全局最优的判断要复杂很多，因为需要检查所有可能的解。但这里我想说的是，无论是局部最优还是全局最优，判定都不是一件简单的事情。当然，我所指的判定是&lt;strong&gt;充要条件&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-局部最优和全局最优的关系&quot;&gt;&lt;a href=&quot;#2-2-局部最优和全局最优的关系&quot; class=&quot;headerlink&quot; title=&quot;2.2 局部最优和全局最优的关系&quot;&gt;&lt;/a&gt;2.2 局部最优和全局最优的关系&lt;/h2&gt;&lt;p&gt;对于全局最优的求解，并没有一个一般的方法，因为所有的分析学工具都是针对“局部”，或者说，微分性质的。一种比较直观的思路是：是否有一种优化问题，其局部最优就是全局最优？这个问题的答案是肯定的，凸优化就是其中的一种。&lt;/p&gt;
+&lt;p&gt;我们这里不做严格证明，但可以简单论述一下。如果凸优化的局部最优不是全局最优，我们可以把该局部最优和全局最优连线。首先，由于约束是凸集，这条线必然在可行集内部。然后，从这个局部最优点看过去，这条线应该是“往下”的，因为全局最优解在它的“下方”（或者说，斜下方）。这就出现了矛盾：在局部最优的附近，所有的函数点都在它的“上方”，如果有函数值在下方，这个点也就不是局部最优解了！因此，凸优化的局部最优解也就是全局最优解。&lt;/p&gt;
+&lt;h1 id=&quot;三、非凸问题的NP性质&quot;&gt;&lt;a href=&quot;#三、非凸问题的NP性质&quot; class=&quot;headerlink&quot; title=&quot;三、非凸问题的NP性质&quot;&gt;&lt;/a&gt;三、非凸问题的NP性质&lt;/h1&gt;&lt;p&gt;我们已经知道，凸优化问题在某种程度上是“简单”的。一个很自然的问题是，非凸优化问题是不是真的“难”？或者说，是不是还有别的方式来找到非凸优化问题的局部最优解和全局最优解？当然，有可能有部分非凸优化问题可以在比较短的时间内求解，但我们关心的是一般的非凸问题。&lt;br&gt;当然，所谓“简单”和“难”都是相对的，我们这里可以说明，部分非凸问题的全局最优解、局部最优解的求解都是所谓的&lt;strong&gt;NP完全问题&lt;/strong&gt;。至少到目前为止，NP完全问题在求解上还存在着极大的困难，因此，在NP完全问题被攻克前，我们不能奢求对于&lt;strong&gt;一般&lt;/strong&gt;的非凸问题求解全局最优解，甚至求解局部最优解也是不可行的。&lt;/p&gt;
+&lt;h2 id=&quot;3-1-非凸问题的全局最优解&quot;&gt;&lt;a href=&quot;#3-1-非凸问题的全局最优解&quot; class=&quot;headerlink&quot; title=&quot;3.1 非凸问题的全局最优解&quot;&gt;&lt;/a&gt;3.1 非凸问题的全局最优解&lt;/h2&gt;&lt;p&gt;为了论述全局最优解的NP完全性，我们需要找一个已知的NP完全问题，并证明全局最优解的求解难度和这个已知问题相同。我们寻找的NP完全问题是&lt;strong&gt;部分和问题&lt;/strong&gt;：给定一个数组和一个数字，该数组是否存在子数组，其和等于该数字？用数学语言叙述则为：给定数字$d_0$和一个数组$d_1,d_2,\dots,d_n$，问：是否存在$y_j\in{0,1},j=1,2,\dots,n$使得：&lt;br&gt;\[&lt;br&gt;\sum_{j=1}^nd_jy_j=d_0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;我们把上述问题称为&lt;strong&gt;问题1&lt;/strong&gt;。同时，我们考虑如下问题(&lt;strong&gt;问题2&lt;/strong&gt;)：&lt;br&gt;\[&lt;br&gt;\min \left(\sum_{j=1}^nd_jy_j-d_0\right)^2+\sum_{j=1}^ny_j(1-y_j) \\&lt;br&gt;\text{s.t. } 0 \leq y_j \leq 1, j=1,2,\dots, n&lt;br&gt;\]&lt;br&gt;注意，在第一个问题中，我们假设了$y_j$是整数，而第二个问题中，我们并没有假设$y_j$是整数。不难看出，问题2的目标函数始终是不小于0的。当问题1有解的时候，把该解代入问题2，就可以得到目标函数的最小值0。反过来，当问题2的目标函数最小值为0时，$y_j$只能都取0或1（否则第二项大于0，第一项不小于0，目标函数不可能等于0），这个解也满足问题1。&lt;/p&gt;
+&lt;p&gt;因此我们得出结论，问题1有解和问题2全局最优解为0是等价的。由于问题1是NP完全问题，问题2的全局最优解的求解也只能是NP完全问题。&lt;/p&gt;
+&lt;p&gt;这里要注意，我们并没有求解问题2的全局最优解，而是验证全局最优解是否为0。如果这种验证都被证明是一件“困难”的事，那么全局最优解的求解只会更加困难。&lt;/p&gt;
+&lt;h2 id=&quot;3-2-含约束非凸问题的局部最优解&quot;&gt;&lt;a href=&quot;#3-2-含约束非凸问题的局部最优解&quot; class=&quot;headerlink&quot; title=&quot;3.2 含约束非凸问题的局部最优解&quot;&gt;&lt;/a&gt;3.2 含约束非凸问题的局部最优解&lt;/h2&gt;&lt;p&gt;这里我们考虑如下问题（&lt;strong&gt;问题3&lt;/strong&gt;）：&lt;br&gt;\[&lt;br&gt;\min Q(x) = x^TDx, x\geq 0&lt;br&gt;\]&lt;br&gt;其中$D$是$n$阶矩阵，其元素均为整数。&lt;/p&gt;
+&lt;p&gt;Murty证明了如下定理：验证0是否为问题3的局部最优解，是一个NP完全问题！这个定理非常有意思，我们将在另一篇博客中论述。但同样的，如果局部最优解的判定已经是NP完全问题，那么局部最优解的求解只可能更加困难。&lt;/p&gt;
+&lt;h2 id=&quot;3-3-无约束非凸问题的局部最优解&quot;&gt;&lt;a href=&quot;#3-3-无约束非凸问题的局部最优解&quot; class=&quot;headerlink&quot; title=&quot;3.3 无约束非凸问题的局部最优解&quot;&gt;&lt;/a&gt;3.3 无约束非凸问题的局部最优解&lt;/h2&gt;&lt;p&gt;3.2的条件中含有约束$x\geq 0$，也就是说，对于一般的含约束的非凸问题，没有有效的方法验证局部最优解。实际上，只要稍作修改，就可以发现，一般的无约束非凸问题也没有有效的方法验证局部最优解。我们只需要令$x=u^2$，则问题3转化为：&lt;br&gt;\[&lt;br&gt;\min Q(x) = [u^2]^TD[u^2]&lt;br&gt;\]&lt;br&gt;此时，对于u就是无约束优化问题了。显然，这个问题和问题3是等价的，它也是NP完全问题。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在优化问题中，凸优化问题很重要的一类子问题。一般来说，凸优化问题的求解无论在理论上，还是在算法上，都比非凸优化问题要成熟很多。可以证明，凸优化问题的局部最优即为全局最优，这使得凸优化问题的全局最优解的寻找更为简单。但凸性的意义不止于此。一个有意思的结论是：一般的非凸问题不仅全局最优难以求解，甚至局部最优的求解也非常困难！这篇文章会简要介绍相关的结论。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="凸优化" scheme="http://cxsmarkchan.github.com/tags/%E5%87%B8%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
     <title>优化模型（一）：优化的要素</title>
-    <link href="http://cxsmarkchan.github.com/2017/10/12/20171007-optimization-config/"/>
-    <id>http://cxsmarkchan.github.com/2017/10/12/20171007-optimization-config/</id>
+    <link href="http://cxsmarkchan.github.com/2017/10/12/optimization-config/"/>
+    <id>http://cxsmarkchan.github.com/2017/10/12/optimization-config/</id>
     <published>2017-10-12T04:39:11.000Z</published>
     <updated>2017-10-12T04:42:35.754Z</updated>
     
@@ -118,9 +160,9 @@
       <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
     
     
-      <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
-    
       <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
     
       <category term="松弛" scheme="http://cxsmarkchan.github.com/tags/%E6%9D%BE%E5%BC%9B/"/>
     
@@ -197,9 +239,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
-    
       <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+      <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
     
   </entry>
   
@@ -265,9 +307,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
-    
       <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
+    
+      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
