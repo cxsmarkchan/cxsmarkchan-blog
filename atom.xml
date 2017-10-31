@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-10-27T04:29:33.508Z</updated>
+  <updated>2017-10-31T19:01:04.936Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>最优性条件：KKT</title>
+    <link href="http://cxsmarkchan.github.com/2017/10/31/optimization-kkt/"/>
+    <id>http://cxsmarkchan.github.com/2017/10/31/optimization-kkt/</id>
+    <published>2017-10-31T04:17:22.000Z</published>
+    <updated>2017-10-31T19:01:04.936Z</updated>
+    
+    <content type="html">&lt;p&gt;在最优性判别中，基于导数的方法是一种相当有效的方法。对于无约束优化，可以直接利用一阶导数作为必要性判据，利用二阶导数作为充分性判据。这种方法可以推广到约束优化中，也就是著名的KKT条件。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;一、无约束优化的判据&quot;&gt;&lt;a href=&quot;#一、无约束优化的判据&quot; class=&quot;headerlink&quot; title=&quot;一、无约束优化的判据&quot;&gt;&lt;/a&gt;一、无约束优化的判据&lt;/h1&gt;&lt;p&gt;考虑一维的无约束优化问题$\min_x f(x)$，如果我们假设$f(x)$一阶可导，那么$x^*$为局部最优解的&lt;strong&gt;必要条件&lt;/strong&gt;是一阶导数$f’(x^*)=0$。如果$f(x)$二阶可导，那么我们可以有&lt;strong&gt;充分条件&lt;/strong&gt;$f’(x^*)=0,f’’(x^*)&amp;gt;0$。对于凸问题，$f’’(x)\geq 0$恒成立，则$f’(x^*)=0$是$x^*$为(全局)最优解的&lt;strong&gt;充要条件&lt;/strong&gt;。但对于一般的非凸问题，并没有比较好用的充要条件。&lt;/p&gt;
+&lt;p&gt;上述结论当然可以推广到高维的情况。考虑高维无约束优化问题$\min_x f(x)$，我们有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$x^*$为局部最优解的必要条件是$\nabla f(x)=0$&lt;/li&gt;
+&lt;li&gt;$x^*$为局部最优解的充分条件是$\nabla f(x)=0$且$\nabla^2 f(x)$正定&lt;/li&gt;
+&lt;li&gt;如果$f(x)$为凸函数，则$x^*$为全局最优解的充要条件为$\nabla f(x)=0$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;上述结论在一般的微积分课本中都有介绍，下面我们考虑如何把这些结论推广到约束优化中。实际上，我们只需要考虑第1种情况，因为后面两种情况是类似的。&lt;/p&gt;
+&lt;h1 id=&quot;二、拉格朗日函数&quot;&gt;&lt;a href=&quot;#二、拉格朗日函数&quot; class=&quot;headerlink&quot; title=&quot;二、拉格朗日函数&quot;&gt;&lt;/a&gt;二、拉格朗日函数&lt;/h1&gt;&lt;p&gt;考虑下述约束优化问题：&lt;br&gt;\[&lt;br&gt;\min_x f(x) \\&lt;br&gt;\text{s.t. } g(x)\leq 0, h(x)=0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;为了将其转化为无约束优化问题，我们可以利用所谓的&lt;strong&gt;拉格朗日函数&lt;/strong&gt;：&lt;br&gt;\[&lt;br&gt;L(x,\lambda,\mu) = f(x) + \lambda^T g(x) + \mu^T h(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$\lambda\geq 0$。固定$x$，容易发现：&lt;br&gt;\[&lt;br&gt;\max_{\lambda\geq 0, \mu} L(x, \lambda, \mu) = \left\{&lt;br&gt;\begin{split}&lt;br&gt;f(x), &amp;amp;\text{if } g(x)\leq 0, h(x)=0\\&lt;br&gt;+\infty, &amp;amp;\text{otherwise}&lt;br&gt;\end{split}&lt;br&gt;\right.&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这是因为，如果$g(x)&amp;gt;0$，则可以选择很大的$\lambda$，使$L$趋于正无穷。而如果$h(x)\neq 0$，则可以根据$h(x)$的符号，将$\mu$置为相同符号的大数，使$L$趋于正无穷。&lt;/p&gt;
+&lt;p&gt;由此可见，原来的约束优化问题可以等价表达为：&lt;br&gt;\[&lt;br&gt;\min_x \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;此时不再含有对$x$的约束$g(x)\leq 0, h(x)=0$，因为这些约束不满足的时候，必有$\max_{\lambda\geq 0, \mu} L=+\infty$，从而不可能成为最小值。然而，转化后的这个问题是一个$\min \max$类型的问题，而且第二层的$\max$中仍然要考虑$\lambda\geq 0$的约束。下面，我们来处理这个问题。&lt;/p&gt;
+&lt;h1 id=&quot;三、KKT条件&quot;&gt;&lt;a href=&quot;#三、KKT条件&quot; class=&quot;headerlink&quot; title=&quot;三、KKT条件&quot;&gt;&lt;/a&gt;三、KKT条件&lt;/h1&gt;&lt;p&gt;引入了拉格朗日函数后，我们把优化问题的最优解记为$(x^*,\lambda^*,\mu^*)$，即：&lt;br&gt;\[&lt;br&gt;L(x^*,\lambda^*,\mu^*) = \min_x \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;h2 id=&quot;3-1-互补松弛&quot;&gt;&lt;a href=&quot;#3-1-互补松弛&quot; class=&quot;headerlink&quot; title=&quot;3.1 互补松弛&quot;&gt;&lt;/a&gt;3.1 互补松弛&lt;/h2&gt;&lt;p&gt;在最优解中，由于$h(x)=0$，因此$(\mu^*)^Th(x^*)=0$，这是显然的。此外，注意到$g(x)\leq 0, \lambda\geq 0$，那么$(\lambda^*)^Tg(x)$是否有其他约束呢？事实上我们有：&lt;br&gt;\[&lt;br&gt;(\lambda^*)^Tg(x) = 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;换句话说，$\lambda^*$和$g(x^*)$中至少有一个为0。也可以解释为，如果$g(x^*)&amp;lt;0$，则$\lambda^*=0$。这个结果可以从拉格朗日函数$L$的定义直接得出。这个条件通常称为互补松弛条件。&lt;/p&gt;
+&lt;h2 id=&quot;3-2-导数条件&quot;&gt;&lt;a href=&quot;#3-2-导数条件&quot; class=&quot;headerlink&quot; title=&quot;3.2 导数条件&quot;&gt;&lt;/a&gt;3.2 导数条件&lt;/h2&gt;&lt;p&gt;为了获得和无约束优化类似的“一阶导数为0”的条件，我们需要一些&lt;strong&gt;正则化条件&lt;/strong&gt;，其中最常见的条件是&lt;strong&gt;强对偶定理&lt;/strong&gt;：&lt;br&gt;\[&lt;br&gt;L(x^*,\lambda^*,\mu^*) = \min_x \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu) = \max_{\lambda\geq 0, \mu} \min_x L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;即原问题和对偶问题的最优解重合。此时我们可以考虑上面连等式的第1项和第3项，并在第3项的上层优化中固定$\lambda=\lambda^*,\mu=\mu^*$，这样就只需要考虑下层优化，即：&lt;br&gt;\[&lt;br&gt;L(x^*,\lambda^*,\mu^*) = \min_x L(x, \lambda^*, \mu^*)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这已经是一个无约束优化问题了，我们可以直接写出其最优性必要条件：&lt;br&gt;\[&lt;br&gt;\nabla_xL(x^*,\lambda^*,\mu^*) = 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这就是一阶导数条件在约束优化中的推广，根据$L$的定义，我们可以将其展开为：&lt;br&gt;\[&lt;br&gt;\nabla f(x^*) + \left(\lambda^*\right)^T\nabla g(x^*) + \left(\mu^*\right)^T \nabla h(x^*) = 0 \\&lt;br&gt;\]&lt;/p&gt;
+&lt;h2 id=&quot;3-3-KKT条件&quot;&gt;&lt;a href=&quot;#3-3-KKT条件&quot; class=&quot;headerlink&quot; title=&quot;3.3 KKT条件&quot;&gt;&lt;/a&gt;3.3 KKT条件&lt;/h2&gt;&lt;p&gt;综上所述，在一些正则化条件（如强对偶条件）下，约束优化的必要条件为：&lt;br&gt;\[&lt;br&gt;\nabla f(x^*) + \left(\lambda^*\right)^T\nabla g(x^*) + \left(\mu^*\right)^T \nabla h(x^*) = 0 \\&lt;br&gt;\lambda^* \geq 0 \\&lt;br&gt;g(x^*) \leq 0 \\&lt;br&gt;h(x^*) = 0 \\&lt;br&gt;\left(\lambda^*\right)^T g(x^*) = 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;该式把约束优化问题转化为一组等式和不等式，对于简单的问题可以直接求解，对于复杂的问题，则为基于导数的优化方法提供了支撑。&lt;/p&gt;
+&lt;p&gt;同样地，KKT条件也有充分条件的版本，此时只需添加$\nabla^2_xL(x^*,\lambda^*,\mu^*)$正定的条件即可。对于凸优化来说，由于海森矩阵能保证半正定，所以上述必要条件成为充分条件。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在最优性判别中，基于导数的方法是一种相当有效的方法。对于无约束优化，可以直接利用一阶导数作为必要性判据，利用二阶导数作为充分性判据。这种方法可以推广到约束优化中，也就是著名的KKT条件。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="导数" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%BC%E6%95%B0/"/>
+    
+      <category term="约束" scheme="http://cxsmarkchan.github.com/tags/%E7%BA%A6%E6%9D%9F/"/>
+    
+      <category term="KKT条件" scheme="http://cxsmarkchan.github.com/tags/KKT%E6%9D%A1%E4%BB%B6/"/>
+    
+      <category term="极值" scheme="http://cxsmarkchan.github.com/tags/%E6%9E%81%E5%80%BC/"/>
+    
+  </entry>
   
   <entry>
     <title>凸性对于优化问题的意义</title>
@@ -160,9 +214,9 @@
       <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
     
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
-    
       <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
     
       <category term="松弛" scheme="http://cxsmarkchan.github.com/tags/%E6%9D%BE%E5%BC%9B/"/>
     
@@ -239,9 +293,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
-    
       <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
+    
+      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
@@ -307,9 +361,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
-    
       <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+      <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
     
   </entry>
   
@@ -432,13 +486,13 @@
       <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
     
     
-      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
     
       <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
-    
       <category term="64位" scheme="http://cxsmarkchan.github.com/tags/64%E4%BD%8D/"/>
+    
+      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
     
   </entry>
   
@@ -480,13 +534,13 @@
       <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
     
     
-      <category term="操作系统" scheme="http://cxsmarkchan.github.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-      <category term="汇编" scheme="http://cxsmarkchan.github.com/tags/%E6%B1%87%E7%BC%96/"/>
+      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
     
       <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
     
-      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
+      <category term="操作系统" scheme="http://cxsmarkchan.github.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+      <category term="汇编" scheme="http://cxsmarkchan.github.com/tags/%E6%B1%87%E7%BC%96/"/>
     
   </entry>
   
