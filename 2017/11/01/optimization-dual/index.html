@@ -7,7 +7,7 @@
 
     
 
-    <title>极值 | cxsmarkchan的博客</title>
+    <title>对偶理论 | cxsmarkchan的博客</title>
     <meta name="author" content="cxsmarkchan">
     
     <meta name="description" content="Ph.D. Electrical Engineering">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="对偶理论"/>
     <meta property="og:site_name" content="cxsmarkchan的博客"/>
 
     
@@ -195,30 +195,111 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper indigo">
-        <span class="breadcrumb">当前位置（标签）</span>
+        <span class="breadcrumb">当前位置（分类目录）</span>
         
+            
+    
+    
+    <a class="breadcrumb" href="/categories/优化/">优化</a><a class="breadcrumb" href="/categories/优化/理论/">理论</a>
+
 
         
-            <a class="breadcrumb" href="/tags/极值/">极值</a>
+
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>对偶理论</h1>
+    
 
 
-    <div class="collection mt-0">
+            </div>
+            <time class="pink-link-context" datetime="2017-11-02T02:27:08.000Z"><a href="/2017/11/01/optimization-dual/">2017-11-01</a></time>
+
+            
+    <div class="tags-row">
         
-            <a href="/2017/10/31/optimization-kkt/" class="collection-item grey-text text-darken-1">
-                <time datetime="2017-10-31T04:17:22.000Z">2017-10-31</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                最优性条件：KKT
-            </a>
+            <a href="/tags/对偶/" class="chip pink lighten-1">对偶</a>
+        
+            <a href="/tags/互补松弛/" class="chip pink lighten-1">互补松弛</a>
         
     </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、拉格朗日函数和对偶问题"><span class="section table-of-contents-text">一、拉格朗日函数和对偶问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、对偶问题的例子：线性规划"><span class="section table-of-contents-text">二、对偶问题的例子：线性规划</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#三、弱对偶定理"><span class="section table-of-contents-text">三、弱对偶定理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#四、强对偶定理"><span class="section table-of-contents-text">四、强对偶定理</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>对偶理论是优化理论中非常优美的部分，很多优化问题的求解都依赖对偶形式。强对偶定理保证了这种求解方法的正确性。</p>
+<a id="more"></a>
+<h1 id="一、拉格朗日函数和对偶问题"><a href="#一、拉格朗日函数和对偶问题" class="headerlink" title="一、拉格朗日函数和对偶问题"></a>一、拉格朗日函数和对偶问题</h1><p>考虑如下问题：<br>\[<br>p^*=\min f(x) \\<br>\text{s.t. } g(x) \leq 0, h(x)=0<br>\]</p>
+<p>其拉格朗日函数为：<br>\[<br>L(x,\lambda, \mu)=f(x) + \lambda^Tg(x) + \mu^Th(x)<br>\]</p>
+<p>此时可以证明：<br>\[<br>\max_{\lambda\geq 0,\mu} L(x, \lambda, \mu) = \left\{<br>\begin{split}<br>f(x),&amp;\text{if }g(x)\leq 0,h(x)=0 \\<br>+\infty,&amp;\text{otherwise}<br>\end{split}<br>\right.<br>\]</p>
+<p>我们可以把原问题用拉格朗日函数表示：<br>\[<br>p^*=\min_x \max_{\lambda\geq 0,\mu} L(x,\lambda, \mu)<br>\]</p>
+<p>此时不必再显式考虑约束，这是因为约束不满足的时候，$L$的最大值是$+\infty$，因此不可能成为最优解。</p>
+<p>所谓<strong>对偶问题</strong>，实际上是把原问题的min和max调换顺序：<br>\[<br>d^*=\max_{\lambda\geq 0, \mu} \min_x L(x, \lambda, \mu)<br>\]</p>
+<p>如果我们令$\theta(\lambda, \mu) = \min_x L(x, \lambda, \mu)$, 则对偶问题可以写成：<br>\[<br>d^*=\max_{\lambda\geq 0, \mu} \theta(\lambda, \mu)<br>\]</p>
+<h1 id="二、对偶问题的例子：线性规划"><a href="#二、对偶问题的例子：线性规划" class="headerlink" title="二、对偶问题的例子：线性规划"></a>二、对偶问题的例子：线性规划</h1><p>上述对偶问题的定义比较一般化，实际上，在具体问题中，对偶问题的形式可能会非常简单。我们以线性规划为例说明。</p>
+<p>考虑如下线性规划问题：<br>\[<br>p^*\min c^Tx \\<br>\text{s.t. } Ax\geq b<br>\]</p>
+<p>其拉格朗日函数为：<br>\[<br>L(x, \lambda, \mu) = c^Tx-\lambda^T(Ax-b) = (c-A^T\lambda)^Tx+\lambda^Tb<br>\]</p>
+<p>我们来计算$\theta(\lambda)$，显然有：<br>\[<br>\theta(\lambda) = \left\{<br>\begin{split}<br>\lambda^Tb,&amp;\text{if }c-A^T\lambda=0 \\<br>-\infty,&amp;\text{otherwise}<br>\end{split}<br>\right.<br>\]</p>
+<p>由于对偶问题可以表述为$d^*=\max_{\lambda\geq 0} \theta(\lambda)$，所以只有满足约束$c-A^T\lambda=0$的$\lambda$才可能作为候选解。因此，对偶问题可以表述为如下形式：<br>\[<br>d^*=\max_\lambda \lambda^Tb \\<br>\text{s.t. } \lambda\geq 0, c-A^T\lambda=0<br>\]</p>
+<p>由此可见，线性规划的对偶问题仍为线性规划。实际上，关于线性规划对偶问题的表述，有一套完整的规则，在任何一本线性规划的教材中均有提及，这里就不再赘述。</p>
+<h1 id="三、弱对偶定理"><a href="#三、弱对偶定理" class="headerlink" title="三、弱对偶定理"></a>三、弱对偶定理</h1><p>弱对偶定理对于所有的优化问题均成立，该定理的表述非常简单：<br>\[<br>d^*\leq p^*<br>\]</p>
+<p>或者说：<br>\[<br>\max_{\lambda\geq 0,\mu} \min_x L(x, \lambda, \mu) \leq \min_x \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu)<br>\]</p>
+<p>也就是说，一个最小化问题的对偶问题的最优解，永远小于该最小化问题的最优解。</p>
+<p>证明并不困难，注意到下列事实：<br>\[<br>\min_xL(x,\lambda,\mu) \leq L(x, \lambda, \mu)<br>\]</p>
+<p>两边同时对$\lambda$和$\mu$取最大值：<br>\[<br>d^*=\max_{\lambda\geq 0, \mu} \min_xL(x, \lambda, \mu) \leq \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu)<br>\]</p>
+<p>由于左边已经是常数$d^*$，左侧恒不大于右侧，自然不大于右侧的最小值，也就是$p^*$，我们就得到了弱对偶定理。</p>
+<h1 id="四、强对偶定理"><a href="#四、强对偶定理" class="headerlink" title="四、强对偶定理"></a>四、强对偶定理</h1><p>弱对偶定理在任何条件下都成立，但一般情况下，我们不能保证$d^*=p^*$。两者之间的距离$p^*-d^*$被称为对偶间隙。一个很自然的问题是，对偶间隙是否有可能为0？或者说，原问题和对偶问题的最优解有可能相等吗？这个问题非常重要，因为如果对偶间隙为零，我们就可以用对偶问题的最优解来代替原问题的最优解。有的时候，对偶问题比原问题更好求解。更重要地，在非线性优化中，我们常常需要终止条件，如果我们能同时求解原问题和对偶问题，当两者的解的间隙足够小，我们就可以认为最优解已经（近似）达到，从而终止算法。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2017/11/01/optimization-dual/" data-title="对偶理论" data-url="http://cxsmarkchan.github.com/2017/11/01/optimization-dual/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'cxsmarkchan-github'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
 
 
 </div>

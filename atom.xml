@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-10-31T19:01:04.936Z</updated>
+  <updated>2017-11-03T05:19:55.281Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对偶理论</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/01/optimization-dual/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/01/optimization-dual/</id>
+    <published>2017-11-02T02:27:08.000Z</published>
+    <updated>2017-11-03T05:19:55.281Z</updated>
+    
+    <content type="html">&lt;p&gt;对偶理论是优化理论中非常优美的部分，很多优化问题的求解都依赖对偶形式。强对偶定理保证了这种求解方法的正确性。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;一、拉格朗日函数和对偶问题&quot;&gt;&lt;a href=&quot;#一、拉格朗日函数和对偶问题&quot; class=&quot;headerlink&quot; title=&quot;一、拉格朗日函数和对偶问题&quot;&gt;&lt;/a&gt;一、拉格朗日函数和对偶问题&lt;/h1&gt;&lt;p&gt;考虑如下问题：&lt;br&gt;\[&lt;br&gt;p^*=\min f(x) \\&lt;br&gt;\text{s.t. } g(x) \leq 0, h(x)=0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其拉格朗日函数为：&lt;br&gt;\[&lt;br&gt;L(x,\lambda, \mu)=f(x) + \lambda^Tg(x) + \mu^Th(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;此时可以证明：&lt;br&gt;\[&lt;br&gt;\max_{\lambda\geq 0,\mu} L(x, \lambda, \mu) = \left\{&lt;br&gt;\begin{split}&lt;br&gt;f(x),&amp;amp;\text{if }g(x)\leq 0,h(x)=0 \\&lt;br&gt;+\infty,&amp;amp;\text{otherwise}&lt;br&gt;\end{split}&lt;br&gt;\right.&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;我们可以把原问题用拉格朗日函数表示：&lt;br&gt;\[&lt;br&gt;p^*=\min_x \max_{\lambda\geq 0,\mu} L(x,\lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;此时不必再显式考虑约束，这是因为约束不满足的时候，$L$的最大值是$+\infty$，因此不可能成为最优解。&lt;/p&gt;
+&lt;p&gt;所谓&lt;strong&gt;对偶问题&lt;/strong&gt;，实际上是把原问题的min和max调换顺序：&lt;br&gt;\[&lt;br&gt;d^*=\max_{\lambda\geq 0, \mu} \min_x L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;如果我们令$\theta(\lambda, \mu) = \min_x L(x, \lambda, \mu)$, 则对偶问题可以写成：&lt;br&gt;\[&lt;br&gt;d^*=\max_{\lambda\geq 0, \mu} \theta(\lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;h1 id=&quot;二、对偶问题的例子：线性规划&quot;&gt;&lt;a href=&quot;#二、对偶问题的例子：线性规划&quot; class=&quot;headerlink&quot; title=&quot;二、对偶问题的例子：线性规划&quot;&gt;&lt;/a&gt;二、对偶问题的例子：线性规划&lt;/h1&gt;&lt;p&gt;上述对偶问题的定义比较一般化，实际上，在具体问题中，对偶问题的形式可能会非常简单。我们以线性规划为例说明。&lt;/p&gt;
+&lt;p&gt;考虑如下线性规划问题：&lt;br&gt;\[&lt;br&gt;p^*\min c^Tx \\&lt;br&gt;\text{s.t. } Ax\geq b&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其拉格朗日函数为：&lt;br&gt;\[&lt;br&gt;L(x, \lambda, \mu) = c^Tx-\lambda^T(Ax-b) = (c-A^T\lambda)^Tx+\lambda^Tb&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;我们来计算$\theta(\lambda)$，显然有：&lt;br&gt;\[&lt;br&gt;\theta(\lambda) = \left\{&lt;br&gt;\begin{split}&lt;br&gt;\lambda^Tb,&amp;amp;\text{if }c-A^T\lambda=0 \\&lt;br&gt;-\infty,&amp;amp;\text{otherwise}&lt;br&gt;\end{split}&lt;br&gt;\right.&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;由于对偶问题可以表述为$d^*=\max_{\lambda\geq 0} \theta(\lambda)$，所以只有满足约束$c-A^T\lambda=0$的$\lambda$才可能作为候选解。因此，对偶问题可以表述为如下形式：&lt;br&gt;\[&lt;br&gt;d^*=\max_\lambda \lambda^Tb \\&lt;br&gt;\text{s.t. } \lambda\geq 0, c-A^T\lambda=0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;由此可见，线性规划的对偶问题仍为线性规划。实际上，关于线性规划对偶问题的表述，有一套完整的规则，在任何一本线性规划的教材中均有提及，这里就不再赘述。&lt;/p&gt;
+&lt;h1 id=&quot;三、弱对偶定理&quot;&gt;&lt;a href=&quot;#三、弱对偶定理&quot; class=&quot;headerlink&quot; title=&quot;三、弱对偶定理&quot;&gt;&lt;/a&gt;三、弱对偶定理&lt;/h1&gt;&lt;p&gt;弱对偶定理对于所有的优化问题均成立，该定理的表述非常简单：&lt;br&gt;\[&lt;br&gt;d^*\leq p^*&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;或者说：&lt;br&gt;\[&lt;br&gt;\max_{\lambda\geq 0,\mu} \min_x L(x, \lambda, \mu) \leq \min_x \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;也就是说，一个最小化问题的对偶问题的最优解，永远小于该最小化问题的最优解。&lt;/p&gt;
+&lt;p&gt;证明并不困难，注意到下列事实：&lt;br&gt;\[&lt;br&gt;\min_xL(x,\lambda,\mu) \leq L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;两边同时对$\lambda$和$\mu$取最大值：&lt;br&gt;\[&lt;br&gt;d^*=\max_{\lambda\geq 0, \mu} \min_xL(x, \lambda, \mu) \leq \max_{\lambda\geq 0, \mu} L(x, \lambda, \mu)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;由于左边已经是常数$d^*$，左侧恒不大于右侧，自然不大于右侧的最小值，也就是$p^*$，我们就得到了弱对偶定理。&lt;/p&gt;
+&lt;h1 id=&quot;四、强对偶定理&quot;&gt;&lt;a href=&quot;#四、强对偶定理&quot; class=&quot;headerlink&quot; title=&quot;四、强对偶定理&quot;&gt;&lt;/a&gt;四、强对偶定理&lt;/h1&gt;&lt;p&gt;弱对偶定理在任何条件下都成立，但一般情况下，我们不能保证$d^*=p^*$。两者之间的距离$p^*-d^*$被称为对偶间隙。一个很自然的问题是，对偶间隙是否有可能为0？或者说，原问题和对偶问题的最优解有可能相等吗？这个问题非常重要，因为如果对偶间隙为零，我们就可以用对偶问题的最优解来代替原问题的最优解。有的时候，对偶问题比原问题更好求解。更重要地，在非线性优化中，我们常常需要终止条件，如果我们能同时求解原问题和对偶问题，当两者的解的间隙足够小，我们就可以认为最优解已经（近似）达到，从而终止算法。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对偶理论是优化理论中非常优美的部分，很多优化问题的求解都依赖对偶形式。强对偶定理保证了这种求解方法的正确性。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="理论" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+    
+    
+      <category term="对偶" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%B9%E5%81%B6/"/>
+    
+      <category term="互补松弛" scheme="http://cxsmarkchan.github.com/tags/%E4%BA%92%E8%A1%A5%E6%9D%BE%E5%BC%9B/"/>
+    
+  </entry>
   
   <entry>
     <title>最优性条件：KKT</title>
@@ -293,9 +341,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
-    
       <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+      <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
     
   </entry>
   
@@ -361,9 +409,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
-    
       <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
+    
+      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
@@ -486,13 +534,13 @@
       <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
     
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
+      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
     
       <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
     
-      <category term="64位" scheme="http://cxsmarkchan.github.com/tags/64%E4%BD%8D/"/>
+      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
     
-      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+      <category term="64位" scheme="http://cxsmarkchan.github.com/tags/64%E4%BD%8D/"/>
     
   </entry>
   
@@ -534,13 +582,13 @@
       <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
     
     
-      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
-    
-      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
-    
       <category term="操作系统" scheme="http://cxsmarkchan.github.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
       <category term="汇编" scheme="http://cxsmarkchan.github.com/tags/%E6%B1%87%E7%BC%96/"/>
+    
+      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+    
+      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
     
   </entry>
   
