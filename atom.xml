@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-03T05:19:55.281Z</updated>
+  <updated>2017-11-06T05:50:32.349Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一维搜索：0.618法与牛顿法</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/05/optimization-line-search/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/05/optimization-line-search/</id>
+    <published>2017-11-06T02:35:25.000Z</published>
+    <updated>2017-11-06T05:50:32.349Z</updated>
+    
+    <content type="html">&lt;p&gt;对于一般的优化问题，常见的解法是根据某个初始位置，确定一个搜索方向，把搜索问题暂时看作沿该方向的一维优化问题，再确定前进的步长。由此可见，一维的优化问题是最简单、也是最基本的优化问题。0.618法和牛顿法是两种具有代表性的方法。前者采用逐次试探的方式，不断逼近最优解，后者则把函数近似为二次函数，采用二次函数求极值的方法进行迭代求解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、0-618法&quot;&gt;&lt;a href=&quot;#一、0-618法&quot; class=&quot;headerlink&quot; title=&quot;一、0.618法&quot;&gt;&lt;/a&gt;一、0.618法&lt;/h1&gt;&lt;p&gt;0.618法是&lt;strong&gt;试探法&lt;/strong&gt;的一种。考虑如下一维搜索问题：&lt;br&gt;\[&lt;br&gt;\min_x f(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中x是一维变量。我们此处仅讨论局部最优解的求解，因此不妨假设$f(x)$在某个局部$[a,b]$内是凸的。同时，可以假设$f(a)\leq f(b)$，并假设极小值点$x_0\in [a,b]$（这两个假设是为了简化论述，在实际算法中并不必要）。于是我们有$a\leq x_0 \leq b$，$f(x_0)\leq f(a) \leq f(b)$。&lt;/p&gt;
+&lt;p&gt;由于$x_0$未知，为了缩小区间，我们在$[a,b]$中取两个点$x_1,x_2$（$x_1&amp;lt;x_2$），并计算$f(x_1)$和$f(x_2)$。此时可能出现两种情况：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$f(x_1) \leq f(x_2)$，那么根据凸性必有$f(x_1)\leq f(x_2) \leq f(b)$，因此$(x_2,b]$内的所有点都不小于$f(x_2)$，因此可以被删去。而$[a,x_1]$和$[x_1,x_2]$中的点仍有可能是极值点。&lt;/li&gt;
+&lt;li&gt;$f(x_1) \geq f(x_2)$，同理，可以删去$[a,x_1]$。&lt;br&gt;因此，根据两个端点$a,b$的函数值和两个中间点$x_1,x_2$的值，就可以将搜索区间从$[a,b]$缩小到$[a,x_2]$或$[x_1,b]$，这就是&lt;strong&gt;试探法&lt;/strong&gt;的基本思路。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么，$x_1$和$x_2$应该如何选取呢？一种方法是尽量让区间缩小得更多。此时可以将$x_1$和$x_2$尽量靠近中点，这样可以保证每次都删去将近一半的区间。但一般来说，我们并不会采取这种方式。&lt;/p&gt;
+&lt;p&gt;更常见的思路是：每次操作时都需要计算$f(x_1)$和$f(x_2)$，而这个计算有可能非常耗时。那么，有没有可能在下一次迭代中，继续用到上一次的计算结果，从而减少计算量呢？例如，第一次迭代中选取了$[a,b$区间中的$x_1,x_2$，计算发现$f(x_1) \leq f(x_2)$，从而可以删去$(x_2,b]$，保留$[a,x_2]$。注意到$x_1\in [a,x_2]$，因此在下一次迭代，选取两个中间点时，是否可以把$x_1$当做其中一个中间点？这样，就可以减少一半的计算量。&lt;/p&gt;
+&lt;p&gt;如果采用这个思路，一个直接的问题是：能否保证每次迭代后区间长度都能稳定地减少？下面我们来分析这个问题。&lt;/p&gt;
+&lt;p&gt;不妨假设所选区间为$[0,1]$，在选取中间点时，为了保证在两种情况下删除的区间大小一致，我们可以选择$x$和$1-x$作为中间点。假设$1-x&lt;x$，即$x&gt;0.5$，这样删去的区间大小即为$1-x$。&lt;/x$，即$x&gt;&lt;/p&gt;
+&lt;p&gt;如果删去的是$(x,1]$，则留下了$[0,x]$，且$1-x\in [0, x]$。此时，删去的区间的长度是原区间的$1-x$倍。在选取中间点的时候，我们希望$1-x$是其中一个中间点，这就意味着如果$f(1-x)$大于另一个中间点的函数值，则删去的区间应为现在区间$[0,x]$的$1-x$倍，即$x(1-x)$。因此，有两种可能：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$1-x$为靠左的中间点，则$1-x=x(1-x)$，得出$x=1$，不符合$x$是中间点的要求；&lt;/li&gt;
+&lt;li&gt;$1-x$为靠右的中间点，则$x-(1-x) = x(1-x)$,得到$x^2+x-1=0$，得到$x=\frac{\sqrt{5}-1}{2}\approx 0.618$。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由此可见，如果要保证每次删去的区间长度与原区间长度的比值一致，同时要求前一次迭代所求的中间点在后一次中能用上，中间点应该选在区间长度的0.618倍。此时，每次迭代，区间长度都会缩小为原区间长度的0.618倍。这种收敛方式我们一般称为&lt;strong&gt;线性收敛&lt;/strong&gt;，因为每次迭代后最优解的范围与前一次迭代的最优解范围呈线性关系（0.618倍）。除了线性收敛，还有些算法的收敛速度更快，牛顿法就是其中一种，可以达到&lt;strong&gt;二级收敛&lt;/strong&gt;。&lt;/p&gt;
+&lt;h1 id=&quot;二、牛顿法&quot;&gt;&lt;a href=&quot;#二、牛顿法&quot; class=&quot;headerlink&quot; title=&quot;二、牛顿法&quot;&gt;&lt;/a&gt;二、牛顿法&lt;/h1&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于一般的优化问题，常见的解法是根据某个初始位置，确定一个搜索方向，把搜索问题暂时看作沿该方向的一维优化问题，再确定前进的步长。由此可见，一维的优化问题是最简单、也是最基本的优化问题。0.618法和牛顿法是两种具有代表性的方法。前者采用逐次试探的方式，不断逼近最优解，后者则把函数近似为二次函数，采用二次函数求极值的方法进行迭代求解。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="算法" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="优选法" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E9%80%89%E6%B3%95/"/>
+    
+      <category term="0.618" scheme="http://cxsmarkchan.github.com/tags/0-618/"/>
+    
+      <category term="黄金分割" scheme="http://cxsmarkchan.github.com/tags/%E9%BB%84%E9%87%91%E5%88%86%E5%89%B2/"/>
+    
+  </entry>
   
   <entry>
     <title>对偶理论</title>
