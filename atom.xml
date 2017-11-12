@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-06T05:50:32.349Z</updated>
+  <updated>2017-11-12T21:04:03.282Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>梯度下降法及其收敛性</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/</id>
+    <published>2017-11-12T20:10:54.000Z</published>
+    <updated>2017-11-12T21:04:03.282Z</updated>
+    
+    <content type="html">&lt;p&gt;在高维的优化问题中，梯度下降法是一类常见的优化算法，它利用“梯度是函数上升最快的方向”这一特点，沿着梯度反方向搜索，以降低函数值。在一定条件下，梯度下降法可以达到线性收敛性，尽管和牛顿法等二阶收敛算法有差距，但其较少的假设条件和方便的计算使其成为一种广泛使用的方法。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、梯度下降法的基本概念&quot;&gt;&lt;a href=&quot;#一、梯度下降法的基本概念&quot; class=&quot;headerlink&quot; title=&quot;一、梯度下降法的基本概念&quot;&gt;&lt;/a&gt;一、梯度下降法的基本概念&lt;/h1&gt;&lt;p&gt;考虑如下优化问题：&lt;br&gt;\[&lt;br&gt;\min_x f(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$x$是一个$n$维变量。假设我们已经目前处在一个初始位置$x_0$，我们希望得到一个新的位置$x_1$，使得$f(x_1) &amp;lt; f(x_0)$。注意我们并不要求$x_1$就是这个优化问题的最小值，因为得到$x_1$之后，我们可以把$x_1$视作初始点，继续迭代，通过迭代次数的增加来逼近最优解。因此，更准确的问题描述是：经过$k$次迭代后，我们到达了$x_k$，现在要寻找$x_{k+1}$，使$f(x_{k+1})&amp;lt;f(x_k)$。&lt;/p&gt;
+&lt;p&gt;那么这里涉及到两个的问题，一是$x_{k+1}$在$x_k$的什么方向上（即&lt;strong&gt;搜索方向&lt;/strong&gt;），二是沿着这个方向，$x_{k+1}$和$x_k$的距离是多少（即&lt;strong&gt;搜索步长&lt;/strong&gt;）。可以看出，当搜索方向固定后，搜索步长的问题就变成了一维搜索问题，可以用一系列方法来求解，例如可以用0.618法或牛顿法等直接求得该方向的最小值，或者沿该方向前进一定的步长，得到该方向上一个“较小”的函数值。所以，高维优化问题和一维优化问题的本质区别在于搜索方向的求解。&lt;/p&gt;
+&lt;p&gt;梯度下降法采用了一个直观的思路：在这个$n$维空间中，函数值下降最快的方向是什么？这里就会用到一个数学上的概念：沿着高维空间的梯度方向，函数值上升最快。因此，沿着&lt;strong&gt;梯度的反方向&lt;/strong&gt;，函数值下降最快。当然，由于梯度是局部概念，在$x_k$点看过去，下降最快的方向不一定就是最优解所在方向，但这并不重要，因为我们并不要求一次性找到最优解，只要找到一个有“足够”下降的点$x_{k+1}$即可。&lt;/p&gt;
+&lt;p&gt;根据这样的想法，梯度下降法可以描述为：&lt;br&gt;\[&lt;br&gt;x_{k+1}=x_k-\alpha_{k}\nabla f(x_k)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$\alpha_k$的大小决定了搜索步长。确定了梯度方向之后，搜索步长的确定通常有几种策略：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;沿着梯度方向，直接寻找该方向的最小值，即：&lt;br&gt;\[&lt;br&gt;\alpha_k=\arg\min_{\alpha}f\left[x_k-\alpha\nabla f(x_k)\right]&lt;br&gt;\]&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;用启发式方法找到该方向的“较小值”，最简单的是固定$\alpha_k=\alpha$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;二、梯度下降法的收敛性&quot;&gt;&lt;a href=&quot;#二、梯度下降法的收敛性&quot; class=&quot;headerlink&quot; title=&quot;二、梯度下降法的收敛性&quot;&gt;&lt;/a&gt;二、梯度下降法的收敛性&lt;/h1&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在高维的优化问题中，梯度下降法是一类常见的优化算法，它利用“梯度是函数上升最快的方向”这一特点，沿着梯度反方向搜索，以降低函数值。在一定条件下，梯度下降法可以达到线性收敛性，尽管和牛顿法等二阶收敛算法有差距，但其较少的假设条件和方便的计算使其成为一种广泛使用的方法。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="算法" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="导数" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%BC%E6%95%B0/"/>
+    
+      <category term="梯度" scheme="http://cxsmarkchan.github.com/tags/%E6%A2%AF%E5%BA%A6/"/>
+    
+      <category term="收敛" scheme="http://cxsmarkchan.github.com/tags/%E6%94%B6%E6%95%9B/"/>
+    
+  </entry>
   
   <entry>
     <title>一维搜索：0.618法与牛顿法</title>
