@@ -247,7 +247,7 @@
 
 
             <div class="toc pink-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、梯度下降法的基本概念"><span class="section table-of-contents-text">一、梯度下降法的基本概念</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、梯度下降法的收敛性"><span class="section table-of-contents-text">二、梯度下降法的收敛性</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-强凸性"><span class="section table-of-contents-text">2.1 强凸性</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-收敛性和条件数"><span class="section table-of-contents-text">2.2 收敛性和条件数</span></a></li></ol></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、梯度下降法的基本概念"><span class="section table-of-contents-text">一、梯度下降法的基本概念</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、梯度下降法的收敛性"><span class="section table-of-contents-text">二、梯度下降法的收敛性</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-强凸性"><span class="section table-of-contents-text">2.1 强凸性</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-最大特征值的影响"><span class="section table-of-contents-text">2.2 最大特征值的影响</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-3-条件数"><span class="section table-of-contents-text">2.3 条件数</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#三、讨论"><span class="section table-of-contents-text">三、讨论</span></a></li></ol>
 </div>
 
 
@@ -271,9 +271,20 @@
 <p>这里我们做一个简单推导：固定$x$时，上面式子的右侧可以看作$\Delta x$的二次函数，可以证明，<br>\[<br>\Delta x^T\nabla f(x) + \frac{1}{2}m \lVert \Delta x \rVert ^2 \geq -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2<br>\]</p>
 <p>其中等号成立的条件是$\Delta x=-\frac{1}{m}\nabla f(x)$。由此我们得到：<br>\[<br>f(x+\Delta x) \geq f(x) -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2<br>\]</p>
 <p>同时，注意到该等式对任意$\Delta x$均成立，我们可以设置合适的$\Delta x$，使$x+\Delta x=x^*$，于是我们得到：<br>\[<br>p^*=f(x^*)\geq f(x) -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2<br>\]</p>
-<p>这个式子可以改写成如下表达式：<br>\[<br>\lVert \nabla f(x) \rVert ^2 \geq 2m\left(f(x)-p^*\right)<br>\]</p>
+<p>这个式子可以改写成如下表达式：<br>\begin{equation} \label{eq:m}<br>\lVert \nabla f(x) \rVert ^2 \geq 2m\left(f(x)-p^*\right)<br>\end{equation}</p>
 <p>这个式子说明了强凸性对于函数的梯度值的影响。可以看出，强凸性让对函数的梯度值给出了限制，使得梯度不至于“太小”。直观来说，凸性越强，梯度值就越大，每一步走得就越远，因此收敛也会更快。当然，这只是一个直观的说明，具体的收敛速度还和另外一个因素有关，那就是<strong>条件数</strong>。</p>
-<h2 id="2-2-收敛性和条件数"><a href="#2-2-收敛性和条件数" class="headerlink" title="2.2 收敛性和条件数"></a>2.2 收敛性和条件数</h2><p>我们曾经说明过，对于非凸的函数，即使局部最优解的寻找（甚至判定）也是极其困难的。这里我们针对凸函数可以证明，凸性的好坏会影响算法的收敛速度。如果梯度下降法在凸性“较差”的函数收敛速度慢，那么可以直观地想象（只是想象，并不是证明），梯度下降法在非凸函数中会遇到更多的问题。</p>
+<h2 id="2-2-最大特征值的影响"><a href="#2-2-最大特征值的影响" class="headerlink" title="2.2 最大特征值的影响"></a>2.2 最大特征值的影响</h2><p>直观来说，凸性越强（即$m$越大），梯度就越大。但我们应该注意到，这种梯度的“大小”并不能完全反映收敛的快慢，因为收敛的快慢还取决于另一个因素：函数离最优值的“距离”，而这个所谓的“距离”则是由函数的二阶导数（或海森矩阵特征值）的最大值衡量。具体来说我们有如下式子：<br>\[<br>f(x+\Delta x) \leq f(x) + \Delta x^T\nabla f(x) + \frac{1}{2}M \lVert \Delta x \rVert ^2<br>\]</p>
+<p>结合强凸性条件，可以看出$m$和$M$确定了函数二阶导数的上限和下限。我们可以把梯度下降法公式代入上式，令$x^+=x-\alpha \nabla f(x)$则有：<br>\[<br>f(x^+) \leq f(x) + \left(-\alpha+\frac{M\alpha^2}{2}\right) \lVert \nabla f(x) \rVert ^2<br>\]</p>
+<p>两边同时减去最优值$p^*$，则有：<br>\[<br>f(x^+) - p^* \leq f(x) - p^* + \left(-\alpha+\frac{M\alpha^2}{2}\right) \lVert \nabla f(x) \rVert ^2<br>\]</p>
+<p>由于$f(x)-p^*$反映了函数值离最优解的距离，可见如果要让$f(x^*)$离最优解更近，则需要保证$\left(-\alpha+M\alpha^2/2\right)&lt;0$。注意到这是$\alpha$的二次函数，如果M已知的话，我们可以选择$\alpha=1/M$，此时有<br>\begin{equation} \label{eq:M}<br>f(x^+) - p^* \leq f(x) - p^* - \frac{1}{2M}\lVert \nabla f(x) \rVert ^2<br>\end{equation}</p>
+<p>由这个式子可以看出，如果$M$较大，则函数值在迭代过程中下降也较慢。可见$M$和$m$如果同时增大，其作用可能会相互抵消。更进一步的分析表明，它们的比例才是决定性的因素。</p>
+<h2 id="2-3-条件数"><a href="#2-3-条件数" class="headerlink" title="2.3 条件数"></a>2.3 条件数</h2><p>把不等式\eqref{eq:m}代入不等式\eqref{eq:M}，我们可以得到：<br>\[<br>f(x^+)-p^*\leq \left(1-\frac{m}{M}\right)\left(f(x)-p^*\right)<br>\]</p>
+<p>至此，我们得到了梯度下降法的收敛性。由于$1-m/M&lt;1$，可以看出在迭代过程中函数值不断接近最优解，而每次迭代，函数值和最优解的距离都线性减小。因此，梯度下降法具有<strong>线性收敛性</strong>。</p>
+<p>同时，也可以看出，收敛性的好坏取决于$m$和$M$的相对大小。我们把$M/m$成为$f(x)$的<strong>条件数</strong>，于是条件数越大的函数，其收敛效果就越差。</p>
+<h1 id="三、讨论"><a href="#三、讨论" class="headerlink" title="三、讨论"></a>三、讨论</h1><p>在上述证明中，我们假设了$m$和$M$都是已知的。这一点在实际的函数中并不容易做到。一个严重的问题是，如果$M$未知，那么就无法根据$M$的值设置迭代步长$\alpha$，而不合适的迭代步长甚至会导致函数发散！针对这样的问题，一般需要设置变步长搜索，而最简单的则是沿着梯度方向进行一维搜索，直接找该方向的最小值。这种方法相对来说比较耗时，还有一些其他的方法，此处不再赘述。</p>
+<p>我们曾经说明过，对于非凸的函数，即使局部最优解的寻找（甚至判定）也是极其困难的。这里我们针对凸函数证明了，凸性的好坏会影响算法的收敛速度。如果梯度下降法在凸性“较差”的函数收敛速度慢，那么可以直观地想象（只是想象，并不是证明），梯度下降法在非凸函数中会遇到更多的问题。</p>
+<p>事实上，非凸函数中的问题不仅仅是收敛速度问题，梯度下降法的收敛判据本身也存在问题。这是因为梯度下降法以梯度为0作为收敛判据，但在非凸问题中，梯度为0的点可能是极小值点，也可能是极大值点和<strong>鞍点</strong>。在高维问题中，鞍点的数量远大于极小值点的数量，因此梯度下降法很大程度上只能收敛到鞍点。鞍点是在一个方向上为极小值，而在另一个方向上为极大值的点，鞍点不是极小值点，也存在理论上的下降方向，但鞍点附近非常平坦，极易触发收敛判据。这就是著名的<strong>鞍点问题</strong>，遗憾的是鞍点问题并没有特别好的解决方法。</p>
+<p>然而，梯度下降法存在的这些问题，在几乎所有别的优化方法中同样存在。因此，即便在非凸优化中，梯度下降法也是目前能找到的最好的方法了。目前，仍然有大量的研究论述梯度下降法在各种条件下的收敛性，可见这一方法的重要性和本质困难。</p>
 
             </div>
         </div>
