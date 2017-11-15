@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-12T21:04:03.282Z</updated>
+  <updated>2017-11-15T04:38:12.082Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/"/>
     <id>http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/</id>
     <published>2017-11-12T20:10:54.000Z</published>
-    <updated>2017-11-12T21:04:03.282Z</updated>
+    <updated>2017-11-15T04:38:12.082Z</updated>
     
     <content type="html">&lt;p&gt;在高维的优化问题中，梯度下降法是一类常见的优化算法，它利用“梯度是函数上升最快的方向”这一特点，沿着梯度反方向搜索，以降低函数值。在一定条件下，梯度下降法可以达到线性收敛性，尽管和牛顿法等二阶收敛算法有差距，但其较少的假设条件和方便的计算使其成为一种广泛使用的方法。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;一、梯度下降法的基本概念&quot;&gt;&lt;a href=&quot;#一、梯度下降法的基本概念&quot; class=&quot;headerlink&quot; title=&quot;一、梯度下降法的基本概念&quot;&gt;&lt;/a&gt;一、梯度下降法的基本概念&lt;/h1&gt;&lt;p&gt;考虑如下优化问题：&lt;br&gt;\[&lt;br&gt;\min_x f(x)&lt;br&gt;\]&lt;/p&gt;
@@ -35,7 +35,16 @@
 &lt;li&gt;&lt;p&gt;用启发式方法找到该方向的“较小值”，最简单的是固定$\alpha_k=\alpha$&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id=&quot;二、梯度下降法的收敛性&quot;&gt;&lt;a href=&quot;#二、梯度下降法的收敛性&quot; class=&quot;headerlink&quot; title=&quot;二、梯度下降法的收敛性&quot;&gt;&lt;/a&gt;二、梯度下降法的收敛性&lt;/h1&gt;</content>
+&lt;h1 id=&quot;二、梯度下降法的收敛性&quot;&gt;&lt;a href=&quot;#二、梯度下降法的收敛性&quot; class=&quot;headerlink&quot; title=&quot;二、梯度下降法的收敛性&quot;&gt;&lt;/a&gt;二、梯度下降法的收敛性&lt;/h1&gt;&lt;h2 id=&quot;2-1-强凸性&quot;&gt;&lt;a href=&quot;#2-1-强凸性&quot; class=&quot;headerlink&quot; title=&quot;2.1 强凸性&quot;&gt;&lt;/a&gt;2.1 强凸性&lt;/h2&gt;&lt;p&gt;我们以固定$\alpha$的方法为例，讨论梯度下降法的收敛性。这里需要说明的是，仅仅假设$f(x)$为凸函数，对于求解收敛速度并不够，我们需要更强的条件，也就是&lt;strong&gt;强凸性&lt;/strong&gt;（strong-convexity)。具体来说，如果一个函数的二阶导数（高维情况下，应该是海森矩阵的所有特征值）均大于一个正数$m$，那么我们就把这个函数成为$m$-强凸的（m-strongly convex）。&lt;/p&gt;
+&lt;p&gt;在这里，我们需要利用的是强凸性的一个等价性质：&lt;br&gt;\[&lt;br&gt;f(x+\Delta x) \geq f(x) + \Delta x^T\nabla f(x) + \frac{1}{2}m \lVert \Delta x \rVert ^2&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;可以看出，如果$m=0$，强凸性就会退化成凸性。实际上，凸性要求一个函数在局部增长得比线性函数要快，而强凸性则要求其增长得比一个二次函数（二次项系数为$m/2$）快。&lt;/p&gt;
+&lt;p&gt;这里我们做一个简单推导：固定$x$时，上面式子的右侧可以看作$\Delta x$的二次函数，可以证明，&lt;br&gt;\[&lt;br&gt;\Delta x^T\nabla f(x) + \frac{1}{2}m \lVert \Delta x \rVert ^2 \geq -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中等号成立的条件是$\Delta x=-\frac{1}{m}\nabla f(x)$。由此我们得到：&lt;br&gt;\[&lt;br&gt;f(x+\Delta x) \geq f(x) -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;同时，注意到该等式对任意$\Delta x$均成立，我们可以设置合适的$\Delta x$，使$x+\Delta x=x^*$，于是我们得到：&lt;br&gt;\[&lt;br&gt;p^*=f(x^*)\geq f(x) -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这个式子可以改写成如下表达式：&lt;br&gt;\[&lt;br&gt;\lVert \nabla f(x) \rVert ^2 \geq 2m\left(f(x)-p^*\right)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这个式子说明了强凸性对于函数的梯度值的影响。可以看出，强凸性让对函数的梯度值给出了限制，使得梯度不至于“太小”。直观来说，凸性越强，梯度值就越大，每一步走得就越远，因此收敛也会更快。当然，这只是一个直观的说明，具体的收敛速度还和另外一个因素有关，那就是&lt;strong&gt;条件数&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-收敛性和条件数&quot;&gt;&lt;a href=&quot;#2-2-收敛性和条件数&quot; class=&quot;headerlink&quot; title=&quot;2.2 收敛性和条件数&quot;&gt;&lt;/a&gt;2.2 收敛性和条件数&lt;/h2&gt;&lt;p&gt;我们曾经说明过，对于非凸的函数，即使局部最优解的寻找（甚至判定）也是极其困难的。这里我们针对凸函数可以证明，凸性的好坏会影响算法的收敛速度。如果梯度下降法在凸性“较差”的函数收敛速度慢，那么可以直观地想象（只是想象，并不是证明），梯度下降法在非凸函数中会遇到更多的问题。&lt;/p&gt;
+</content>
     
     <summary type="html">
     

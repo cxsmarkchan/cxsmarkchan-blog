@@ -247,7 +247,7 @@
 
 
             <div class="toc pink-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、梯度下降法的基本概念"><span class="section table-of-contents-text">一、梯度下降法的基本概念</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、梯度下降法的收敛性"><span class="section table-of-contents-text">二、梯度下降法的收敛性</span></a></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、梯度下降法的基本概念"><span class="section table-of-contents-text">一、梯度下降法的基本概念</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、梯度下降法的收敛性"><span class="section table-of-contents-text">二、梯度下降法的收敛性</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-强凸性"><span class="section table-of-contents-text">2.1 强凸性</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-收敛性和条件数"><span class="section table-of-contents-text">2.2 收敛性和条件数</span></a></li></ol></li></ol>
 </div>
 
 
@@ -265,7 +265,16 @@
 <li><p>用启发式方法找到该方向的“较小值”，最简单的是固定$\alpha_k=\alpha$</p>
 </li>
 </ol>
-<h1 id="二、梯度下降法的收敛性"><a href="#二、梯度下降法的收敛性" class="headerlink" title="二、梯度下降法的收敛性"></a>二、梯度下降法的收敛性</h1>
+<h1 id="二、梯度下降法的收敛性"><a href="#二、梯度下降法的收敛性" class="headerlink" title="二、梯度下降法的收敛性"></a>二、梯度下降法的收敛性</h1><h2 id="2-1-强凸性"><a href="#2-1-强凸性" class="headerlink" title="2.1 强凸性"></a>2.1 强凸性</h2><p>我们以固定$\alpha$的方法为例，讨论梯度下降法的收敛性。这里需要说明的是，仅仅假设$f(x)$为凸函数，对于求解收敛速度并不够，我们需要更强的条件，也就是<strong>强凸性</strong>（strong-convexity)。具体来说，如果一个函数的二阶导数（高维情况下，应该是海森矩阵的所有特征值）均大于一个正数$m$，那么我们就把这个函数成为$m$-强凸的（m-strongly convex）。</p>
+<p>在这里，我们需要利用的是强凸性的一个等价性质：<br>\[<br>f(x+\Delta x) \geq f(x) + \Delta x^T\nabla f(x) + \frac{1}{2}m \lVert \Delta x \rVert ^2<br>\]</p>
+<p>可以看出，如果$m=0$，强凸性就会退化成凸性。实际上，凸性要求一个函数在局部增长得比线性函数要快，而强凸性则要求其增长得比一个二次函数（二次项系数为$m/2$）快。</p>
+<p>这里我们做一个简单推导：固定$x$时，上面式子的右侧可以看作$\Delta x$的二次函数，可以证明，<br>\[<br>\Delta x^T\nabla f(x) + \frac{1}{2}m \lVert \Delta x \rVert ^2 \geq -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2<br>\]</p>
+<p>其中等号成立的条件是$\Delta x=-\frac{1}{m}\nabla f(x)$。由此我们得到：<br>\[<br>f(x+\Delta x) \geq f(x) -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2<br>\]</p>
+<p>同时，注意到该等式对任意$\Delta x$均成立，我们可以设置合适的$\Delta x$，使$x+\Delta x=x^*$，于是我们得到：<br>\[<br>p^*=f(x^*)\geq f(x) -\frac{1}{2m} \lVert \nabla f(x) \rVert ^2<br>\]</p>
+<p>这个式子可以改写成如下表达式：<br>\[<br>\lVert \nabla f(x) \rVert ^2 \geq 2m\left(f(x)-p^*\right)<br>\]</p>
+<p>这个式子说明了强凸性对于函数的梯度值的影响。可以看出，强凸性让对函数的梯度值给出了限制，使得梯度不至于“太小”。直观来说，凸性越强，梯度值就越大，每一步走得就越远，因此收敛也会更快。当然，这只是一个直观的说明，具体的收敛速度还和另外一个因素有关，那就是<strong>条件数</strong>。</p>
+<h2 id="2-2-收敛性和条件数"><a href="#2-2-收敛性和条件数" class="headerlink" title="2.2 收敛性和条件数"></a>2.2 收敛性和条件数</h2><p>我们曾经说明过，对于非凸的函数，即使局部最优解的寻找（甚至判定）也是极其困难的。这里我们针对凸函数可以证明，凸性的好坏会影响算法的收敛速度。如果梯度下降法在凸性“较差”的函数收敛速度慢，那么可以直观地想象（只是想象，并不是证明），梯度下降法在非凸函数中会遇到更多的问题。</p>
+
             </div>
         </div>
     </div>
