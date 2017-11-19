@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-15T17:38:03.760Z</updated>
+  <updated>2017-11-19T03:21:39.107Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛顿法</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/18/optimization-newton/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/18/optimization-newton/</id>
+    <published>2017-11-19T01:46:51.000Z</published>
+    <updated>2017-11-19T03:21:39.107Z</updated>
+    
+    <content type="html">&lt;p&gt;相较于梯度下降方法，牛顿法通常具有更快的收敛性，即二次收敛性。当然，牛顿法对于函数性质的要求更为苛刻：它要求函数是二阶连续可导的，而梯度方法只要求一阶可导（包括在收敛性证明中，也不需要用到二阶导数）。牛顿法的瓶颈在于二阶导数矩阵（即海森矩阵）的计算和求逆，因此，其通常应用在这些导数容易显式求得的情形下。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、牛顿法&quot;&gt;&lt;a href=&quot;#一、牛顿法&quot; class=&quot;headerlink&quot; title=&quot;一、牛顿法&quot;&gt;&lt;/a&gt;一、牛顿法&lt;/h1&gt;&lt;p&gt;牛顿法来源于二次函数的极小值求解。考虑$f(x)$在给定点$x$处的二阶泰勒展开：&lt;br&gt;\[&lt;br&gt;f(y) \approx f(x) + \left[\nabla f(x)\right]^T(y-x) + \frac{1}{2}(y-x)^T\left[\nabla^2 f(x)\right](y-x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;如果这个式子严格成立，那么很容易求得$f(x)$的极小值点为：&lt;br&gt;\[&lt;br&gt;x^*=x - \left[\nabla^2 f(x)\right]^{-1}\nabla f(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;当然，实际的函数不一定是严格的二次函数，所以上式通常应该写成迭代的格式：&lt;br&gt;\[&lt;br&gt;x^+=x - \left[\nabla^2 f(x)\right]^{-1}\nabla f(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;牛顿法的一种推广形式为：&lt;br&gt;\[&lt;br&gt;x^+=x - \alpha \left[\nabla^2 f(x)\right]^{-1}\nabla f(x)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$\alpha$为搜索步长。这种形式可以看成用原始的牛顿方法求得搜索方向，再沿着该方向进行一维搜索（可以是确定系数$\alpha$的搜索，也可以是变系数搜索，例如直接搜索该方向的极小值）。这种搜索方式与原始牛顿法相比，收敛会更快，但在收敛次数上不会有本质区别——它们都是二次收敛。&lt;/p&gt;
+&lt;h1 id=&quot;二、牛顿法的收敛性&quot;&gt;&lt;a href=&quot;#二、牛顿法的收敛性&quot; class=&quot;headerlink&quot; title=&quot;二、牛顿法的收敛性&quot;&gt;&lt;/a&gt;二、牛顿法的收敛性&lt;/h1&gt;&lt;p&gt;这里我们只讨论原始的牛顿法，即$\alpha=1$的情形。和梯度下降法相同，我们假设$f(x)$具有$m$-强凸性，其二阶导数的最大特征值不超过$M$。同时，还要假设其二阶导数是$L-Lipschitz$连续的，即：&lt;br&gt;\[&lt;br&gt;\lVert \nabla^2 f(x) - \nabla^2 f(y) \rVert_2 \leq L \lVert x-y \rVert_2&lt;br&gt;\]&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;相较于梯度下降方法，牛顿法通常具有更快的收敛性，即二次收敛性。当然，牛顿法对于函数性质的要求更为苛刻：它要求函数是二阶连续可导的，而梯度方法只要求一阶可导（包括在收敛性证明中，也不需要用到二阶导数）。牛顿法的瓶颈在于二阶导数矩阵（即海森矩阵）的计算和求逆，因此，其通常应用在这些导数容易显式求得的情形下。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="算法" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="二阶收敛" scheme="http://cxsmarkchan.github.com/tags/%E4%BA%8C%E9%98%B6%E6%94%B6%E6%95%9B/"/>
+    
+      <category term="牛顿法" scheme="http://cxsmarkchan.github.com/tags/%E7%89%9B%E9%A1%BF%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>梯度下降法及其收敛性</title>
