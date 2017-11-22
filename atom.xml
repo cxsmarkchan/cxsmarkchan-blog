@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-19T03:21:39.107Z</updated>
+  <updated>2017-11-22T03:10:22.961Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>支持向量机：构造</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/21/ml-svm-construction/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/21/ml-svm-construction/</id>
+    <published>2017-11-21T18:04:34.000Z</published>
+    <updated>2017-11-22T03:10:22.961Z</updated>
+    
+    <content type="html">&lt;p&gt;支持向量机（Support Vector Machine, SVM）的主要思想是在分类问题中使不同类别之间的“间隔”最大。所谓支持向量，即在分类问题中最接近边界的样本，这些样本会影响到分类超平面的构造。可以有两种方式构造支持向量机，一种是直接基于间隔最大化思想，另一种则是基于一种特殊的损失函数（合页损失函数）。从损失函数的角度理解，支持向量机并不比Logistic回归更强大，当然，支持向量机的核心优势并不在此。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;考虑一个二类分类问题，给定特征$x$，预测分类值$y\in \{-1,1\}$。线性支持向量机的目标是找到一个超平面$w^Tx+b=0$，然后对于任意$x$，给出预测值$y=\text{sgn}\{w^Tx+b\}$。换句话说，线性支持向量机根据样本点$x$与超平面$w^Tx+b=0$的关系来决定该点的分类。&lt;/p&gt;
+&lt;h1 id=&quot;一、基于距离的构造&quot;&gt;&lt;a href=&quot;#一、基于距离的构造&quot; class=&quot;headerlink&quot; title=&quot;一、基于距离的构造&quot;&gt;&lt;/a&gt;一、基于距离的构造&lt;/h1&gt;&lt;h2 id=&quot;1-1-线性可分情形&quot;&gt;&lt;a href=&quot;#1-1-线性可分情形&quot; class=&quot;headerlink&quot; title=&quot;1.1 线性可分情形&quot;&gt;&lt;/a&gt;1.1 线性可分情形&lt;/h2&gt;&lt;p&gt;考虑一组训练数据$\left(x^{(i)},y^{(i)}\right),i=1,2,\dots,N$，其中$y^{(i)}\in\{-1,1\}$。我们假设数据是&lt;strong&gt;线性可分&lt;/strong&gt;的，也就是说，存在向量$w$和常数$b$，满足如下条件：&lt;br&gt;\[&lt;br&gt;\left\{&lt;br&gt;\begin{split}&lt;br&gt;w^Tx^{(i)}+b &amp;lt; 0, &amp;amp;\forall i\text{ s.t. }y^{(i)}=-1 \\&lt;br&gt;w^Tx^{(i)}+b &amp;gt; 0, &amp;amp;\forall i\text{ s.t. }y^{(i)}=1&lt;br&gt;\end{split}&lt;br&gt;\right.&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;在这种情况下，我们认为数据被超平面$w^Tx+b=0$分离。同时，注意到$(w,b)$和$(\lambda w, \lambda b),\lambda \neq 0$代表了相同的超平面，因此，我们可以对$(w,b)$进行齐次放缩，而不影响结果。通过合理的放缩，可以得到如下条件：&lt;br&gt;\[&lt;br&gt;\left\{&lt;br&gt;\begin{split}&lt;br&gt;w^Tx^{(i)}+b \leq -1, &amp;amp;\forall i\text{ s.t. }y^{(i)}=-1 \\&lt;br&gt;w^Tx^{(i)}+b \geq 1, &amp;amp;\forall i\text{ s.t. }y^{(i)}=1&lt;br&gt;\end{split}&lt;br&gt;\right.&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这个条件又等价于如下条件：&lt;br&gt;\[&lt;br&gt;y^{(i)}\left(w^Tx^{(i)}+b\right) \geq 1&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;注意到数据集$\left(x^{(i)}, y^{(i)} \right)$是已知的，上述条件是$(w,b)$的线性约束。&lt;/p&gt;
+&lt;p&gt;一般来说，满足约束的超平面有很多，支持向量机要解决的问题是：什么样的超平面是最合理的？而它给出的方案是：让超平面两边的点离超平面都足够远。为此，我们先来看如何衡量一个点到超平面的距离。&lt;/p&gt;
+&lt;p&gt;首先取超平面上的一点$\tilde{x}$，即满足$w^T\tilde{x}+b=0$，考虑超平面外的一点$x$，我们只需要计算向量$x-\tilde{x}$在超平面法向的投影即可。而该投影可以通过与法向单位向量$\frac{w}{\lVert w\rVert}$的内积得到：&lt;br&gt;\[&lt;br&gt;dist(x) = \frac{w^T(x-\tilde{x})}{\lVert w \rVert} = \frac{w^Tx+b}{\lVert w \rVert}&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中，后一个等式用到了$\tilde{x}$在超平面上的条件，即$w^T\tilde{x}+b=0$。这是一个有向距离，即$x$在超平面两边时，所得到距离的符号不同。注意到$x$在超平面两边时，$y$分别为$\pm 1$，因此正确的距离应该为$\frac{y\left(w^Tx+b\right)}{\lVert w \rVert}$。由此，为了最大化距离，我们需要求解如下优化问题：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\max_{w,b} \min_{i} \frac{y^{(i)}\left(w^Tx^{(i)}+b\right)}{\lVert w \rVert} \\&lt;br&gt;\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1, \forall i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;同时，注意到在优化问题中，最优解必然会有部分约束起作用，也就是存在$i$使得$y^{(i)}\left(w^Tx^{(i)} + b\right) = 1$，因此我们有：&lt;br&gt;\[&lt;br&gt;\min_{i} \frac{y^{(i)}\left(w^Tx^{(i)}+b\right)}{\lVert w \rVert} = \frac{1}{\lVert w \rVert}&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;因此，我们得到如下优化问题：&lt;br&gt;\[&lt;br&gt;\max_{w,b} \frac{1}{\lVert w \rVert} \\&lt;br&gt;\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1, \forall i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;最后，为了简化问题的求解，我们注意到$\max \frac{1}{\lVert w \rVert}$和$\min \lVert w \rVert^2$（也可以写成$\min w^Tw$）是等价的，因此可以把优化问题改写为：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1, \forall i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$\frac{1}{2}$仅仅是表示二次目标函数时的一个通用约定，没有其他含义。到这里，我们就得到了&lt;strong&gt;线性可分情形下的支持向量机模型&lt;/strong&gt;。这个模型是一个&lt;strong&gt;二次规划&lt;/strong&gt;问题，可以用典型的凸优化方法求解。&lt;/p&gt;
+&lt;p&gt;最后，我们可以对“支持向量机”的名字做一个简单的解释。由于支持向量机是一个含约束的二次规划问题，那么其约束就必然有起作用和不起作用的分别。很明显，当约束起作用时，样本点离分离超平面的距离刚好等于$\frac{1}{\lVert w \rVert}$，而约束不起作用时，样本点离分离超平面的距离都超过这个值。因此，&lt;strong&gt;起作用约束对应的是离分离超平面最近的那些样本点&lt;/strong&gt;。同时，在约束优化中，我们知道，删去不起作用的约束，不会影响问题的最优解。这就意味着，支持向量机的计算结果仅取决于起作用约束，也就是离分离超平面最近的点。这些点就是所谓的&lt;strong&gt;支持向量&lt;/strong&gt;，因为它们“支撑”了超平面。支持向量机的名称也来源于此。&lt;/p&gt;
+&lt;p&gt;综上所述，&lt;strong&gt;那么支持向量机的思想在于，分类问题中，确定边界是最重要的，而边界的位置则取决于离边界最近的点。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;应该说，支持向量机是一个很优美的模型：一方面，依托于“最大间隔”，数学图景非常清晰。另一方面，凸优化是目前被研究最充分的优化问题，因此支持向量机具有简单的数学模型，也易于求解。&lt;/p&gt;
+&lt;h2 id=&quot;1-2-一般情形&quot;&gt;&lt;a href=&quot;#1-2-一般情形&quot; class=&quot;headerlink&quot; title=&quot;1.2 一般情形&quot;&gt;&lt;/a&gt;1.2 一般情形&lt;/h2&gt;&lt;p&gt;在线性可分场景下构造的支持向量机有两个方面的问题：第一，在数据不可分的时候，模型没有可行解；第二，即使数据可分，由于支持向量机仅考虑支持向量，如果支持向量有坏数据，就会极大影响求解的结果。这两种情况本质是相同的，即&lt;strong&gt;线性可分支持向量机对于边界上的误差容忍度过低&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为此，只需把支持向量机的模型改成如下形式：&lt;br&gt;\begin{equation*}&lt;br&gt;\begin{aligned}&lt;br&gt;&amp;amp;\min_{w,b} C\sum_{i=1}^N\xi_i+\frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } &amp;amp; y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1 - \xi_i, \forall i \\&lt;br&gt;&amp;amp; \xi_i\geq 0, \forall i&lt;br&gt;\end{aligned}&lt;br&gt;\end{equation*}&lt;/p&gt;
+&lt;p&gt;这个模型中，$\xi_i$是第$i$个样本点违背约束的程度，如果$\xi_i=0$，则说明第$i$个样本点被成功分类，并且分离超平面有“足够”的距离，否则就认为样本点分类错误，并引入惩罚项。由此可见，一般的支持向量机模型允许样本点越过支持向量对应的点，但这些点会根据越界大小引入惩罚，而支持向量机模型会权衡惩罚项的大小和分类的间隔距离，做出最优的选择。其中，两者的权重由惩罚因子$C$决定，C越大，惩罚越大，分类结果就越接近线性可分支持向量机的分类结果。&lt;/p&gt;
+&lt;h1 id=&quot;二、基于损失函数的构造&quot;&gt;&lt;a href=&quot;#二、基于损失函数的构造&quot; class=&quot;headerlink&quot; title=&quot;二、基于损失函数的构造&quot;&gt;&lt;/a&gt;二、基于损失函数的构造&lt;/h1&gt;&lt;p&gt;我们首先考虑支持向量机的求解目标。给定一个样本点$x^{(i)}$，如果$y^{(i)}=1$，则我们希望$w^Tx^{(i)}+b\geq 1$（注意这里不是0，因为支持向量机要求正确分类的样本点离超平面有一定距离），因此，如果这一目标实现了，损失函数则应该是0，而如果没实现，则损失函数应该大于0。如果$y^{(i)}=-1$，则应该有$w^Tx^{(i)}+b\leq -1$。&lt;/p&gt;
+&lt;p&gt;令$\hat{y}^{(i)}=w^Tx^{(i)}+b$，我们采用如下损失函数：&lt;br&gt;\[&lt;br&gt;L\left(y^{(i)},\hat{y}^{(i)}\right) = \left\{&lt;br&gt;\begin{split}&lt;br&gt;\max\{0, 1 - \hat{y}^{(i)}\}, &amp;amp; \text{if } y^{(i)}=1 \\&lt;br&gt;\max\{0, \hat{y}^{(i)} + 1\}, &amp;amp; \text{if } y^{(i)}=-1&lt;br&gt;\end{split}&lt;br&gt;\right.&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这个损失函数一般称为&lt;strong&gt;合页损失函数&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;则分类问题转化为：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \sum_{i=1}^NL\left(y^{(i)}, w^Tx^{(i)}+b\right)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;当然，为了避免过拟合，还需要加上正则化项，于是得到：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \sum_{i=1}^NL\left(y^{(i)}, w^Tx^{(i)}+b\right) + \lambda w^Tw&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这就是&lt;strong&gt;支持向量机的损失函数构造&lt;/strong&gt;。接下来，我们来证明这种构造和基于间隔的构造的等价性。我们引入辅助变量$\xi_i=L\left(y^{(i)}, w^Tx^{(i)}+b\right)$，把上述问题转化为：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \sum_{i=1}^N\xi_i+ \lambda \lVert w \rVert^2 \\&lt;br&gt;\text{s.t. } L\left(y^{(i)}, w^Tx^{(i)}+b\right) = \xi_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;显然该问题等价于：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \sum_{i=1}^N\xi_i+ \lambda w^Ts \\&lt;br&gt;\text{s.t. } L\left(y^{(i)}, w^Tx^{(i)}+b\right) \leq \xi_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;考察上述问题中的约束，当$y^{(i)}=1$时，该约束即为：&lt;br&gt;\[&lt;br&gt;\max\left\{0, 1 - \left(w^Tx^{(i)}+b\right)\right\} \leq \xi_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;而两个数的最大值小于$\xi_i$，说明这两个数均小于$\xi_i$，因此上式等价于：&lt;br&gt;\[&lt;br&gt;\xi_i \geq 0 \\&lt;br&gt;w^Tx^{(i)}+b \geq 1 - \xi_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;以上讨论了$y^{(i)} = 1$的情形，对于$y^{(i)}=-1$的情形，情况是类似的，但结果略有不同：&lt;br&gt;\[&lt;br&gt;\xi_i \geq 0 \\&lt;br&gt;w^Tx^{(i)}+b \leq \xi_i - 1&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这两种类型的约束可以合并为统一的形式：&lt;br&gt;\[&lt;br&gt;\xi_i \geq 0 \\&lt;br&gt;y^{(i)}\left(w^Tx^{(i)}+b\right) \geq 1 - \xi_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;由此可得，支持向量机的模型等价于：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \sum_{i=1}^N\xi_i+\lambda w^Tw \\&lt;br&gt;\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1 - \xi_i, \forall i \\&lt;br&gt;\xi_i\geq 0, \forall i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;最后，将目标函数除以$2\lambda$，不会改变结果，于是我们得到：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \frac{1}{2\lambda}\sum_{i=1}^N\xi_i+\frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1 - \xi_i, \forall i \\&lt;br&gt;\xi_i\geq 0, \forall i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;很明显，该式与基于间隔的构造方法得出的模型是等价的，只需要令常数$C=\frac{1}{2\lambda}$即可。&lt;/p&gt;
+&lt;p&gt;作为总结，支持向量机是一种使分类间隔最大化的分类方法，同时也可以理解为目标函数为合页损失函数的学习方法。支持向量机的分类结果受到分类边界处的样本，即支持向量和误分类样本的影响。支持向量机的松弛项惩罚系数$C$对应于正则化参数$\lambda$，$C$越大，则正则化参数越小，模型对边界数据的误差和误分类样本就越敏感，而对误差敏感则意味着过拟合。反之，$C$越小，则模型的容忍度就越高，也越容易欠拟合。&lt;/p&gt;
+&lt;p&gt;值得注意的是，从损失函数的角度来看，支持向量机的损失函数并不比Logistic回归的损失函数更“优越”，因此没有明显的证据表明支持向量机比Logistic回归更好。&lt;strong&gt;但支持向量机的优势一方面在于所求解的问题是二次规划，也就是一类凸优化问题，从而可以很好地求解，另一方面则在于其很容易拓展到非线性情形，从而获得更强的表现力。&lt;/strong&gt;关于后者，我们将在后续文章中论述。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;支持向量机（Support Vector Machine, SVM）的主要思想是在分类问题中使不同类别之间的“间隔”最大。所谓支持向量，即在分类问题中最接近边界的样本，这些样本会影响到分类超平面的构造。可以有两种方式构造支持向量机，一种是直接基于间隔最大化思想，另一种则是基于一种特殊的损失函数（合页损失函数）。从损失函数的角度理解，支持向量机并不比Logistic回归更强大，当然，支持向量机的核心优势并不在此。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+    
+    
+      <category term="支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+    
+      <category term="SVM" scheme="http://cxsmarkchan.github.com/tags/SVM/"/>
+    
+      <category term="合页损失函数" scheme="http://cxsmarkchan.github.com/tags/%E5%90%88%E9%A1%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
+    
+      <category term="最大间隔" scheme="http://cxsmarkchan.github.com/tags/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%94/"/>
+    
+  </entry>
   
   <entry>
     <title>牛顿法</title>
@@ -162,7 +228,7 @@
     <link href="http://cxsmarkchan.github.com/2017/11/01/optimization-dual/"/>
     <id>http://cxsmarkchan.github.com/2017/11/01/optimization-dual/</id>
     <published>2017-11-02T02:27:08.000Z</published>
-    <updated>2017-11-03T05:19:55.281Z</updated>
+    <updated>2017-11-21T18:10:24.928Z</updated>
     
     <content type="html">&lt;p&gt;对偶理论是优化理论中非常优美的部分，很多优化问题的求解都依赖对偶形式。强对偶定理保证了这种求解方法的正确性。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -210,7 +276,7 @@
     <link href="http://cxsmarkchan.github.com/2017/10/31/optimization-kkt/"/>
     <id>http://cxsmarkchan.github.com/2017/10/31/optimization-kkt/</id>
     <published>2017-10-31T04:17:22.000Z</published>
-    <updated>2017-10-31T19:01:04.936Z</updated>
+    <updated>2017-11-21T18:10:11.668Z</updated>
     
     <content type="html">&lt;p&gt;在最优性判别中，基于导数的方法是一种相当有效的方法。对于无约束优化，可以直接利用一阶导数作为必要性判据，利用二阶导数作为充分性判据。这种方法可以推广到约束优化中，也就是著名的KKT条件。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -248,6 +314,8 @@
     
       <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
     
+      <category term="理论" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+    
     
       <category term="导数" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%BC%E6%95%B0/"/>
     
@@ -264,7 +332,7 @@
     <link href="http://cxsmarkchan.github.com/2017/10/20/optimization-convex/"/>
     <id>http://cxsmarkchan.github.com/2017/10/20/optimization-convex/</id>
     <published>2017-10-21T02:57:12.000Z</published>
-    <updated>2017-10-27T04:29:33.508Z</updated>
+    <updated>2017-11-21T18:09:05.996Z</updated>
     
     <content type="html">&lt;p&gt;在优化问题中，凸优化问题很重要的一类子问题。一般来说，凸优化问题的求解无论在理论上，还是在算法上，都比非凸优化问题要成熟很多。可以证明，凸优化问题的局部最优即为全局最优，这使得凸优化问题的全局最优解的寻找更为简单。但凸性的意义不止于此。一个有意思的结论是：一般的非凸问题不仅全局最优难以求解，甚至局部最优的求解也非常困难！这篇文章会简要介绍相关的结论。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;一、凸性的基本定义&quot;&gt;&lt;a href=&quot;#一、凸性的基本定义&quot; class=&quot;headerlink&quot; title=&quot;一、凸性的基本定义&quot;&gt;&lt;/a&gt;一、凸性的基本定义&lt;/h1&gt;&lt;p&gt;优化问题的基本形式为：&lt;br&gt;\[&lt;br&gt;\min_x f(x) \\&lt;br&gt;\text{s.t. } g(x)\leq 0&lt;br&gt;\]&lt;/p&gt;
@@ -294,6 +362,8 @@
     
       <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
     
+      <category term="理论" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+    
     
       <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
     
@@ -306,7 +376,7 @@
     <link href="http://cxsmarkchan.github.com/2017/10/12/optimization-config/"/>
     <id>http://cxsmarkchan.github.com/2017/10/12/optimization-config/</id>
     <published>2017-10-12T04:39:11.000Z</published>
-    <updated>2017-10-12T04:42:35.754Z</updated>
+    <updated>2017-11-21T18:08:43.612Z</updated>
     
     <content type="html">&lt;p&gt;在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -335,6 +405,8 @@
     
       <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
     
+      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
+    
     
       <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
     
@@ -347,7 +419,7 @@
     <link href="http://cxsmarkchan.github.com/2016/05/12/bilinear/"/>
     <id>http://cxsmarkchan.github.com/2016/05/12/bilinear/</id>
     <published>2016-05-13T00:40:32.000Z</published>
-    <updated>2017-09-26T00:15:12.454Z</updated>
+    <updated>2017-11-21T18:09:53.360Z</updated>
     
     <content type="html">&lt;p&gt;今天想谈一个研究中常见的问题，即含有双线性约束的优化问题。&lt;br&gt;双线性约束即形为$z=xy$的约束，这是一类在电力领域中很常见的约束。对于含有一般双线性约束的优化问题，目前还没有很好的求解方法，不过，有一些特殊的双线性约束是可以被等价转化成线性约束的，本文即讨论这些约束形式以及相应的转化技巧。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;原创内容: cxsmarkchan&lt;/p&gt;
@@ -402,6 +474,8 @@
     </summary>
     
       <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
     
     
       <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
