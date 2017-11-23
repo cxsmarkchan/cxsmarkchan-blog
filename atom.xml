@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-22T03:10:22.961Z</updated>
+  <updated>2017-11-23T04:30:30.688Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>支持向量机：对偶形式</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/22/ml-svm-dual/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/22/ml-svm-dual/</id>
+    <published>2017-11-22T05:45:27.000Z</published>
+    <updated>2017-11-23T04:30:30.688Z</updated>
+    
+    <content type="html">&lt;p&gt;支持向量机的原始形式为二次规划，这是一种典型的凸规划，也满足强对偶定理。支持向量机的对偶形式仍然为凸二次规划。对偶形式的主要优点除了计算以外，还在于其易于推广到非线性支持向量机。本节介绍对偶形式的构造，以及如何根据对偶问题的解还原出原始问题的解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、对偶形式的构造&quot;&gt;&lt;a href=&quot;#一、对偶形式的构造&quot; class=&quot;headerlink&quot; title=&quot;一、对偶形式的构造&quot;&gt;&lt;/a&gt;一、对偶形式的构造&lt;/h1&gt;&lt;p&gt;考虑支持向量机的原始形式：&lt;br&gt;\[&lt;br&gt;\min_{w,b,\xi} C \sum_{i=1}^N\xi_i + \frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\&lt;br&gt;\xi_i \geq 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其拉格朗日函数为：&lt;br&gt;\[&lt;br&gt;L(w,b, \xi, \alpha, \beta) = C \sum_{i=1}^N\xi_i + \frac{1}{2}w^Tw - \sum_{i=1}^N\alpha_i\left[y_i\left(w^Tx_i+b\right) - 1 + \xi_i \right] - \sum_{i=1}^N\beta_i\xi_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;可以证明，原始问题等价于如下形式：&lt;br&gt;\[&lt;br&gt;p^* = \min_{w,b,\xi} \max_{\alpha\geq 0, \beta \geq 0} L(w,b,\xi,\alpha, \beta)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;而对偶问题则为：&lt;br&gt;\[&lt;br&gt;d^* = \max_{\alpha\geq 0, \beta \geq 0} \min_{w,b,\xi} L(w,b,\xi,\alpha, \beta)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;为了简化问题，下面我们求解对偶问题的内部优化。在固定了$\alpha,\beta$后，内部优化问题实际上是一个无约束二次规划问题，简单地令其对$w,b,\xi$的导数为零，可以得到：&lt;br&gt;\[&lt;br&gt;w=\sum_{i=1}^N\alpha_iy_ix_i \\&lt;br&gt;\sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;\alpha_i+\beta_i=C&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;将这些式子代入$L$的表达式，得到：&lt;br&gt;\[&lt;br&gt;\min_{w,b,\xi} L(w,b,\xi,\alpha,\beta) = -\frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j + \sum_{i=1}^N\alpha_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;于是对偶问题为：&lt;br&gt;\[&lt;br&gt;\max_{\alpha\geq 0, \beta \geq 0} -\frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j +\sum_{i=1}^N\alpha_i\\&lt;br&gt;\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;\alpha_i+\beta_i=C&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;注意到$\beta$在上面的优化问题中等价于保证$\alpha_i \leq C$，可以消去$\beta$，并把上述问题改写为：&lt;br&gt;\[&lt;br&gt;\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\&lt;br&gt;\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;0 \leq\alpha_i\leq C&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这样我们就得到&lt;strong&gt;支持向量机的对偶形式&lt;/strong&gt;。可以看出，支持向量机的对偶形式仍然为二次规划。和原始形式相同，这个二次规划也是一个凸规划，这一事实可以从下述等式中看出：&lt;br&gt;\[&lt;br&gt;\sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j = \alpha^TA^TA\alpha&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$A=\left[y_1x_1,y_2x_2,\dots,y_Nx_N\right]$是一个$D\times N$的矩阵（D为特征的维数）。而$A^TA$是一个半正定矩阵，因此该二次规划为凸规划。&lt;/p&gt;
+&lt;h1 id=&quot;二、对偶问题的解与原始问题的关系&quot;&gt;&lt;a href=&quot;#二、对偶问题的解与原始问题的关系&quot; class=&quot;headerlink&quot; title=&quot;二、对偶问题的解与原始问题的关系&quot;&gt;&lt;/a&gt;二、对偶问题的解与原始问题的关系&lt;/h1&gt;&lt;p&gt;根据强对偶定理，对偶问题的最优解与原始问题的最优解相等。因此，求得对偶问题的解，即可得到原始问题的解。在前面的分析中，我们已经看到了$w$与对偶解$\alpha$之间的关系：&lt;br&gt;\[&lt;br&gt;w=\sum_{i=1}^N\alpha_iy_ix_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;得到了$w$后，还需要确定原始问题的$b$。为此，考虑原始问题的约束：&lt;br&gt;\[&lt;br&gt;y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\&lt;br&gt;\xi_i \geq 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;如果对于某个$i$，这个约束起作用，即：&lt;br&gt;\[&lt;br&gt;y_i\left(w^Tx_i+b\right) = 1 - \xi_i \\&lt;br&gt;\xi_i = 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;那么我们就有：&lt;br&gt;\[&lt;br&gt;b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=j}^N\alpha_jy_jx_j^Tx_i&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;从而可以求得$b$。那么，如何找到使约束起作用的$i$？这里需要用到互补松弛定理。实际上，根据互补松弛定理我们知道，如果对偶问题的解中有一个$\alpha_i$满足$0&amp;lt;\alpha_i&amp;lt;C$，那么原始问题中对应的约束则起作用。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;支持向量机的原始形式为二次规划，这是一种典型的凸规划，也满足强对偶定理。支持向量机的对偶形式仍然为凸二次规划。对偶形式的主要优点除了计算以外，还在于其易于推广到非线性支持向量机。本节介绍对偶形式的构造，以及如何根据对偶问题的解还原出原始问题的解。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+    
+    
+      <category term="对偶" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%B9%E5%81%B6/"/>
+    
+      <category term="支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+    
+      <category term="SVM" scheme="http://cxsmarkchan.github.com/tags/SVM/"/>
+    
+  </entry>
   
   <entry>
     <title>支持向量机：构造</title>
@@ -121,7 +165,7 @@
     <link href="http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/"/>
     <id>http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/</id>
     <published>2017-11-12T20:10:54.000Z</published>
-    <updated>2017-11-15T17:38:03.760Z</updated>
+    <updated>2017-11-22T03:10:37.765Z</updated>
     
     <content type="html">&lt;p&gt;在高维的优化问题中，梯度下降法是一类常见的优化算法，它利用“梯度是函数上升最快的方向”这一特点，沿着梯度反方向搜索，以降低函数值。在一定条件下，梯度下降法可以达到线性收敛性，尽管和牛顿法等二阶收敛算法有差距，但其较少的假设条件和方便的计算使其成为一种广泛使用的方法。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;一、梯度下降法的基本概念&quot;&gt;&lt;a href=&quot;#一、梯度下降法的基本概念&quot; class=&quot;headerlink&quot; title=&quot;一、梯度下降法的基本概念&quot;&gt;&lt;/a&gt;一、梯度下降法的基本概念&lt;/h1&gt;&lt;p&gt;考虑如下优化问题：&lt;br&gt;\[&lt;br&gt;\min_x f(x)&lt;br&gt;\]&lt;/p&gt;
