@@ -59,7 +59,7 @@
                         <a class="menu-archive " href="/archives" >
                             <i class="fa fa-archive "></i>
                             
-                            目录
+                            归档
                         </a>
                     </li>
                 
@@ -72,10 +72,10 @@
                     </li>
                 
                     <li>
-                        <a class="menu-about " href="/about" >
-                            <i class="fa fa-user "></i>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
                             
-                            关于
+                            搜索
                         </a>
                     </li>
                 
@@ -90,7 +90,7 @@
                 </div>
                 <div class="info col s8 valign-wrapper no-padding">
                     <div class="valign">
-                        <p class="name">陈晓爽</p>
+                        <p class="name">cxsmarkchan</p>
                         <p class="desc">电力系统/优化/随机</p>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                 <a class="waves-effect menu-archive " href="/archives" >
                     <i class="fa fa-archive "></i>
                     
-                    目录
+                    归档
                 </a>
             </li>
         
@@ -124,10 +124,10 @@
             </li>
         
             <li class="no-padding">
-                <a class="waves-effect menu-about " href="/about" >
-                    <i class="fa fa-user "></i>
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
                     
-                    关于
+                    搜索
                 </a>
             </li>
         
@@ -225,6 +225,20 @@
     </div>
 </nav>
 
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
     <main>
         
 
@@ -233,20 +247,20 @@
 <div id="article-list" class="container main-container">
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/25/ml-svm-kernel/">支持向量机：核方法</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-26T03:06:35.000Z"><a href="/2017/11/25/ml-svm-kernel/">2017-11-25</a></time>
+            <time class="pink-link-context" datetime="2017-11-26T03:06:35.000Z"><a href="/2017/11/25/ml-svm-kernel/">2017-11-25</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/对偶/" class="chip pink lighten-1">对偶</a>
@@ -263,37 +277,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>利用支持向量机的对偶形式，可以把支持向量机推广到非线性模型中。由于对偶形式中仅出现了自变量的内积形式，因此在非线性支持向量机中，我们甚至不用定义具体的非线性映射，只需要定义“非线性内积”，也就是核函数。核方法使得非线性支持向量机仍然能用凸二次规划的方法来求解。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/25/ml-svm-kernel/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>利用支持向量机的对偶形式，可以把支持向量机推广到非线性模型中。由于对偶形式中仅出现了自变量的内积形式，因此在非线性支持向量机中，我们甚至不用定义具体的非线性映射，只需要定义“非线性内积”，也就是核函数。核方法使得非线性支持向量机仍然能用凸二次规划的方法来求解。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/25/ml-svm-kernel/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/22/ml-svm-dual/">支持向量机：对偶形式</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-22T05:45:27.000Z"><a href="/2017/11/22/ml-svm-dual/">2017-11-22</a></time>
+            <time class="pink-link-context" datetime="2017-11-22T05:45:27.000Z"><a href="/2017/11/22/ml-svm-dual/">2017-11-22</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/对偶/" class="chip pink lighten-1">对偶</a>
@@ -306,37 +320,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>支持向量机的原始形式为二次规划，这是一种典型的凸规划，也满足强对偶定理。支持向量机的对偶形式仍然为凸二次规划。对偶形式的主要优点除了计算以外，还在于其易于推广到非线性支持向量机。本节介绍对偶形式的构造，以及如何根据对偶问题的解还原出原始问题的解。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/22/ml-svm-dual/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>支持向量机的原始形式为二次规划，这是一种典型的凸规划，也满足强对偶定理。支持向量机的对偶形式仍然为凸二次规划。对偶形式的主要优点除了计算以外，还在于其易于推广到非线性支持向量机。本节介绍对偶形式的构造，以及如何根据对偶问题的解还原出原始问题的解。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/22/ml-svm-dual/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/21/ml-svm-construction/">支持向量机：构造</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-21T18:04:34.000Z"><a href="/2017/11/21/ml-svm-construction/">2017-11-21</a></time>
+            <time class="pink-link-context" datetime="2017-11-21T18:04:34.000Z"><a href="/2017/11/21/ml-svm-construction/">2017-11-21</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/支持向量机/" class="chip pink lighten-1">支持向量机</a>
@@ -351,37 +365,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>支持向量机（Support Vector Machine, SVM）的主要思想是在分类问题中使不同类别之间的“间隔”最大。所谓支持向量，即在分类问题中最接近边界的样本，这些样本会影响到分类超平面的构造。可以有两种方式构造支持向量机，一种是直接基于间隔最大化思想，另一种则是基于一种特殊的损失函数（合页损失函数）。从损失函数的角度理解，支持向量机并不比Logistic回归更强大，当然，支持向量机的核心优势并不在此。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/21/ml-svm-construction/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>支持向量机（Support Vector Machine, SVM）的主要思想是在分类问题中使不同类别之间的“间隔”最大。所谓支持向量，即在分类问题中最接近边界的样本，这些样本会影响到分类超平面的构造。可以有两种方式构造支持向量机，一种是直接基于间隔最大化思想，另一种则是基于一种特殊的损失函数（合页损失函数）。从损失函数的角度理解，支持向量机并不比Logistic回归更强大，当然，支持向量机的核心优势并不在此。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/21/ml-svm-construction/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/18/optimization-newton/">牛顿法</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-19T01:46:51.000Z"><a href="/2017/11/18/optimization-newton/">2017-11-18</a></time>
+            <time class="pink-link-context" datetime="2017-11-19T01:46:51.000Z"><a href="/2017/11/18/optimization-newton/">2017-11-18</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/优化/" class="chip pink lighten-1">优化</a>
@@ -394,37 +408,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>相较于梯度下降方法，牛顿法通常具有更快的收敛性，即二次收敛性。当然，牛顿法对于函数性质的要求更为苛刻：它要求函数是二阶连续可导的，而梯度方法只要求一阶可导（包括在收敛性证明中，也不需要用到二阶导数）。牛顿法的瓶颈在于二阶导数矩阵（即海森矩阵）的计算和求逆，因此，其通常应用在这些导数容易显式求得的情形下。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/18/optimization-newton/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>相较于梯度下降方法，牛顿法通常具有更快的收敛性，即二次收敛性。当然，牛顿法对于函数性质的要求更为苛刻：它要求函数是二阶连续可导的，而梯度方法只要求一阶可导（包括在收敛性证明中，也不需要用到二阶导数）。牛顿法的瓶颈在于二阶导数矩阵（即海森矩阵）的计算和求逆，因此，其通常应用在这些导数容易显式求得的情形下。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/18/optimization-newton/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/12/optimization-gradient-descent/">梯度下降法及其收敛性</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-12T20:10:54.000Z"><a href="/2017/11/12/optimization-gradient-descent/">2017-11-12</a></time>
+            <time class="pink-link-context" datetime="2017-11-12T20:10:54.000Z"><a href="/2017/11/12/optimization-gradient-descent/">2017-11-12</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/导数/" class="chip pink lighten-1">导数</a>
@@ -437,37 +451,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>在高维的优化问题中，梯度下降法是一类常见的优化算法，它利用“梯度是函数上升最快的方向”这一特点，沿着梯度反方向搜索，以降低函数值。在一定条件下，梯度下降法可以达到线性收敛性，尽管和牛顿法等二阶收敛算法有差距，但其较少的假设条件和方便的计算使其成为一种广泛使用的方法。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/12/optimization-gradient-descent/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>在高维的优化问题中，梯度下降法是一类常见的优化算法，它利用“梯度是函数上升最快的方向”这一特点，沿着梯度反方向搜索，以降低函数值。在一定条件下，梯度下降法可以达到线性收敛性，尽管和牛顿法等二阶收敛算法有差距，但其较少的假设条件和方便的计算使其成为一种广泛使用的方法。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/12/optimization-gradient-descent/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/05/optimization-line-search/">一维搜索：0.618法与牛顿法</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-06T02:35:25.000Z"><a href="/2017/11/05/optimization-line-search/">2017-11-05</a></time>
+            <time class="pink-link-context" datetime="2017-11-06T02:35:25.000Z"><a href="/2017/11/05/optimization-line-search/">2017-11-05</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/优选法/" class="chip pink lighten-1">优选法</a>
@@ -480,37 +494,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>对于一般的优化问题，常见的解法是根据某个初始位置，确定一个搜索方向，把搜索问题暂时看作沿该方向的一维优化问题，再确定前进的步长。由此可见，一维的优化问题是最简单、也是最基本的优化问题。0.618法和牛顿法是两种具有代表性的方法。前者采用逐次试探的方式，不断逼近最优解，后者则把函数近似为二次函数，采用二次函数求极值的方法进行迭代求解。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/05/optimization-line-search/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>对于一般的优化问题，常见的解法是根据某个初始位置，确定一个搜索方向，把搜索问题暂时看作沿该方向的一维优化问题，再确定前进的步长。由此可见，一维的优化问题是最简单、也是最基本的优化问题。0.618法和牛顿法是两种具有代表性的方法。前者采用逐次试探的方式，不断逼近最优解，后者则把函数近似为二次函数，采用二次函数求极值的方法进行迭代求解。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/05/optimization-line-search/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/11/01/optimization-dual/">对偶理论</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-11-02T02:27:08.000Z"><a href="/2017/11/01/optimization-dual/">2017-11-01</a></time>
+            <time class="pink-link-context" datetime="2017-11-02T02:27:08.000Z"><a href="/2017/11/01/optimization-dual/">2017-11-01</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/对偶/" class="chip pink lighten-1">对偶</a>
@@ -521,37 +535,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>对偶理论是优化理论中非常优美的部分，很多优化问题的求解都依赖对偶形式。强对偶定理保证了这种求解方法的正确性。</p>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/11/01/optimization-dual/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>对偶理论是优化理论中非常优美的部分，很多优化问题的求解都依赖对偶形式。强对偶定理保证了这种求解方法的正确性。</p>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/11/01/optimization-dual/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/10/31/optimization-kkt/">最优性条件：KKT</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-10-31T04:17:22.000Z"><a href="/2017/10/31/optimization-kkt/">2017-10-31</a></time>
+            <time class="pink-link-context" datetime="2017-10-31T04:17:22.000Z"><a href="/2017/10/31/optimization-kkt/">2017-10-31</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/导数/" class="chip pink lighten-1">导数</a>
@@ -566,37 +580,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>在最优性判别中，基于导数的方法是一种相当有效的方法。对于无约束优化，可以直接利用一阶导数作为必要性判据，利用二阶导数作为充分性判据。这种方法可以推广到约束优化中，也就是著名的KKT条件。</p>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/10/31/optimization-kkt/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>在最优性判别中，基于导数的方法是一种相当有效的方法。对于无约束优化，可以直接利用一阶导数作为必要性判据，利用二阶导数作为充分性判据。这种方法可以推广到约束优化中，也就是著名的KKT条件。</p>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/10/31/optimization-kkt/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/10/20/optimization-convex/">凸性对于优化问题的意义</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-10-21T02:57:12.000Z"><a href="/2017/10/20/optimization-convex/">2017-10-20</a></time>
+            <time class="pink-link-context" datetime="2017-10-21T02:57:12.000Z"><a href="/2017/10/20/optimization-convex/">2017-10-20</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/优化/" class="chip pink lighten-1">优化</a>
@@ -607,37 +621,37 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>在优化问题中，凸优化问题很重要的一类子问题。一般来说，凸优化问题的求解无论在理论上，还是在算法上，都比非凸优化问题要成熟很多。可以证明，凸优化问题的局部最优即为全局最优，这使得凸优化问题的全局最优解的寻找更为简单。但凸性的意义不止于此。一个有意思的结论是：一般的非凸问题不仅全局最优难以求解，甚至局部最优的求解也非常困难！这篇文章会简要介绍相关的结论。<br>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/10/20/optimization-convex/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>在优化问题中，凸优化问题很重要的一类子问题。一般来说，凸优化问题的求解无论在理论上，还是在算法上，都比非凸优化问题要成熟很多。可以证明，凸优化问题的局部最优即为全局最优，这使得凸优化问题的全局最优解的寻找更为简单。但凸性的意义不止于此。一个有意思的结论是：一般的非凸问题不仅全局最优难以求解，甚至局部最优的求解也非常困难！这篇文章会简要介绍相关的结论。<br>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/10/20/optimization-convex/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
         <article class="simple-article">
-        <div class="card">
-            <div class="card-content">
-                <div class="article-title">
-                    
+    <div class="card">
+        <div class="card-content">
+            <div class="article-title">
+                
     
         <h1 class="indigo-link-context"><a href="/2017/10/12/optimization-config/">优化模型（一）：优化的要素</a></h1>
     
 
 
-                </div>
+            </div>
 
-                <time class="pink-link-context" datetime="2017-10-12T04:39:11.000Z"><a href="/2017/10/12/optimization-config/">2017-10-12</a></time>
+            <time class="pink-link-context" datetime="2017-10-12T04:39:11.000Z"><a href="/2017/10/12/optimization-config/">2017-10-12</a></time>
 
-                
+            
     <div class="tags-row">
         
             <a href="/tags/优化/" class="chip pink lighten-1">优化</a>
@@ -648,19 +662,19 @@
 
 
 
-                
-                    <div class="entry pink-link-context">
-                        <p>在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。</p>
-                    </div>
-                
-            </div>
-
             
-            <div class="card-action pink-link-context">
-                <a href="2017/10/12/optimization-config/">READ MORE</a>
-            </div>
+                <div class="entry pink-link-context">
+                    <p>在工程学科中，大量的问题均可以转化为优化问题。从字面意义上，优化即为在允许的范围(约束)内调整决策变量，使某个目标达到最大或最小。然而，在数学上处理优化之前，很自然的问题是：优化问题应该如何用数学语言表达？它有那些要素需要注意？这篇博客简要介绍优化问题的决策变量、目标函数和约束，这也是优化问题最基础的知识。</p>
+                </div>
             
         </div>
+
+        
+        <div class="card-action pink-link-context">
+            <a href="/2017/10/12/optimization-config/">阅读全文</a>
+        </ div>
+        
+    </div>
 </article>
 
     
@@ -689,17 +703,17 @@
     </a>
     <ul>
       <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
-      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
     </ul>
   </div>
 
     </main>
     <footer class="page-footer indigo darken-1">
     
-    <div class="container">
+    <div class="footer-container container">
         <div class="row">
             
-            <div class="social-group col m3 s12">
+            <div class="social-group col m4 s12">
                 <h5 class="white-text">社交</h5>
                 
                     <a class="social-link" href="https://github.com/cxsmarkchan" target="_blank">
@@ -710,6 +724,22 @@
                         <i class="fa fa-2x fa-rss"></i>
                     </a>
                 
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
             </div>
             
 
@@ -720,7 +750,7 @@
 
     <div class="footer-copyright pink-link-context">
         <div class="container">
-            © 2016 cxsmarkchan.github.io, All rights reserved.
+            © 2016 example.com, All rights reserved.
             <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
         </div>
     </div>
@@ -729,85 +759,208 @@
 
     <noscript>
     <div class="noscript">
-        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
     </div>
 </noscript>
 <div class="noscript">
-    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
 </div>
 
 
-<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script src="/js/materialize.min.js"></script>
 
 <script>
-(function($) {
-    $(document).ready(function() {
-        // 隐藏禁用javascript（针对微信内置浏览器）的提示
-        $('.noscript').hide();
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
 
-        // 图片缩放效果
-        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
 
-        // 给图片加上点击放大效果（materialbox插件）
-        $imgs.addClass('materialboxed')
-            .each(function(i, el) {
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
                 $(this).attr('data-caption', $(this).attr('alt') || ' ');
             }).materialbox();
 
-        // 优化表格的显示
-        $('table').addClass('responsive-table striped bordered');
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
 
-        // 首页幻灯片
-        $('.slider').slider({
-            indicators: true,
-            full_width: true,
-            interval: 8000
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
         });
 
-        $(".button-collapse").sideNav();
-        $(".category-menu").sideNav();
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
 
-        // 针对gallery post
-        $('.carousel').carousel({
-            full_width: true
-        });
-        $('.carousel-control.prev').click(function() {
-            $('.carousel').carousel('prev');
-        });
-        $('.carousel-control.next').click(function() {
-            $('.carousel').carousel('next');
-        });
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
 
-        // 文章目录
-        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
-        // 修正文章目录的left-border颜色
-        var color = $('.table-of-contents-text').css('color');
-        $('.table-of-contents-link').css('border-left-color', color);
-
-        // 针对移动端做的优化：FAB按钮点击一下收回
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            $('.fixed-action-btn').addClass('click-to-toggle');
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
         }
-        // 回到顶部
-        $('.btn-return-top').click(function() {
-            $('body, html').animate({
-                scrollTop: 0
-            }, 500);
-        });
-
-        // 重置读书页面的Tab标签页的颜色
-        $('li.tab a').hover(function() {
-            $(this).toggleClass('text-lighten-4');
-        });
-        $('.indicator').addClass('pink lighten-2');
-
-        
-        // 添加new标签
-        $('.menu-reading').append('<span class="new badge pink"></span>');
-        
-    });
-})(jQuery);
+    })(jQuery);
 </script>
 
 
