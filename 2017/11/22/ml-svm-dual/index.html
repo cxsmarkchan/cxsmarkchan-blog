@@ -204,7 +204,7 @@
 
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/机器学习/">
-                    机器学习 <span class="right">2 篇</span></a>
+                    机器学习 <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -212,7 +212,7 @@
 
             <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/机器学习/模型/">
-                    模型 <span class="right">2 篇</span></a>
+                    模型 <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -271,7 +271,7 @@
 
 
             <div class="toc pink-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、对偶形式的构造"><span class="section table-of-contents-text">一、对偶形式的构造</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、对偶问题的解与原始问题的关系"><span class="section table-of-contents-text">二、对偶问题的解与原始问题的关系</span></a></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、对偶形式的构造"><span class="section table-of-contents-text">一、对偶形式的构造</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、对偶问题的解与原始问题的关系"><span class="section table-of-contents-text">二、对偶问题的解与原始问题的关系</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-基本思路"><span class="section table-of-contents-text">2.1 基本思路</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-硬间隔下的支持向量机"><span class="section table-of-contents-text">2.2 硬间隔下的支持向量机</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-3-软间隔下的支持向量机"><span class="section table-of-contents-text">2.3 软间隔下的支持向量机</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#三、小结"><span class="section table-of-contents-text">三、小结</span></a></li></ol>
 </div>
 
 
@@ -287,11 +287,30 @@
 <p>注意到$\beta$在上面的优化问题中等价于保证$\alpha_i \leq C$，可以消去$\beta$，并把上述问题改写为：<br>\[<br>\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\<br>\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\<br>0 \leq\alpha_i\leq C<br>\]</p>
 <p>这样我们就得到<strong>支持向量机的对偶形式</strong>。可以看出，支持向量机的对偶形式仍然为二次规划。和原始形式相同，这个二次规划也是一个凸规划，这一事实可以从下述等式中看出：<br>\[<br>\sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j = \alpha^TA^TA\alpha<br>\]</p>
 <p>其中$A=\left[y_1x_1,y_2x_2,\dots,y_Nx_N\right]$是一个$D\times N$的矩阵（D为特征的维数）。而$A^TA$是一个半正定矩阵，因此该二次规划为凸规划。</p>
-<h1 id="二、对偶问题的解与原始问题的关系"><a href="#二、对偶问题的解与原始问题的关系" class="headerlink" title="二、对偶问题的解与原始问题的关系"></a>二、对偶问题的解与原始问题的关系</h1><p>根据强对偶定理，对偶问题的最优解与原始问题的最优解相等。因此，求得对偶问题的解，即可得到原始问题的解。在前面的分析中，我们已经看到了$w$与对偶解$\alpha$之间的关系：<br>\[<br>w=\sum_{i=1}^N\alpha_iy_ix_i<br>\]</p>
+<h1 id="二、对偶问题的解与原始问题的关系"><a href="#二、对偶问题的解与原始问题的关系" class="headerlink" title="二、对偶问题的解与原始问题的关系"></a>二、对偶问题的解与原始问题的关系</h1><h2 id="2-1-基本思路"><a href="#2-1-基本思路" class="headerlink" title="2.1 基本思路"></a>2.1 基本思路</h2><p>根据强对偶定理，对偶问题的最优解与原始问题的最优解相等。因此，求得对偶问题的解，即可得到原始问题的解。在前面的分析中，我们已经看到了$w$与对偶解$\alpha$之间的关系：<br>\[<br>w=\sum_{i=1}^N\alpha_iy_ix_i<br>\]</p>
 <p>得到了$w$后，还需要确定原始问题的$b$。为此，考虑原始问题的约束：<br>\[<br>y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\<br>\xi_i \geq 0<br>\]</p>
 <p>如果对于某个$i$，这个约束起作用，即：<br>\[<br>y_i\left(w^Tx_i+b\right) = 1 - \xi_i \\<br>\xi_i = 0<br>\]</p>
 <p>那么我们就有：<br>\[<br>b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=j}^N\alpha_jy_jx_j^Tx_i<br>\]</p>
-<p>从而可以求得$b$。那么，如何找到使约束起作用的$i$？这里需要用到互补松弛定理。实际上，根据互补松弛定理我们知道，如果对偶问题的解中有一个$\alpha_i$满足$0&lt;\alpha_i&lt;C$，那么原始问题中对应的约束则起作用。</p>
+<p>从而可以求得$b$。由此可见，寻找起作用约束是确定$b$的关键环节。那么，我们需要考虑两个问题：</p>
+<ol>
+<li>起作用约束一定存在吗？如果不存在如何处理？</li>
+<li>起作用约束是否唯一？如果不唯一如何处理？</li>
+</ol>
+<p>我们首先回答第2个问题：起作用约束不一定唯一，但不同的起作用约束计算出来的$b$是相等的。这是因为，上述起作用约束构成了对$b$的等式约束，如果两个等式约束的结果不同，就会造成矛盾。所以，如果能找到一个$i$使得$0&lt;\alpha_i&lt;C$，就可以放心地利用该样本算出相应的$b$。</p>
+<p>对于第1个问题，一般采用互补松弛定理来处理。下面我们考虑硬间隔和软间隔两种情况。</p>
+<h2 id="2-2-硬间隔下的支持向量机"><a href="#2-2-硬间隔下的支持向量机" class="headerlink" title="2.2 硬间隔下的支持向量机"></a>2.2 硬间隔下的支持向量机</h2><p>所谓硬间隔，即为线性可分场景下的支持向量机，即：<br>\[<br>\min_{w,b} \frac{1}{2}w^Tw \\<br>\text{s.t. } y_i\left(w^Tx_i+b\right) \geq 1<br>\]</p>
+<p>它对应于$C$为无穷大的情形。此时，对偶问题的约束由$0\leq \alpha_i \leq C$变为$\alpha_i\geq 0$，其余约束不变。这种情形相对简单，因此先予以讨论。</p>
+<p>根据互补松弛定理我们知道，如果对偶问题的解中有一个$\alpha_i$满足$\alpha_i&gt;0$，那么原始问题中对应的约束则起作用。所以，只要找到一个$\alpha_i&gt;0$即可。那么，是否有可能所有$\alpha_i$均为0呢？答案是否定的，否则我们可以得到$w=\sum_{i=1}^N\alpha_iy_ix_i=0$，从而原问题中的约束$y_i\left(w^Tx_i+b\right) \geq 1$变为$y_ib\geq 1$。而$b$是固定值，在二类分类问题中，训练样本$y_i$应部分为1，部分为-1，不可能做到$y_ib\geq 1,\forall i$，因此产生矛盾。从而，必然存在$\alpha_i&gt;0$，即起作用约束必然存在。<strong>显然，$\alpha_i&gt;0$对应的样本点$i$即为支持向量</strong>。</p>
+<h2 id="2-3-软间隔下的支持向量机"><a href="#2-3-软间隔下的支持向量机" class="headerlink" title="2.3 软间隔下的支持向量机"></a>2.3 软间隔下的支持向量机</h2><p>软间隔对应的是一般的支持向量机，此时通过类似的互补松弛分析可以得知，如果存在$0&lt;\alpha_i<c$，则对应的两个约束$y\_i\\left(w^tx\_i+b\\right) 1="" =="" -="" \\xi\_i$和$\\xi\_i="0$均起作用，从而可以求得$b$。同样地，可以证明必然存在$i$使得$\\alpha\_i">0$，这些样本也称为<strong>支持向量</strong>。</c$，则对应的两个约束$y\_i\\left(w^tx\_i+b\\right)></p>
+<p>然而，在软间隔下，我们只能保证必然存在$\alpha_i$使得$\alpha_i&gt;0$，但不能保证存在$i$使得$0&lt;\alpha_i&lt;C$。换句话说，<strong>有可能不存在样本点$i$，使两个约束$y_i\left(w^Tx_i+b\right) = 1 - \xi_i$和$\xi_i = 0$同时起作用。</strong>这种情况下，$b$的取值在一定范围内是任意的。不同的$b$会对应不同的$\xi_i$，但因为目标函数中只有求和项$\sum_{i=1}^N\xi_i$，由$b$的变化造成的$\xi_i$的变化会在求和中被抵消。也就是说，不同的$b$对应的目标函数是不变的。究其原因，是<strong>软间隔下的支持向量机可能存在不唯一的最优解</strong>。</p>
+<p>这个时候，通常的做法是在$\alpha_i=C$的样本（这些样本也是支持向量，因为满足$\alpha_i&gt;0$）中，任意选择样本$i$，令$\xi_i=0$，从而得出相应的$b$。或者对所有的满足$\alpha_i=C$的约束采取这样的操作，将所得到的$b$取平均，从而得到“接近中心”的分离超平面。</p>
+<h1 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h1><p>最后，我们总结利用对偶方法求解支持向量机的步骤：</p>
+<ol>
+<li>列出其对偶形式并求解出最优的$\alpha$：<br>\[<br>\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\<br>\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\<br>0 \leq\alpha_i\leq C<br>\]</li>
+<li>找到起作用约束$i$，计算系数$b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=1}^N\alpha_jy_jx_j^Tx_i$.</li>
+<li>对于给定的样本$x$，预测：<br>\[<br>\hat{y}=w^Tx+b=\sum_{i=1}^N\alpha_iy_ix_i^Tx+b<br>\]</li>
+</ol>
+<p>值得注意的是，在第3步中，我们并没有显式地计算出$w$，而是将$w=\sum_{i=1}^N\alpha_iy_ix_i$代入到$\hat{y}=w^Tx+b$计算预测值。这实际上体现了对偶方法的一个很重要的性质：<strong>在所有步骤中，涉及到自变量的部分均以内积$x_i^Tx_j$或$x_i^Tx$的形式出现，不含有其他对自变量的操作</strong>。这个性质使得支持向量机非常容易推广到非线性的情形：<strong>只要我们能定义一种新的“内积”来取代$x_i^Tx_j$的形式，就可以用相同的算法（凸二次规划）来处理非线性分类问题。</strong>这也是支持向量机的一个重要的优势。</p>
 
             </div>
         </div>

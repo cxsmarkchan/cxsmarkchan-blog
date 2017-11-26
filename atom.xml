@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.github.com/"/>
-  <updated>2017-11-23T04:30:30.688Z</updated>
+  <updated>2017-11-26T04:23:26.124Z</updated>
   <id>http://cxsmarkchan.github.com/</id>
   
   <author>
@@ -16,11 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>支持向量机：核方法</title>
+    <link href="http://cxsmarkchan.github.com/2017/11/25/ml-svm-kernel/"/>
+    <id>http://cxsmarkchan.github.com/2017/11/25/ml-svm-kernel/</id>
+    <published>2017-11-26T03:06:35.000Z</published>
+    <updated>2017-11-26T04:23:26.124Z</updated>
+    
+    <content type="html">&lt;p&gt;利用支持向量机的对偶形式，可以把支持向量机推广到非线性模型中。由于对偶形式中仅出现了自变量的内积形式，因此在非线性支持向量机中，我们甚至不用定义具体的非线性映射，只需要定义“非线性内积”，也就是核函数。核方法使得非线性支持向量机仍然能用凸二次规划的方法来求解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;利用支持向量机的对偶形式，可以把支持向量机推广到非线性模型中。由于对偶形式中仅出现了自变量的内积形式，因此在非线性支持向量机中，我们甚至不用定义具体的非线性映射，只需要定义“非线性内积”，也就是核函数。核方法使得非线性支持向量机仍然能用凸二次规划的方法来求解。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+    
+    
+      <category term="对偶" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%B9%E5%81%B6/"/>
+    
+      <category term="支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+    
+      <category term="SVM" scheme="http://cxsmarkchan.github.com/tags/SVM/"/>
+    
+      <category term="核方法" scheme="http://cxsmarkchan.github.com/tags/%E6%A0%B8%E6%96%B9%E6%B3%95/"/>
+    
+      <category term="非线性支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
     <title>支持向量机：对偶形式</title>
     <link href="http://cxsmarkchan.github.com/2017/11/22/ml-svm-dual/"/>
     <id>http://cxsmarkchan.github.com/2017/11/22/ml-svm-dual/</id>
     <published>2017-11-22T05:45:27.000Z</published>
-    <updated>2017-11-23T04:30:30.688Z</updated>
+    <updated>2017-11-26T04:20:14.851Z</updated>
     
     <content type="html">&lt;p&gt;支持向量机的原始形式为二次规划，这是一种典型的凸规划，也满足强对偶定理。支持向量机的对偶形式仍然为凸二次规划。对偶形式的主要优点除了计算以外，还在于其易于推广到非线性支持向量机。本节介绍对偶形式的构造，以及如何根据对偶问题的解还原出原始问题的解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;一、对偶形式的构造&quot;&gt;&lt;a href=&quot;#一、对偶形式的构造&quot; class=&quot;headerlink&quot; title=&quot;一、对偶形式的构造&quot;&gt;&lt;/a&gt;一、对偶形式的构造&lt;/h1&gt;&lt;p&gt;考虑支持向量机的原始形式：&lt;br&gt;\[&lt;br&gt;\min_{w,b,\xi} C \sum_{i=1}^N\xi_i + \frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\&lt;br&gt;\xi_i \geq 0&lt;br&gt;\]&lt;/p&gt;
@@ -33,11 +66,30 @@
 &lt;p&gt;注意到$\beta$在上面的优化问题中等价于保证$\alpha_i \leq C$，可以消去$\beta$，并把上述问题改写为：&lt;br&gt;\[&lt;br&gt;\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\&lt;br&gt;\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;0 \leq\alpha_i\leq C&lt;br&gt;\]&lt;/p&gt;
 &lt;p&gt;这样我们就得到&lt;strong&gt;支持向量机的对偶形式&lt;/strong&gt;。可以看出，支持向量机的对偶形式仍然为二次规划。和原始形式相同，这个二次规划也是一个凸规划，这一事实可以从下述等式中看出：&lt;br&gt;\[&lt;br&gt;\sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j = \alpha^TA^TA\alpha&lt;br&gt;\]&lt;/p&gt;
 &lt;p&gt;其中$A=\left[y_1x_1,y_2x_2,\dots,y_Nx_N\right]$是一个$D\times N$的矩阵（D为特征的维数）。而$A^TA$是一个半正定矩阵，因此该二次规划为凸规划。&lt;/p&gt;
-&lt;h1 id=&quot;二、对偶问题的解与原始问题的关系&quot;&gt;&lt;a href=&quot;#二、对偶问题的解与原始问题的关系&quot; class=&quot;headerlink&quot; title=&quot;二、对偶问题的解与原始问题的关系&quot;&gt;&lt;/a&gt;二、对偶问题的解与原始问题的关系&lt;/h1&gt;&lt;p&gt;根据强对偶定理，对偶问题的最优解与原始问题的最优解相等。因此，求得对偶问题的解，即可得到原始问题的解。在前面的分析中，我们已经看到了$w$与对偶解$\alpha$之间的关系：&lt;br&gt;\[&lt;br&gt;w=\sum_{i=1}^N\alpha_iy_ix_i&lt;br&gt;\]&lt;/p&gt;
+&lt;h1 id=&quot;二、对偶问题的解与原始问题的关系&quot;&gt;&lt;a href=&quot;#二、对偶问题的解与原始问题的关系&quot; class=&quot;headerlink&quot; title=&quot;二、对偶问题的解与原始问题的关系&quot;&gt;&lt;/a&gt;二、对偶问题的解与原始问题的关系&lt;/h1&gt;&lt;h2 id=&quot;2-1-基本思路&quot;&gt;&lt;a href=&quot;#2-1-基本思路&quot; class=&quot;headerlink&quot; title=&quot;2.1 基本思路&quot;&gt;&lt;/a&gt;2.1 基本思路&lt;/h2&gt;&lt;p&gt;根据强对偶定理，对偶问题的最优解与原始问题的最优解相等。因此，求得对偶问题的解，即可得到原始问题的解。在前面的分析中，我们已经看到了$w$与对偶解$\alpha$之间的关系：&lt;br&gt;\[&lt;br&gt;w=\sum_{i=1}^N\alpha_iy_ix_i&lt;br&gt;\]&lt;/p&gt;
 &lt;p&gt;得到了$w$后，还需要确定原始问题的$b$。为此，考虑原始问题的约束：&lt;br&gt;\[&lt;br&gt;y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\&lt;br&gt;\xi_i \geq 0&lt;br&gt;\]&lt;/p&gt;
 &lt;p&gt;如果对于某个$i$，这个约束起作用，即：&lt;br&gt;\[&lt;br&gt;y_i\left(w^Tx_i+b\right) = 1 - \xi_i \\&lt;br&gt;\xi_i = 0&lt;br&gt;\]&lt;/p&gt;
 &lt;p&gt;那么我们就有：&lt;br&gt;\[&lt;br&gt;b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=j}^N\alpha_jy_jx_j^Tx_i&lt;br&gt;\]&lt;/p&gt;
-&lt;p&gt;从而可以求得$b$。那么，如何找到使约束起作用的$i$？这里需要用到互补松弛定理。实际上，根据互补松弛定理我们知道，如果对偶问题的解中有一个$\alpha_i$满足$0&amp;lt;\alpha_i&amp;lt;C$，那么原始问题中对应的约束则起作用。&lt;/p&gt;
+&lt;p&gt;从而可以求得$b$。由此可见，寻找起作用约束是确定$b$的关键环节。那么，我们需要考虑两个问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;起作用约束一定存在吗？如果不存在如何处理？&lt;/li&gt;
+&lt;li&gt;起作用约束是否唯一？如果不唯一如何处理？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们首先回答第2个问题：起作用约束不一定唯一，但不同的起作用约束计算出来的$b$是相等的。这是因为，上述起作用约束构成了对$b$的等式约束，如果两个等式约束的结果不同，就会造成矛盾。所以，如果能找到一个$i$使得$0&amp;lt;\alpha_i&amp;lt;C$，就可以放心地利用该样本算出相应的$b$。&lt;/p&gt;
+&lt;p&gt;对于第1个问题，一般采用互补松弛定理来处理。下面我们考虑硬间隔和软间隔两种情况。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-硬间隔下的支持向量机&quot;&gt;&lt;a href=&quot;#2-2-硬间隔下的支持向量机&quot; class=&quot;headerlink&quot; title=&quot;2.2 硬间隔下的支持向量机&quot;&gt;&lt;/a&gt;2.2 硬间隔下的支持向量机&lt;/h2&gt;&lt;p&gt;所谓硬间隔，即为线性可分场景下的支持向量机，即：&lt;br&gt;\[&lt;br&gt;\min_{w,b} \frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } y_i\left(w^Tx_i+b\right) \geq 1&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;它对应于$C$为无穷大的情形。此时，对偶问题的约束由$0\leq \alpha_i \leq C$变为$\alpha_i\geq 0$，其余约束不变。这种情形相对简单，因此先予以讨论。&lt;/p&gt;
+&lt;p&gt;根据互补松弛定理我们知道，如果对偶问题的解中有一个$\alpha_i$满足$\alpha_i&amp;gt;0$，那么原始问题中对应的约束则起作用。所以，只要找到一个$\alpha_i&amp;gt;0$即可。那么，是否有可能所有$\alpha_i$均为0呢？答案是否定的，否则我们可以得到$w=\sum_{i=1}^N\alpha_iy_ix_i=0$，从而原问题中的约束$y_i\left(w^Tx_i+b\right) \geq 1$变为$y_ib\geq 1$。而$b$是固定值，在二类分类问题中，训练样本$y_i$应部分为1，部分为-1，不可能做到$y_ib\geq 1,\forall i$，因此产生矛盾。从而，必然存在$\alpha_i&amp;gt;0$，即起作用约束必然存在。&lt;strong&gt;显然，$\alpha_i&amp;gt;0$对应的样本点$i$即为支持向量&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;2-3-软间隔下的支持向量机&quot;&gt;&lt;a href=&quot;#2-3-软间隔下的支持向量机&quot; class=&quot;headerlink&quot; title=&quot;2.3 软间隔下的支持向量机&quot;&gt;&lt;/a&gt;2.3 软间隔下的支持向量机&lt;/h2&gt;&lt;p&gt;软间隔对应的是一般的支持向量机，此时通过类似的互补松弛分析可以得知，如果存在$0&amp;lt;\alpha_i&lt;c$，则对应的两个约束$y\_i\\left(w^tx\_i+b\\right) 1=&quot;&quot; ==&quot;&quot; -=&quot;&quot; \\xi\_i$和$\\xi\_i=&quot;0$均起作用，从而可以求得$b$。同样地，可以证明必然存在$i$使得$\\alpha\_i&quot;&gt;0$，这些样本也称为&lt;strong&gt;支持向量&lt;/strong&gt;。&lt;/c$，则对应的两个约束$y\_i\\left(w^tx\_i+b\\right)&gt;&lt;/p&gt;
+&lt;p&gt;然而，在软间隔下，我们只能保证必然存在$\alpha_i$使得$\alpha_i&amp;gt;0$，但不能保证存在$i$使得$0&amp;lt;\alpha_i&amp;lt;C$。换句话说，&lt;strong&gt;有可能不存在样本点$i$，使两个约束$y_i\left(w^Tx_i+b\right) = 1 - \xi_i$和$\xi_i = 0$同时起作用。&lt;/strong&gt;这种情况下，$b$的取值在一定范围内是任意的。不同的$b$会对应不同的$\xi_i$，但因为目标函数中只有求和项$\sum_{i=1}^N\xi_i$，由$b$的变化造成的$\xi_i$的变化会在求和中被抵消。也就是说，不同的$b$对应的目标函数是不变的。究其原因，是&lt;strong&gt;软间隔下的支持向量机可能存在不唯一的最优解&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这个时候，通常的做法是在$\alpha_i=C$的样本（这些样本也是支持向量，因为满足$\alpha_i&amp;gt;0$）中，任意选择样本$i$，令$\xi_i=0$，从而得出相应的$b$。或者对所有的满足$\alpha_i=C$的约束采取这样的操作，将所得到的$b$取平均，从而得到“接近中心”的分离超平面。&lt;/p&gt;
+&lt;h1 id=&quot;三、小结&quot;&gt;&lt;a href=&quot;#三、小结&quot; class=&quot;headerlink&quot; title=&quot;三、小结&quot;&gt;&lt;/a&gt;三、小结&lt;/h1&gt;&lt;p&gt;最后，我们总结利用对偶方法求解支持向量机的步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;列出其对偶形式并求解出最优的$\alpha$：&lt;br&gt;\[&lt;br&gt;\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\&lt;br&gt;\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;0 \leq\alpha_i\leq C&lt;br&gt;\]&lt;/li&gt;
+&lt;li&gt;找到起作用约束$i$，计算系数$b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=1}^N\alpha_jy_jx_j^Tx_i$.&lt;/li&gt;
+&lt;li&gt;对于给定的样本$x$，预测：&lt;br&gt;\[&lt;br&gt;\hat{y}=w^Tx+b=\sum_{i=1}^N\alpha_iy_ix_i^Tx+b&lt;br&gt;\]&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;值得注意的是，在第3步中，我们并没有显式地计算出$w$，而是将$w=\sum_{i=1}^N\alpha_iy_ix_i$代入到$\hat{y}=w^Tx+b$计算预测值。这实际上体现了对偶方法的一个很重要的性质：&lt;strong&gt;在所有步骤中，涉及到自变量的部分均以内积$x_i^Tx_j$或$x_i^Tx$的形式出现，不含有其他对自变量的操作&lt;/strong&gt;。这个性质使得支持向量机非常容易推广到非线性的情形：&lt;strong&gt;只要我们能定义一种新的“内积”来取代$x_i^Tx_j$的形式，就可以用相同的算法（凸二次规划）来处理非线性分类问题。&lt;/strong&gt;这也是支持向量机的一个重要的优势。&lt;/p&gt;
 </content>
     
     <summary type="html">
