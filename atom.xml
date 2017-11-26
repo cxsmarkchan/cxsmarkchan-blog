@@ -4,9 +4,9 @@
   <subtitle>cxsmarkchan的博客</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://cxsmarkchan.github.com/"/>
+  <link href="http://cxsmarkchan.com/"/>
   <updated>2017-11-26T04:23:26.124Z</updated>
-  <id>http://cxsmarkchan.github.com/</id>
+  <id>http://cxsmarkchan.com/</id>
   
   <author>
     <name>cxsmarkchan</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>支持向量机：核方法</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/25/ml-svm-kernel/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/25/ml-svm-kernel/</id>
+    <link href="http://cxsmarkchan.com/2017/11/25/ml-svm-kernel/"/>
+    <id>http://cxsmarkchan.com/2017/11/25/ml-svm-kernel/</id>
     <published>2017-11-26T03:06:35.000Z</published>
     <updated>2017-11-26T04:23:26.124Z</updated>
     
@@ -31,27 +31,27 @@
     
     </summary>
     
-      <category term="机器学习" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+      <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="对偶" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%B9%E5%81%B6/"/>
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
-      <category term="支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+      <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
-      <category term="SVM" scheme="http://cxsmarkchan.github.com/tags/SVM/"/>
+      <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
     
-      <category term="核方法" scheme="http://cxsmarkchan.github.com/tags/%E6%A0%B8%E6%96%B9%E6%B3%95/"/>
+      <category term="核方法" scheme="http://cxsmarkchan.com/tags/%E6%A0%B8%E6%96%B9%E6%B3%95/"/>
     
-      <category term="非线性支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+      <category term="非线性支持向量机" scheme="http://cxsmarkchan.com/tags/%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
   </entry>
   
   <entry>
     <title>支持向量机：对偶形式</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/22/ml-svm-dual/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/22/ml-svm-dual/</id>
+    <link href="http://cxsmarkchan.com/2017/11/22/ml-svm-dual/"/>
+    <id>http://cxsmarkchan.com/2017/11/22/ml-svm-dual/</id>
     <published>2017-11-22T05:45:27.000Z</published>
     <updated>2017-11-26T04:20:14.851Z</updated>
     
@@ -98,23 +98,23 @@
     
     </summary>
     
-      <category term="机器学习" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+      <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="对偶" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%B9%E5%81%B6/"/>
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
-      <category term="支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+      <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
-      <category term="SVM" scheme="http://cxsmarkchan.github.com/tags/SVM/"/>
+      <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
     
   </entry>
   
   <entry>
     <title>支持向量机：构造</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/21/ml-svm-construction/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/21/ml-svm-construction/</id>
+    <link href="http://cxsmarkchan.com/2017/11/21/ml-svm-construction/"/>
+    <id>http://cxsmarkchan.com/2017/11/21/ml-svm-construction/</id>
     <published>2017-11-21T18:04:34.000Z</published>
     <updated>2017-11-22T03:10:22.961Z</updated>
     
@@ -162,25 +162,25 @@
     
     </summary>
     
-      <category term="机器学习" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+      <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="支持向量机" scheme="http://cxsmarkchan.github.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
+      <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
-      <category term="SVM" scheme="http://cxsmarkchan.github.com/tags/SVM/"/>
+      <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
     
-      <category term="合页损失函数" scheme="http://cxsmarkchan.github.com/tags/%E5%90%88%E9%A1%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
+      <category term="合页损失函数" scheme="http://cxsmarkchan.com/tags/%E5%90%88%E9%A1%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
     
-      <category term="最大间隔" scheme="http://cxsmarkchan.github.com/tags/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%94/"/>
+      <category term="最大间隔" scheme="http://cxsmarkchan.com/tags/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%94/"/>
     
   </entry>
   
   <entry>
     <title>牛顿法</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/18/optimization-newton/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/18/optimization-newton/</id>
+    <link href="http://cxsmarkchan.com/2017/11/18/optimization-newton/"/>
+    <id>http://cxsmarkchan.com/2017/11/18/optimization-newton/</id>
     <published>2017-11-19T01:46:51.000Z</published>
     <updated>2017-11-19T03:21:39.107Z</updated>
     
@@ -199,23 +199,23 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="算法" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="二阶收敛" scheme="http://cxsmarkchan.github.com/tags/%E4%BA%8C%E9%98%B6%E6%94%B6%E6%95%9B/"/>
+      <category term="二阶收敛" scheme="http://cxsmarkchan.com/tags/%E4%BA%8C%E9%98%B6%E6%94%B6%E6%95%9B/"/>
     
-      <category term="牛顿法" scheme="http://cxsmarkchan.github.com/tags/%E7%89%9B%E9%A1%BF%E6%B3%95/"/>
+      <category term="牛顿法" scheme="http://cxsmarkchan.com/tags/%E7%89%9B%E9%A1%BF%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>梯度下降法及其收敛性</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/12/optimization-gradient-descent/</id>
+    <link href="http://cxsmarkchan.com/2017/11/12/optimization-gradient-descent/"/>
+    <id>http://cxsmarkchan.com/2017/11/12/optimization-gradient-descent/</id>
     <published>2017-11-12T20:10:54.000Z</published>
     <updated>2017-11-22T03:10:37.765Z</updated>
     
@@ -260,23 +260,23 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="算法" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="导数" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%BC%E6%95%B0/"/>
+      <category term="导数" scheme="http://cxsmarkchan.com/tags/%E5%AF%BC%E6%95%B0/"/>
     
-      <category term="梯度" scheme="http://cxsmarkchan.github.com/tags/%E6%A2%AF%E5%BA%A6/"/>
+      <category term="梯度" scheme="http://cxsmarkchan.com/tags/%E6%A2%AF%E5%BA%A6/"/>
     
-      <category term="收敛" scheme="http://cxsmarkchan.github.com/tags/%E6%94%B6%E6%95%9B/"/>
+      <category term="收敛" scheme="http://cxsmarkchan.com/tags/%E6%94%B6%E6%95%9B/"/>
     
   </entry>
   
   <entry>
     <title>一维搜索：0.618法与牛顿法</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/05/optimization-line-search/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/05/optimization-line-search/</id>
+    <link href="http://cxsmarkchan.com/2017/11/05/optimization-line-search/"/>
+    <id>http://cxsmarkchan.com/2017/11/05/optimization-line-search/</id>
     <published>2017-11-06T02:35:25.000Z</published>
     <updated>2017-11-06T05:50:32.349Z</updated>
     
@@ -306,23 +306,23 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="算法" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="优选法" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E9%80%89%E6%B3%95/"/>
+      <category term="优选法" scheme="http://cxsmarkchan.com/tags/%E4%BC%98%E9%80%89%E6%B3%95/"/>
     
-      <category term="0.618" scheme="http://cxsmarkchan.github.com/tags/0-618/"/>
+      <category term="0.618" scheme="http://cxsmarkchan.com/tags/0-618/"/>
     
-      <category term="黄金分割" scheme="http://cxsmarkchan.github.com/tags/%E9%BB%84%E9%87%91%E5%88%86%E5%89%B2/"/>
+      <category term="黄金分割" scheme="http://cxsmarkchan.com/tags/%E9%BB%84%E9%87%91%E5%88%86%E5%89%B2/"/>
     
   </entry>
   
   <entry>
     <title>对偶理论</title>
-    <link href="http://cxsmarkchan.github.com/2017/11/01/optimization-dual/"/>
-    <id>http://cxsmarkchan.github.com/2017/11/01/optimization-dual/</id>
+    <link href="http://cxsmarkchan.com/2017/11/01/optimization-dual/"/>
+    <id>http://cxsmarkchan.com/2017/11/01/optimization-dual/</id>
     <published>2017-11-02T02:27:08.000Z</published>
     <updated>2017-11-21T18:10:24.928Z</updated>
     
@@ -356,21 +356,21 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="理论" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+      <category term="理论" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
     
     
-      <category term="对偶" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%B9%E5%81%B6/"/>
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
-      <category term="互补松弛" scheme="http://cxsmarkchan.github.com/tags/%E4%BA%92%E8%A1%A5%E6%9D%BE%E5%BC%9B/"/>
+      <category term="互补松弛" scheme="http://cxsmarkchan.com/tags/%E4%BA%92%E8%A1%A5%E6%9D%BE%E5%BC%9B/"/>
     
   </entry>
   
   <entry>
     <title>最优性条件：KKT</title>
-    <link href="http://cxsmarkchan.github.com/2017/10/31/optimization-kkt/"/>
-    <id>http://cxsmarkchan.github.com/2017/10/31/optimization-kkt/</id>
+    <link href="http://cxsmarkchan.com/2017/10/31/optimization-kkt/"/>
+    <id>http://cxsmarkchan.com/2017/10/31/optimization-kkt/</id>
     <published>2017-10-31T04:17:22.000Z</published>
     <updated>2017-11-21T18:10:11.668Z</updated>
     
@@ -408,25 +408,25 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="理论" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+      <category term="理论" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
     
     
-      <category term="导数" scheme="http://cxsmarkchan.github.com/tags/%E5%AF%BC%E6%95%B0/"/>
+      <category term="导数" scheme="http://cxsmarkchan.com/tags/%E5%AF%BC%E6%95%B0/"/>
     
-      <category term="约束" scheme="http://cxsmarkchan.github.com/tags/%E7%BA%A6%E6%9D%9F/"/>
+      <category term="约束" scheme="http://cxsmarkchan.com/tags/%E7%BA%A6%E6%9D%9F/"/>
     
-      <category term="KKT条件" scheme="http://cxsmarkchan.github.com/tags/KKT%E6%9D%A1%E4%BB%B6/"/>
+      <category term="KKT条件" scheme="http://cxsmarkchan.com/tags/KKT%E6%9D%A1%E4%BB%B6/"/>
     
-      <category term="极值" scheme="http://cxsmarkchan.github.com/tags/%E6%9E%81%E5%80%BC/"/>
+      <category term="极值" scheme="http://cxsmarkchan.com/tags/%E6%9E%81%E5%80%BC/"/>
     
   </entry>
   
   <entry>
     <title>凸性对于优化问题的意义</title>
-    <link href="http://cxsmarkchan.github.com/2017/10/20/optimization-convex/"/>
-    <id>http://cxsmarkchan.github.com/2017/10/20/optimization-convex/</id>
+    <link href="http://cxsmarkchan.com/2017/10/20/optimization-convex/"/>
+    <id>http://cxsmarkchan.com/2017/10/20/optimization-convex/</id>
     <published>2017-10-21T02:57:12.000Z</published>
     <updated>2017-11-21T18:09:05.996Z</updated>
     
@@ -456,21 +456,21 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="理论" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+      <category term="理论" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
     
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="凸优化" scheme="http://cxsmarkchan.github.com/tags/%E5%87%B8%E4%BC%98%E5%8C%96/"/>
+      <category term="凸优化" scheme="http://cxsmarkchan.com/tags/%E5%87%B8%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>优化模型（一）：优化的要素</title>
-    <link href="http://cxsmarkchan.github.com/2017/10/12/optimization-config/"/>
-    <id>http://cxsmarkchan.github.com/2017/10/12/optimization-config/</id>
+    <link href="http://cxsmarkchan.com/2017/10/12/optimization-config/"/>
+    <id>http://cxsmarkchan.com/2017/10/12/optimization-config/</id>
     <published>2017-10-12T04:39:11.000Z</published>
     <updated>2017-11-21T18:08:43.612Z</updated>
     
@@ -499,21 +499,21 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
+      <category term="模型" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="模型" scheme="http://cxsmarkchan.github.com/tags/%E6%A8%A1%E5%9E%8B/"/>
+      <category term="模型" scheme="http://cxsmarkchan.com/tags/%E6%A8%A1%E5%9E%8B/"/>
     
   </entry>
   
   <entry>
     <title>双线性约束的精确松弛</title>
-    <link href="http://cxsmarkchan.github.com/2016/05/12/bilinear/"/>
-    <id>http://cxsmarkchan.github.com/2016/05/12/bilinear/</id>
+    <link href="http://cxsmarkchan.com/2016/05/12/bilinear/"/>
+    <id>http://cxsmarkchan.com/2016/05/12/bilinear/</id>
     <published>2016-05-13T00:40:32.000Z</published>
     <updated>2017-11-21T18:09:53.360Z</updated>
     
@@ -569,23 +569,23 @@
     
     </summary>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="模型" scheme="http://cxsmarkchan.github.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
+      <category term="模型" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="双线性" scheme="http://cxsmarkchan.github.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
+      <category term="双线性" scheme="http://cxsmarkchan.com/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7/"/>
     
-      <category term="优化" scheme="http://cxsmarkchan.github.com/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://cxsmarkchan.com/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="松弛" scheme="http://cxsmarkchan.github.com/tags/%E6%9D%BE%E5%BC%9B/"/>
+      <category term="松弛" scheme="http://cxsmarkchan.com/tags/%E6%9D%BE%E5%BC%9B/"/>
     
   </entry>
   
   <entry>
     <title>linux源码分析：schedule进程调度</title>
-    <link href="http://cxsmarkchan.github.com/2016/04/18/linux-schedule/"/>
-    <id>http://cxsmarkchan.github.com/2016/04/18/linux-schedule/</id>
+    <link href="http://cxsmarkchan.com/2016/04/18/linux-schedule/"/>
+    <id>http://cxsmarkchan.com/2016/04/18/linux-schedule/</id>
     <published>2016-04-18T04:44:59.000Z</published>
     <updated>2017-09-25T22:52:56.978Z</updated>
     
@@ -644,25 +644,25 @@
     
     </summary>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/categories/linux/"/>
     
-      <category term="源码" scheme="http://cxsmarkchan.github.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="http://cxsmarkchan.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
     
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/tags/linux/"/>
     
-      <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="http://cxsmarkchan.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+      <category term="进程" scheme="http://cxsmarkchan.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
-      <category term="schedule" scheme="http://cxsmarkchan.github.com/tags/schedule/"/>
+      <category term="schedule" scheme="http://cxsmarkchan.com/tags/schedule/"/>
     
   </entry>
   
   <entry>
     <title>linux源码分析：execve加载可执行文件</title>
-    <link href="http://cxsmarkchan.github.com/2016/04/10/linux-execve/"/>
-    <id>http://cxsmarkchan.github.com/2016/04/10/linux-execve/</id>
+    <link href="http://cxsmarkchan.com/2016/04/10/linux-execve/"/>
+    <id>http://cxsmarkchan.com/2016/04/10/linux-execve/</id>
     <published>2016-04-10T06:29:42.000Z</published>
     <updated>2017-09-25T22:52:56.950Z</updated>
     
@@ -712,25 +712,25 @@
     
     </summary>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/categories/linux/"/>
     
-      <category term="源码" scheme="http://cxsmarkchan.github.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="http://cxsmarkchan.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
     
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/tags/linux/"/>
     
-      <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="http://cxsmarkchan.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="execve" scheme="http://cxsmarkchan.github.com/tags/execve/"/>
+      <category term="execve" scheme="http://cxsmarkchan.com/tags/execve/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+      <category term="进程" scheme="http://cxsmarkchan.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>linux源码分析：fork复制进程</title>
-    <link href="http://cxsmarkchan.github.com/2016/04/03/linux-fork/"/>
-    <id>http://cxsmarkchan.github.com/2016/04/03/linux-fork/</id>
+    <link href="http://cxsmarkchan.com/2016/04/03/linux-fork/"/>
+    <id>http://cxsmarkchan.com/2016/04/03/linux-fork/</id>
     <published>2016-04-04T01:04:54.000Z</published>
     <updated>2017-09-25T22:52:56.938Z</updated>
     
@@ -786,25 +786,25 @@
     
     </summary>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/categories/linux/"/>
     
-      <category term="源码" scheme="http://cxsmarkchan.github.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="http://cxsmarkchan.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
     
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/tags/linux/"/>
     
-      <category term="源码" scheme="http://cxsmarkchan.github.com/tags/%E6%BA%90%E7%A0%81/"/>
+      <category term="源码" scheme="http://cxsmarkchan.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="fork" scheme="http://cxsmarkchan.github.com/tags/fork/"/>
+      <category term="fork" scheme="http://cxsmarkchan.com/tags/fork/"/>
     
-      <category term="进程创建" scheme="http://cxsmarkchan.github.com/tags/%E8%BF%9B%E7%A8%8B%E5%88%9B%E5%BB%BA/"/>
+      <category term="进程创建" scheme="http://cxsmarkchan.com/tags/%E8%BF%9B%E7%A8%8B%E5%88%9B%E5%BB%BA/"/>
     
   </entry>
   
   <entry>
     <title>Linux系统调用：32位和64位的区别</title>
-    <link href="http://cxsmarkchan.github.com/2016/04/02/asm-syscall-64/"/>
-    <id>http://cxsmarkchan.github.com/2016/04/02/asm-syscall-64/</id>
+    <link href="http://cxsmarkchan.com/2016/04/02/asm-syscall-64/"/>
+    <id>http://cxsmarkchan.com/2016/04/02/asm-syscall-64/</id>
     <published>2016-04-02T14:45:20.000Z</published>
     <updated>2017-09-25T22:52:56.926Z</updated>
     
@@ -841,25 +841,25 @@
     
     </summary>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/categories/linux/"/>
     
-      <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
+      <category term="内核" scheme="http://cxsmarkchan.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
     
     
-      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+      <category term="asm" scheme="http://cxsmarkchan.com/tags/asm/"/>
     
-      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
+      <category term="系统调用" scheme="http://cxsmarkchan.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/tags/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/tags/linux/"/>
     
-      <category term="64位" scheme="http://cxsmarkchan.github.com/tags/64%E4%BD%8D/"/>
+      <category term="64位" scheme="http://cxsmarkchan.com/tags/64%E4%BD%8D/"/>
     
   </entry>
   
   <entry>
     <title>用asm内联汇编实现系统调用</title>
-    <link href="http://cxsmarkchan.github.com/2016/04/01/asm-syscall/"/>
-    <id>http://cxsmarkchan.github.com/2016/04/01/asm-syscall/</id>
+    <link href="http://cxsmarkchan.com/2016/04/01/asm-syscall/"/>
+    <id>http://cxsmarkchan.com/2016/04/01/asm-syscall/</id>
     <published>2016-04-01T20:23:12.000Z</published>
     <updated>2017-09-25T22:52:56.918Z</updated>
     
@@ -889,25 +889,25 @@
     
     </summary>
     
-      <category term="linux" scheme="http://cxsmarkchan.github.com/categories/linux/"/>
+      <category term="linux" scheme="http://cxsmarkchan.com/categories/linux/"/>
     
-      <category term="内核" scheme="http://cxsmarkchan.github.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
+      <category term="内核" scheme="http://cxsmarkchan.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
     
     
-      <category term="操作系统" scheme="http://cxsmarkchan.github.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="操作系统" scheme="http://cxsmarkchan.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
-      <category term="汇编" scheme="http://cxsmarkchan.github.com/tags/%E6%B1%87%E7%BC%96/"/>
+      <category term="汇编" scheme="http://cxsmarkchan.com/tags/%E6%B1%87%E7%BC%96/"/>
     
-      <category term="asm" scheme="http://cxsmarkchan.github.com/tags/asm/"/>
+      <category term="asm" scheme="http://cxsmarkchan.com/tags/asm/"/>
     
-      <category term="系统调用" scheme="http://cxsmarkchan.github.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
+      <category term="系统调用" scheme="http://cxsmarkchan.com/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
     
   </entry>
   
   <entry>
     <title>第一篇博客</title>
-    <link href="http://cxsmarkchan.github.com/2016/03/30/firstblog/"/>
-    <id>http://cxsmarkchan.github.com/2016/03/30/firstblog/</id>
+    <link href="http://cxsmarkchan.com/2016/03/30/firstblog/"/>
+    <id>http://cxsmarkchan.com/2016/03/30/firstblog/</id>
     <published>2016-03-30T04:27:55.000Z</published>
     <updated>2017-09-25T22:52:56.986Z</updated>
     
@@ -925,12 +925,12 @@
     
     </summary>
     
-      <category term="生活" scheme="http://cxsmarkchan.github.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://cxsmarkchan.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="博客" scheme="http://cxsmarkchan.github.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+      <category term="博客" scheme="http://cxsmarkchan.com/tags/%E5%8D%9A%E5%AE%A2/"/>
     
-      <category term="hexo" scheme="http://cxsmarkchan.github.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://cxsmarkchan.com/tags/hexo/"/>
     
   </entry>
   
