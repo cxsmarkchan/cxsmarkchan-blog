@@ -3,6 +3,7 @@ Allow: /
 Allow: /archives/
 Allow: /categories/
 Allow: /about/
+Allow: /articles/
 Disallow: /vendors/
 Disallow: /js/
 Disallow: /css/
