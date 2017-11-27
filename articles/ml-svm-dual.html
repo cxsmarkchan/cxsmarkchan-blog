@@ -1,0 +1,693 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="baidu-site-verification" content="iZA6IpYgQU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>支持向量机：对偶形式 | cxsmarkchan的博客</title>
+    <meta name="author" content="cxsmarkchan">
+    
+    <meta name="description" content="Ph.D. Electrical Engineering">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="支持向量机：对偶形式"/>
+    <meta property="og:site_name" content="cxsmarkchan的博客"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="cxsmarkchan的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">cxsmarkchan的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/about/cxs.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">cxsmarkchan</p>
+                        <p class="desc">电力系统/优化/随机</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活/">
+                    生活 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/linux/">
+                    linux <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/源码/">
+                    源码 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/内核/">
+                    内核 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/优化/">
+                    优化 <span class="right">8 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/模型/">
+                    模型 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/理论/">
+                    理论 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/算法/">
+                    算法 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/机器学习/">
+                    机器学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/机器学习/模型/">
+                    模型 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/机器学习/">机器学习</a><a class="breadcrumb" href="/categories/机器学习/模型/">模型</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>支持向量机：对偶形式</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-11-22T05:45:27.000Z"><a href="/articles/ml-svm-dual.html">2017-11-22</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/对偶/" class="chip pink lighten-1">对偶</a>
+        
+            <a href="/tags/支持向量机/" class="chip pink lighten-1">支持向量机</a>
+        
+            <a href="/tags/SVM/" class="chip pink lighten-1">SVM</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、对偶形式的构造"><span class="section table-of-contents-text">一、对偶形式的构造</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、对偶问题的解与原始问题的关系"><span class="section table-of-contents-text">二、对偶问题的解与原始问题的关系</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-基本思路"><span class="section table-of-contents-text">2.1 基本思路</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-硬间隔下的支持向量机"><span class="section table-of-contents-text">2.2 硬间隔下的支持向量机</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-3-软间隔下的支持向量机"><span class="section table-of-contents-text">2.3 软间隔下的支持向量机</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#三、小结"><span class="section table-of-contents-text">三、小结</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>支持向量机的原始形式为二次规划，这是一种典型的凸规划，也满足强对偶定理。支持向量机的对偶形式仍然为凸二次规划。对偶形式的主要优点除了计算以外，还在于其易于推广到非线性支持向量机。本节介绍对偶形式的构造，以及如何根据对偶问题的解还原出原始问题的解。<br><a id="more"></a></p>
+<h1 id="一、对偶形式的构造"><a href="#一、对偶形式的构造" class="headerlink" title="一、对偶形式的构造"></a>一、对偶形式的构造</h1><p>考虑支持向量机的原始形式：<br>\[<br>\min_{w,b,\xi} C \sum_{i=1}^N\xi_i + \frac{1}{2}w^Tw \\<br>\text{s.t. } y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\<br>\xi_i \geq 0<br>\]</p>
+<p>其拉格朗日函数为：<br>\[<br>L(w,b, \xi, \alpha, \beta) = C \sum_{i=1}^N\xi_i + \frac{1}{2}w^Tw - \sum_{i=1}^N\alpha_i\left[y_i\left(w^Tx_i+b\right) - 1 + \xi_i \right] - \sum_{i=1}^N\beta_i\xi_i<br>\]</p>
+<p>可以证明，原始问题等价于如下形式：<br>\[<br>p^* = \min_{w,b,\xi} \max_{\alpha\geq 0, \beta \geq 0} L(w,b,\xi,\alpha, \beta)<br>\]</p>
+<p>而对偶问题则为：<br>\[<br>d^* = \max_{\alpha\geq 0, \beta \geq 0} \min_{w,b,\xi} L(w,b,\xi,\alpha, \beta)<br>\]</p>
+<p>为了简化问题，下面我们求解对偶问题的内部优化。在固定了$\alpha,\beta$后，内部优化问题实际上是一个无约束二次规划问题，简单地令其对$w,b,\xi$的导数为零，可以得到：<br>\[<br>w=\sum_{i=1}^N\alpha_iy_ix_i \\<br>\sum_{i=1}^N\alpha_iy_i=0 \\<br>\alpha_i+\beta_i=C<br>\]</p>
+<p>将这些式子代入$L$的表达式，得到：<br>\[<br>\min_{w,b,\xi} L(w,b,\xi,\alpha,\beta) = -\frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j + \sum_{i=1}^N\alpha_i<br>\]</p>
+<p>于是对偶问题为：<br>\[<br>\max_{\alpha\geq 0, \beta \geq 0} -\frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j +\sum_{i=1}^N\alpha_i\\<br>\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\<br>\alpha_i+\beta_i=C<br>\]</p>
+<p>注意到$\beta$在上面的优化问题中等价于保证$\alpha_i \leq C$，可以消去$\beta$，并把上述问题改写为：<br>\[<br>\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\<br>\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\<br>0 \leq\alpha_i\leq C<br>\]</p>
+<p>这样我们就得到<strong>支持向量机的对偶形式</strong>。可以看出，支持向量机的对偶形式仍然为二次规划。和原始形式相同，这个二次规划也是一个凸规划，这一事实可以从下述等式中看出：<br>\[<br>\sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j = \alpha^TA^TA\alpha<br>\]</p>
+<p>其中$A=\left[y_1x_1,y_2x_2,\dots,y_Nx_N\right]$是一个$D\times N$的矩阵（D为特征的维数）。而$A^TA$是一个半正定矩阵，因此该二次规划为凸规划。</p>
+<h1 id="二、对偶问题的解与原始问题的关系"><a href="#二、对偶问题的解与原始问题的关系" class="headerlink" title="二、对偶问题的解与原始问题的关系"></a>二、对偶问题的解与原始问题的关系</h1><h2 id="2-1-基本思路"><a href="#2-1-基本思路" class="headerlink" title="2.1 基本思路"></a>2.1 基本思路</h2><p>根据强对偶定理，对偶问题的最优解与原始问题的最优解相等。因此，求得对偶问题的解，即可得到原始问题的解。在前面的分析中，我们已经看到了$w$与对偶解$\alpha$之间的关系：<br>\[<br>w=\sum_{i=1}^N\alpha_iy_ix_i<br>\]</p>
+<p>得到了$w$后，还需要确定原始问题的$b$。为此，考虑原始问题的约束：<br>\[<br>y_i\left(w^Tx_i+b\right) \geq 1 - \xi_i \\<br>\xi_i \geq 0<br>\]</p>
+<p>如果对于某个$i$，这个约束起作用，即：<br>\[<br>y_i\left(w^Tx_i+b\right) = 1 - \xi_i \\<br>\xi_i = 0<br>\]</p>
+<p>那么我们就有：<br>\[<br>b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=j}^N\alpha_jy_jx_j^Tx_i<br>\]</p>
+<p>从而可以求得$b$。由此可见，寻找起作用约束是确定$b$的关键环节。那么，我们需要考虑两个问题：</p>
+<ol>
+<li>起作用约束一定存在吗？如果不存在如何处理？</li>
+<li>起作用约束是否唯一？如果不唯一如何处理？</li>
+</ol>
+<p>我们首先回答第2个问题：起作用约束不一定唯一，但不同的起作用约束计算出来的$b$是相等的。这是因为，上述起作用约束构成了对$b$的等式约束，如果两个等式约束的结果不同，就会造成矛盾。所以，如果能找到一个$i$使得$0&lt;\alpha_i&lt;C$，就可以放心地利用该样本算出相应的$b$。</p>
+<p>对于第1个问题，一般采用互补松弛定理来处理。下面我们考虑硬间隔和软间隔两种情况。</p>
+<h2 id="2-2-硬间隔下的支持向量机"><a href="#2-2-硬间隔下的支持向量机" class="headerlink" title="2.2 硬间隔下的支持向量机"></a>2.2 硬间隔下的支持向量机</h2><p>所谓硬间隔，即为线性可分场景下的支持向量机，即：<br>\[<br>\min_{w,b} \frac{1}{2}w^Tw \\<br>\text{s.t. } y_i\left(w^Tx_i+b\right) \geq 1<br>\]</p>
+<p>它对应于$C$为无穷大的情形。此时，对偶问题的约束由$0\leq \alpha_i \leq C$变为$\alpha_i\geq 0$，其余约束不变。这种情形相对简单，因此先予以讨论。</p>
+<p>根据互补松弛定理我们知道，如果对偶问题的解中有一个$\alpha_i$满足$\alpha_i&gt;0$，那么原始问题中对应的约束则起作用。所以，只要找到一个$\alpha_i&gt;0$即可。那么，是否有可能所有$\alpha_i$均为0呢？答案是否定的，否则我们可以得到$w=\sum_{i=1}^N\alpha_iy_ix_i=0$，从而原问题中的约束$y_i\left(w^Tx_i+b\right) \geq 1$变为$y_ib\geq 1$。而$b$是固定值，在二类分类问题中，训练样本$y_i$应部分为1，部分为-1，不可能做到$y_ib\geq 1,\forall i$，因此产生矛盾。从而，必然存在$\alpha_i&gt;0$，即起作用约束必然存在。<strong>显然，$\alpha_i&gt;0$对应的样本点$i$即为支持向量</strong>。</p>
+<h2 id="2-3-软间隔下的支持向量机"><a href="#2-3-软间隔下的支持向量机" class="headerlink" title="2.3 软间隔下的支持向量机"></a>2.3 软间隔下的支持向量机</h2><p>软间隔对应的是一般的支持向量机，此时通过类似的互补松弛分析可以得知，如果存在$0&lt;\alpha_i<c$，则对应的两个约束$y\_i\\left(w^tx\_i+b\\right) 1="" =="" -="" \\xi\_i$和$\\xi\_i="0$均起作用，从而可以求得$b$。同样地，可以证明必然存在$i$使得$\\alpha\_i">0$，这些样本也称为<strong>支持向量</strong>。</c$，则对应的两个约束$y\_i\\left(w^tx\_i+b\\right)></p>
+<p>然而，在软间隔下，我们只能保证必然存在$\alpha_i$使得$\alpha_i&gt;0$，但不能保证存在$i$使得$0&lt;\alpha_i&lt;C$。换句话说，<strong>有可能不存在样本点$i$，使两个约束$y_i\left(w^Tx_i+b\right) = 1 - \xi_i$和$\xi_i = 0$同时起作用。</strong>这种情况下，$b$的取值在一定范围内是任意的。不同的$b$会对应不同的$\xi_i$，但因为目标函数中只有求和项$\sum_{i=1}^N\xi_i$，由$b$的变化造成的$\xi_i$的变化会在求和中被抵消。也就是说，不同的$b$对应的目标函数是不变的。究其原因，是<strong>软间隔下的支持向量机可能存在不唯一的最优解</strong>。</p>
+<p>这个时候，通常的做法是在$\alpha_i=C$的样本（这些样本也是支持向量，因为满足$\alpha_i&gt;0$）中，任意选择样本$i$，令$\xi_i=0$，从而得出相应的$b$。或者对所有的满足$\alpha_i=C$的约束采取这样的操作，将所得到的$b$取平均，从而得到“接近中心”的分离超平面。</p>
+<h1 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h1><p>最后，我们总结利用对偶方法求解支持向量机的步骤：</p>
+<ol>
+<li>列出其对偶形式并求解出最优的$\alpha$：<br>\[<br>\min_{\alpha} \frac{1}{2} \sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_jy_iy_jx_i^Tx_j - \sum_{i=1}^N\alpha_i \\<br>\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\<br>0 \leq\alpha_i\leq C<br>\]</li>
+<li>找到起作用约束$i$，计算系数$b = 1 / y_i - w^Tx_i = y_i - w^Tx_i = y_i - \sum_{i=1}^N\alpha_jy_jx_j^Tx_i$.</li>
+<li>对于给定的样本$x$，预测：<br>\[<br>\hat{y}=w^Tx+b=\sum_{i=1}^N\alpha_iy_ix_i^Tx+b<br>\]</li>
+</ol>
+<p>值得注意的是，在第3步中，我们并没有显式地计算出$w$，而是将$w=\sum_{i=1}^N\alpha_iy_ix_i$代入到$\hat{y}=w^Tx+b$计算预测值。这实际上体现了对偶方法的一个很重要的性质：<strong>在所有步骤中，涉及到自变量的部分均以内积$x_i^Tx_j$或$x_i^Tx$的形式出现，不含有其他对自变量的操作</strong>。这个性质使得支持向量机非常容易推广到非线性的情形：<strong>只要我们能定义一种新的“内积”来取代$x_i^Tx_j$的形式，就可以用相同的算法（凸二次规划）来处理非线性分类问题。</strong>这也是支持向量机的一个重要的优势。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/articles/ml-svm-kernel.html" rel="next" title="支持向量机：核方法">
+    上一篇：支持向量机：核方法
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/articles/ml-svm-construction.html" rel="next" title="支持向量机：构造">
+    下一篇：支持向量机：构造
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.url = 'http://cxsmarkchan.com/articles/ml-svm-dual.html';
+                this.page.identifier = 'articles/ml-svm-dual.html';
+            };
+            (function() {
+                var d = document,
+                    s = d.createElement('script');
+                s.src = '//cxsmarkchan-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/cxsmarkchan" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 example.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

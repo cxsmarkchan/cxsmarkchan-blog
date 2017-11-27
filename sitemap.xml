@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cxsmarkchan.com/articles/ml-svm-kernel.html</loc>
+    
+    <lastmod>2017-11-27T02:37:15.689Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cxsmarkchan.com/about/index.html</loc>
     
     <lastmod>2017-11-26T05:09:35.984Z</lastmod>
@@ -9,77 +16,70 @@
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/11/25/ml-svm-kernel/</loc>
-    
-    <lastmod>2017-11-26T04:23:26.124Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://cxsmarkchan.com/2017/11/22/ml-svm-dual/</loc>
+    <loc>http://cxsmarkchan.com/articles/ml-svm-dual.html</loc>
     
     <lastmod>2017-11-26T04:20:14.851Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/11/12/optimization-gradient-descent/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-gradient-descent.html</loc>
     
     <lastmod>2017-11-22T03:10:37.765Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/11/21/ml-svm-construction/</loc>
+    <loc>http://cxsmarkchan.com/articles/ml-svm-construction.html</loc>
     
     <lastmod>2017-11-22T03:10:22.961Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/11/01/optimization-dual/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-dual.html</loc>
     
     <lastmod>2017-11-21T18:10:24.928Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/10/31/optimization-kkt/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-kkt.html</loc>
     
     <lastmod>2017-11-21T18:10:11.668Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/05/12/bilinear/</loc>
+    <loc>http://cxsmarkchan.com/articles/bilinear.html</loc>
     
     <lastmod>2017-11-21T18:09:53.360Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/10/20/optimization-convex/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-convex.html</loc>
     
     <lastmod>2017-11-21T18:09:05.996Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/10/12/optimization-config/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-config.html</loc>
     
     <lastmod>2017-11-21T18:08:43.612Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/11/18/optimization-newton/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-newton.html</loc>
     
     <lastmod>2017-11-19T03:21:39.107Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2017/11/05/optimization-line-search/</loc>
+    <loc>http://cxsmarkchan.com/articles/optimization-line-search.html</loc>
     
     <lastmod>2017-11-06T05:50:32.349Z</lastmod>
     
@@ -93,42 +93,42 @@
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/03/30/firstblog/</loc>
+    <loc>http://cxsmarkchan.com/articles/firstblog.html</loc>
     
     <lastmod>2017-09-25T22:52:56.986Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/04/18/linux-schedule/</loc>
+    <loc>http://cxsmarkchan.com/articles/linux-schedule.html</loc>
     
     <lastmod>2017-09-25T22:52:56.978Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/04/10/linux-execve/</loc>
+    <loc>http://cxsmarkchan.com/articles/linux-execve.html</loc>
     
     <lastmod>2017-09-25T22:52:56.950Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/04/03/linux-fork/</loc>
+    <loc>http://cxsmarkchan.com/articles/linux-fork.html</loc>
     
     <lastmod>2017-09-25T22:52:56.938Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/04/02/asm-syscall-64/</loc>
+    <loc>http://cxsmarkchan.com/articles/asm-syscall-64.html</loc>
     
     <lastmod>2017-09-25T22:52:56.926Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://cxsmarkchan.com/2016/04/01/asm-syscall/</loc>
+    <loc>http://cxsmarkchan.com/articles/asm-syscall.html</loc>
     
     <lastmod>2017-09-25T22:52:56.918Z</lastmod>
     

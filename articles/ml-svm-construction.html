@@ -1,0 +1,696 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="baidu-site-verification" content="iZA6IpYgQU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>支持向量机：构造 | cxsmarkchan的博客</title>
+    <meta name="author" content="cxsmarkchan">
+    
+    <meta name="description" content="Ph.D. Electrical Engineering">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="支持向量机：构造"/>
+    <meta property="og:site_name" content="cxsmarkchan的博客"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="cxsmarkchan的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">cxsmarkchan的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/about/cxs.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">cxsmarkchan</p>
+                        <p class="desc">电力系统/优化/随机</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活/">
+                    生活 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/linux/">
+                    linux <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/源码/">
+                    源码 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/内核/">
+                    内核 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/优化/">
+                    优化 <span class="right">8 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/模型/">
+                    模型 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/理论/">
+                    理论 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/算法/">
+                    算法 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/机器学习/">
+                    机器学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/机器学习/模型/">
+                    模型 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/机器学习/">机器学习</a><a class="breadcrumb" href="/categories/机器学习/模型/">模型</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>支持向量机：构造</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-11-21T18:04:34.000Z"><a href="/articles/ml-svm-construction.html">2017-11-21</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/支持向量机/" class="chip pink lighten-1">支持向量机</a>
+        
+            <a href="/tags/SVM/" class="chip pink lighten-1">SVM</a>
+        
+            <a href="/tags/合页损失函数/" class="chip pink lighten-1">合页损失函数</a>
+        
+            <a href="/tags/最大间隔/" class="chip pink lighten-1">最大间隔</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、基于距离的构造"><span class="section table-of-contents-text">一、基于距离的构造</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#1-1-线性可分情形"><span class="section table-of-contents-text">1.1 线性可分情形</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#1-2-一般情形"><span class="section table-of-contents-text">1.2 一般情形</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、基于损失函数的构造"><span class="section table-of-contents-text">二、基于损失函数的构造</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>支持向量机（Support Vector Machine, SVM）的主要思想是在分类问题中使不同类别之间的“间隔”最大。所谓支持向量，即在分类问题中最接近边界的样本，这些样本会影响到分类超平面的构造。可以有两种方式构造支持向量机，一种是直接基于间隔最大化思想，另一种则是基于一种特殊的损失函数（合页损失函数）。从损失函数的角度理解，支持向量机并不比Logistic回归更强大，当然，支持向量机的核心优势并不在此。<br><a id="more"></a></p>
+<p>考虑一个二类分类问题，给定特征$x$，预测分类值$y\in \{-1,1\}$。线性支持向量机的目标是找到一个超平面$w^Tx+b=0$，然后对于任意$x$，给出预测值$y=\text{sgn}\{w^Tx+b\}$。换句话说，线性支持向量机根据样本点$x$与超平面$w^Tx+b=0$的关系来决定该点的分类。</p>
+<h1 id="一、基于距离的构造"><a href="#一、基于距离的构造" class="headerlink" title="一、基于距离的构造"></a>一、基于距离的构造</h1><h2 id="1-1-线性可分情形"><a href="#1-1-线性可分情形" class="headerlink" title="1.1 线性可分情形"></a>1.1 线性可分情形</h2><p>考虑一组训练数据$\left(x^{(i)},y^{(i)}\right),i=1,2,\dots,N$，其中$y^{(i)}\in\{-1,1\}$。我们假设数据是<strong>线性可分</strong>的，也就是说，存在向量$w$和常数$b$，满足如下条件：<br>\[<br>\left\{<br>\begin{split}<br>w^Tx^{(i)}+b &lt; 0, &amp;\forall i\text{ s.t. }y^{(i)}=-1 \\<br>w^Tx^{(i)}+b &gt; 0, &amp;\forall i\text{ s.t. }y^{(i)}=1<br>\end{split}<br>\right.<br>\]</p>
+<p>在这种情况下，我们认为数据被超平面$w^Tx+b=0$分离。同时，注意到$(w,b)$和$(\lambda w, \lambda b),\lambda \neq 0$代表了相同的超平面，因此，我们可以对$(w,b)$进行齐次放缩，而不影响结果。通过合理的放缩，可以得到如下条件：<br>\[<br>\left\{<br>\begin{split}<br>w^Tx^{(i)}+b \leq -1, &amp;\forall i\text{ s.t. }y^{(i)}=-1 \\<br>w^Tx^{(i)}+b \geq 1, &amp;\forall i\text{ s.t. }y^{(i)}=1<br>\end{split}<br>\right.<br>\]</p>
+<p>这个条件又等价于如下条件：<br>\[<br>y^{(i)}\left(w^Tx^{(i)}+b\right) \geq 1<br>\]</p>
+<p>注意到数据集$\left(x^{(i)}, y^{(i)} \right)$是已知的，上述条件是$(w,b)$的线性约束。</p>
+<p>一般来说，满足约束的超平面有很多，支持向量机要解决的问题是：什么样的超平面是最合理的？而它给出的方案是：让超平面两边的点离超平面都足够远。为此，我们先来看如何衡量一个点到超平面的距离。</p>
+<p>首先取超平面上的一点$\tilde{x}$，即满足$w^T\tilde{x}+b=0$，考虑超平面外的一点$x$，我们只需要计算向量$x-\tilde{x}$在超平面法向的投影即可。而该投影可以通过与法向单位向量$\frac{w}{\lVert w\rVert}$的内积得到：<br>\[<br>dist(x) = \frac{w^T(x-\tilde{x})}{\lVert w \rVert} = \frac{w^Tx+b}{\lVert w \rVert}<br>\]</p>
+<p>其中，后一个等式用到了$\tilde{x}$在超平面上的条件，即$w^T\tilde{x}+b=0$。这是一个有向距离，即$x$在超平面两边时，所得到距离的符号不同。注意到$x$在超平面两边时，$y$分别为$\pm 1$，因此正确的距离应该为$\frac{y\left(w^Tx+b\right)}{\lVert w \rVert}$。由此，为了最大化距离，我们需要求解如下优化问题：</p>
+<p>\[<br>\max_{w,b} \min_{i} \frac{y^{(i)}\left(w^Tx^{(i)}+b\right)}{\lVert w \rVert} \\<br>\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1, \forall i<br>\]</p>
+<p>同时，注意到在优化问题中，最优解必然会有部分约束起作用，也就是存在$i$使得$y^{(i)}\left(w^Tx^{(i)} + b\right) = 1$，因此我们有：<br>\[<br>\min_{i} \frac{y^{(i)}\left(w^Tx^{(i)}+b\right)}{\lVert w \rVert} = \frac{1}{\lVert w \rVert}<br>\]</p>
+<p>因此，我们得到如下优化问题：<br>\[<br>\max_{w,b} \frac{1}{\lVert w \rVert} \\<br>\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1, \forall i<br>\]</p>
+<p>最后，为了简化问题的求解，我们注意到$\max \frac{1}{\lVert w \rVert}$和$\min \lVert w \rVert^2$（也可以写成$\min w^Tw$）是等价的，因此可以把优化问题改写为：<br>\[<br>\min_{w,b} \frac{1}{2}w^Tw \\<br>\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1, \forall i<br>\]</p>
+<p>其中$\frac{1}{2}$仅仅是表示二次目标函数时的一个通用约定，没有其他含义。到这里，我们就得到了<strong>线性可分情形下的支持向量机模型</strong>。这个模型是一个<strong>二次规划</strong>问题，可以用典型的凸优化方法求解。</p>
+<p>最后，我们可以对“支持向量机”的名字做一个简单的解释。由于支持向量机是一个含约束的二次规划问题，那么其约束就必然有起作用和不起作用的分别。很明显，当约束起作用时，样本点离分离超平面的距离刚好等于$\frac{1}{\lVert w \rVert}$，而约束不起作用时，样本点离分离超平面的距离都超过这个值。因此，<strong>起作用约束对应的是离分离超平面最近的那些样本点</strong>。同时，在约束优化中，我们知道，删去不起作用的约束，不会影响问题的最优解。这就意味着，支持向量机的计算结果仅取决于起作用约束，也就是离分离超平面最近的点。这些点就是所谓的<strong>支持向量</strong>，因为它们“支撑”了超平面。支持向量机的名称也来源于此。</p>
+<p>综上所述，<strong>那么支持向量机的思想在于，分类问题中，确定边界是最重要的，而边界的位置则取决于离边界最近的点。</strong></p>
+<p>应该说，支持向量机是一个很优美的模型：一方面，依托于“最大间隔”，数学图景非常清晰。另一方面，凸优化是目前被研究最充分的优化问题，因此支持向量机具有简单的数学模型，也易于求解。</p>
+<h2 id="1-2-一般情形"><a href="#1-2-一般情形" class="headerlink" title="1.2 一般情形"></a>1.2 一般情形</h2><p>在线性可分场景下构造的支持向量机有两个方面的问题：第一，在数据不可分的时候，模型没有可行解；第二，即使数据可分，由于支持向量机仅考虑支持向量，如果支持向量有坏数据，就会极大影响求解的结果。这两种情况本质是相同的，即<strong>线性可分支持向量机对于边界上的误差容忍度过低</strong>。</p>
+<p>为此，只需把支持向量机的模型改成如下形式：<br>\begin{equation*}<br>\begin{aligned}<br>&amp;\min_{w,b} C\sum_{i=1}^N\xi_i+\frac{1}{2}w^Tw \\<br>\text{s.t. } &amp; y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1 - \xi_i, \forall i \\<br>&amp; \xi_i\geq 0, \forall i<br>\end{aligned}<br>\end{equation*}</p>
+<p>这个模型中，$\xi_i$是第$i$个样本点违背约束的程度，如果$\xi_i=0$，则说明第$i$个样本点被成功分类，并且分离超平面有“足够”的距离，否则就认为样本点分类错误，并引入惩罚项。由此可见，一般的支持向量机模型允许样本点越过支持向量对应的点，但这些点会根据越界大小引入惩罚，而支持向量机模型会权衡惩罚项的大小和分类的间隔距离，做出最优的选择。其中，两者的权重由惩罚因子$C$决定，C越大，惩罚越大，分类结果就越接近线性可分支持向量机的分类结果。</p>
+<h1 id="二、基于损失函数的构造"><a href="#二、基于损失函数的构造" class="headerlink" title="二、基于损失函数的构造"></a>二、基于损失函数的构造</h1><p>我们首先考虑支持向量机的求解目标。给定一个样本点$x^{(i)}$，如果$y^{(i)}=1$，则我们希望$w^Tx^{(i)}+b\geq 1$（注意这里不是0，因为支持向量机要求正确分类的样本点离超平面有一定距离），因此，如果这一目标实现了，损失函数则应该是0，而如果没实现，则损失函数应该大于0。如果$y^{(i)}=-1$，则应该有$w^Tx^{(i)}+b\leq -1$。</p>
+<p>令$\hat{y}^{(i)}=w^Tx^{(i)}+b$，我们采用如下损失函数：<br>\[<br>L\left(y^{(i)},\hat{y}^{(i)}\right) = \left\{<br>\begin{split}<br>\max\{0, 1 - \hat{y}^{(i)}\}, &amp; \text{if } y^{(i)}=1 \\<br>\max\{0, \hat{y}^{(i)} + 1\}, &amp; \text{if } y^{(i)}=-1<br>\end{split}<br>\right.<br>\]</p>
+<p>这个损失函数一般称为<strong>合页损失函数</strong>。</p>
+<p>则分类问题转化为：<br>\[<br>\min_{w,b} \sum_{i=1}^NL\left(y^{(i)}, w^Tx^{(i)}+b\right)<br>\]</p>
+<p>当然，为了避免过拟合，还需要加上正则化项，于是得到：<br>\[<br>\min_{w,b} \sum_{i=1}^NL\left(y^{(i)}, w^Tx^{(i)}+b\right) + \lambda w^Tw<br>\]</p>
+<p>这就是<strong>支持向量机的损失函数构造</strong>。接下来，我们来证明这种构造和基于间隔的构造的等价性。我们引入辅助变量$\xi_i=L\left(y^{(i)}, w^Tx^{(i)}+b\right)$，把上述问题转化为：<br>\[<br>\min_{w,b} \sum_{i=1}^N\xi_i+ \lambda \lVert w \rVert^2 \\<br>\text{s.t. } L\left(y^{(i)}, w^Tx^{(i)}+b\right) = \xi_i<br>\]</p>
+<p>显然该问题等价于：<br>\[<br>\min_{w,b} \sum_{i=1}^N\xi_i+ \lambda w^Ts \\<br>\text{s.t. } L\left(y^{(i)}, w^Tx^{(i)}+b\right) \leq \xi_i<br>\]</p>
+<p>考察上述问题中的约束，当$y^{(i)}=1$时，该约束即为：<br>\[<br>\max\left\{0, 1 - \left(w^Tx^{(i)}+b\right)\right\} \leq \xi_i<br>\]</p>
+<p>而两个数的最大值小于$\xi_i$，说明这两个数均小于$\xi_i$，因此上式等价于：<br>\[<br>\xi_i \geq 0 \\<br>w^Tx^{(i)}+b \geq 1 - \xi_i<br>\]</p>
+<p>以上讨论了$y^{(i)} = 1$的情形，对于$y^{(i)}=-1$的情形，情况是类似的，但结果略有不同：<br>\[<br>\xi_i \geq 0 \\<br>w^Tx^{(i)}+b \leq \xi_i - 1<br>\]</p>
+<p>这两种类型的约束可以合并为统一的形式：<br>\[<br>\xi_i \geq 0 \\<br>y^{(i)}\left(w^Tx^{(i)}+b\right) \geq 1 - \xi_i<br>\]</p>
+<p>由此可得，支持向量机的模型等价于：<br>\[<br>\min_{w,b} \sum_{i=1}^N\xi_i+\lambda w^Tw \\<br>\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1 - \xi_i, \forall i \\<br>\xi_i\geq 0, \forall i<br>\]</p>
+<p>最后，将目标函数除以$2\lambda$，不会改变结果，于是我们得到：<br>\[<br>\min_{w,b} \frac{1}{2\lambda}\sum_{i=1}^N\xi_i+\frac{1}{2}w^Tw \\<br>\text{s.t. } y^{(i)}\left(w^Tx^{(i)} + b\right) \geq 1 - \xi_i, \forall i \\<br>\xi_i\geq 0, \forall i<br>\]</p>
+<p>很明显，该式与基于间隔的构造方法得出的模型是等价的，只需要令常数$C=\frac{1}{2\lambda}$即可。</p>
+<p>作为总结，支持向量机是一种使分类间隔最大化的分类方法，同时也可以理解为目标函数为合页损失函数的学习方法。支持向量机的分类结果受到分类边界处的样本，即支持向量和误分类样本的影响。支持向量机的松弛项惩罚系数$C$对应于正则化参数$\lambda$，$C$越大，则正则化参数越小，模型对边界数据的误差和误分类样本就越敏感，而对误差敏感则意味着过拟合。反之，$C$越小，则模型的容忍度就越高，也越容易欠拟合。</p>
+<p>值得注意的是，从损失函数的角度来看，支持向量机的损失函数并不比Logistic回归的损失函数更“优越”，因此没有明显的证据表明支持向量机比Logistic回归更好。<strong>但支持向量机的优势一方面在于所求解的问题是二次规划，也就是一类凸优化问题，从而可以很好地求解，另一方面则在于其很容易拓展到非线性情形，从而获得更强的表现力。</strong>关于后者，我们将在后续文章中论述。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/articles/ml-svm-dual.html" rel="next" title="支持向量机：对偶形式">
+    上一篇：支持向量机：对偶形式
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/articles/optimization-newton.html" rel="next" title="牛顿法">
+    下一篇：牛顿法
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.url = 'http://cxsmarkchan.com/articles/ml-svm-construction.html';
+                this.page.identifier = 'articles/ml-svm-construction.html';
+            };
+            (function() {
+                var d = document,
+                    s = d.createElement('script');
+                s.src = '//cxsmarkchan-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/cxsmarkchan" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 example.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

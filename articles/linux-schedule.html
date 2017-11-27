@@ -1,0 +1,707 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="baidu-site-verification" content="iZA6IpYgQU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>linux源码分析：schedule进程调度 | cxsmarkchan的博客</title>
+    <meta name="author" content="cxsmarkchan">
+    
+    <meta name="description" content="Ph.D. Electrical Engineering">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="linux源码分析：schedule进程调度"/>
+    <meta property="og:site_name" content="cxsmarkchan的博客"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="cxsmarkchan的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">cxsmarkchan的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/about/cxs.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">cxsmarkchan</p>
+                        <p class="desc">电力系统/优化/随机</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活/">
+                    生活 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/linux/">
+                    linux <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/源码/">
+                    源码 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/内核/">
+                    内核 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/优化/">
+                    优化 <span class="right">8 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/模型/">
+                    模型 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/理论/">
+                    理论 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/算法/">
+                    算法 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/机器学习/">
+                    机器学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/机器学习/模型/">
+                    模型 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/linux/">linux</a><a class="breadcrumb" href="/categories/linux/源码/">源码</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>linux源码分析：schedule进程调度</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-04-18T04:44:59.000Z"><a href="/articles/linux-schedule.html">2016-04-18</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/linux/" class="chip pink lighten-1">linux</a>
+        
+            <a href="/tags/源码/" class="chip pink lighten-1">源码</a>
+        
+            <a href="/tags/进程/" class="chip pink lighten-1">进程</a>
+        
+            <a href="/tags/schedule/" class="chip pink lighten-1">schedule</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#1-进程调度的基本方法"><span class="section table-of-contents-text">1 进程调度的基本方法</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#2-schedule函数的执行过程"><span class="section table-of-contents-text">2 schedule函数的执行过程</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-schedule函数"><span class="section table-of-contents-text">2.1 schedule函数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-schedule函数"><span class="section table-of-contents-text">2.2 __schedule函数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-3-pick-next-task函数"><span class="section table-of-contents-text">2.3 pick_next_task函数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-4-context-switch函数和switch-to函数"><span class="section table-of-contents-text">2.4 context_switch函数和switch_to函数</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#3-小结"><span class="section table-of-contents-text">3 小结</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>schedule是linux中的一个内核函数，用于实现进程调度。该函数由内核线程在合适的时机调用，完成进程上下文的切换。本文从源码的角度分析了schedule函数的执行过程，尤其是进程上下文的切换过程。本文所分析的源码来自<a href="http://codelab.shiyanlou.com/xref/linux-3.18.6/" target="_blank" rel="external">这里</a></p>
+<a id="more"></a>
+<p>原创内容：cxsmarkchan 陈晓爽<br>转载请注明出处<br><a href="http://www.xuetangx.com/courses/course-v1:ustcX+USTC001+_/about" target="_blank" rel="external">linux内核分析</a></p>
+<h1 id="1-进程调度的基本方法"><a href="#1-进程调度的基本方法" class="headerlink" title="1 进程调度的基本方法"></a>1 进程调度的基本方法</h1><p>进程调度是操作系统的核心部分，操作系统的大多数行为，都可以概括为“从一个进程切换到另一个进程”。进程调度的时候，通常需要如下步骤：</p>
+<ol>
+<li>选择下一个要调度的进程</li>
+<li>保存当前进程的上下文</li>
+<li>切换到下一个进程的上下文</li>
+</ol>
+<p>linux系统在很多位置都会调用schedule函数，典型的调用场景如下：</p>
+<ul>
+<li>系统进行常规的进程调度</li>
+<li>在系统调用或其他中断的时候，会允许进行进程调度</li>
+<li>内核线程主动进行进程调度</li>
+</ul>
+<h1 id="2-schedule函数的执行过程"><a href="#2-schedule函数的执行过程" class="headerlink" title="2 schedule函数的执行过程"></a>2 schedule函数的执行过程</h1><h2 id="2-1-schedule函数"><a href="#2-1-schedule函数" class="headerlink" title="2.1 schedule函数"></a>2.1 schedule函数</h2><p>schedule函数定义在<code>kernel/sched/core.c</code>中，其定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">asmlinkage __visible <span class="keyword">void</span> __<span class="function">sched <span class="title">schedule</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> task_struct *tsk = current;</span><br><span class="line"></span><br><span class="line">	sched_submit_work(tsk);</span><br><span class="line">	__schedule();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可见其最主要的内容是调用了<code>__schedule</code>函数。</p>
+<h2 id="2-2-schedule函数"><a href="#2-2-schedule函数" class="headerlink" title="2.2 __schedule函数"></a>2.2 __schedule函数</h2><p><code>__schedule</code>函数执行了所有的进程调度工作。其主要功能为：</p>
+<ol>
+<li>获取当前进程和下一个进程的进程控制块</li>
+<li>判断当前进程和下一个进程是否相同，如果不同，则调用<code>switch_context</code>函数</li>
+</ol>
+<p><code>__schedule</code>函数的重要代码如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __sched __schedule(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">struct</span> task_struct *prev, *next;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> *switch_count;</span><br><span class="line">	<span class="keyword">struct</span> rq *rq;</span><br><span class="line">	<span class="keyword">int</span> cpu;</span><br><span class="line">    </span><br><span class="line">need_resched:</span><br><span class="line">    preempt_disable();</span><br><span class="line">	cpu = smp_processor_id();</span><br><span class="line">	rq = cpu_rq(cpu);</span><br><span class="line">	prev = rq-&gt;curr; <span class="comment">//获取了当前进程的进程控制块</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line"></span><br><span class="line">	next = pick_next_task(rq, prev); <span class="comment">//获取了下一个进程的进程控制块</span></span><br><span class="line">	clear_tsk_need_resched(prev);</span><br><span class="line">	clear_preempt_need_resched();</span><br><span class="line">	rq-&gt;skip_clock_update = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (likely(prev != next)) &#123; <span class="comment">//判断当前进程和下一个进程是否相同</span></span><br><span class="line">		rq-&gt;nr_switches++;</span><br><span class="line">		rq-&gt;curr = next;</span><br><span class="line">		++*switch_count;</span><br><span class="line"></span><br><span class="line">		context_switch(rq, prev, next); <span class="comment">//切换进程上下文</span></span><br><span class="line">        </span><br><span class="line">		cpu = smp_processor_id();</span><br><span class="line">		rq = cpu_rq(cpu);</span><br><span class="line">	&#125; <span class="keyword">else</span></span><br><span class="line">		raw_spin_unlock_irq(&amp;rq-&gt;lock);</span><br><span class="line"></span><br><span class="line">	post_schedule(rq);</span><br><span class="line">	sched_preempt_enable_no_resched();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-3-pick-next-task函数"><a href="#2-3-pick-next-task函数" class="headerlink" title="2.3 pick_next_task函数"></a>2.3 pick_next_task函数</h2><p>pick_next_task函数位于<code>kernel/sched/core.c</code>，其功能为获取下一个进程的进程控制块。其源码如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">struct</span> task_struct *</span><br><span class="line"><span class="title">pick_next_task</span><span class="params">(<span class="keyword">struct</span> rq *rq, <span class="keyword">struct</span> task_struct *prev)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">struct</span> sched_class *<span class="keyword">class</span> = &amp;fair_sched_class;</span><br><span class="line">	<span class="keyword">struct</span> task_struct *p;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (likely(prev-&gt;sched_class == <span class="keyword">class</span> &amp;&amp;</span><br><span class="line">		   rq-&gt;nr_running == rq-&gt;cfs.h_nr_running)) &#123;</span><br><span class="line">		p = fair_sched_class.pick_next_task(rq, prev); <span class="comment">//进程调度算法</span></span><br><span class="line">		<span class="keyword">if</span> (unlikely(p == RETRY_TASK))</span><br><span class="line">			<span class="keyword">goto</span> again;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* assumes fair_sched_class-&gt;next == idle_sched_class */</span></span><br><span class="line">		<span class="keyword">if</span> (unlikely(!p))</span><br><span class="line">			p = idle_sched_class.pick_next_task(rq, prev); <span class="comment">//进程调度算法</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> p;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">again:</span><br><span class="line">	for_each_class(<span class="keyword">class</span>) &#123;</span><br><span class="line">		p = <span class="keyword">class</span>-&gt;pick_next_task(rq, prev); <span class="comment">//进程调度算法</span></span><br><span class="line">		<span class="keyword">if</span> (p) &#123;</span><br><span class="line">			<span class="keyword">if</span> (unlikely(p == RETRY_TASK))</span><br><span class="line">				<span class="keyword">goto</span> again;</span><br><span class="line">			<span class="keyword">return</span> p;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	BUG(); <span class="comment">/* the idle class will always have a runnable task */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可见，该函数中3次调用了名为pick_next_task的函数。事实上，这3个pick_next_task均为函数指针，指向了3个不同的函数。也就是说，在不同的情况下，linux会选择不同的算法来获取下一个要执行的进程。</p>
+<h2 id="2-4-context-switch函数和switch-to函数"><a href="#2-4-context-switch函数和switch-to函数" class="headerlink" title="2.4 context_switch函数和switch_to函数"></a>2.4 context_switch函数和switch_to函数</h2><p><code>context_switch</code>函数位于<code>kernel/sched/core.c</code>，其主要功能是执行进程调度。此处不再列举其源码，因为在源码中，最重要的一条语句即为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">switch_to(prev, next, prev);</span><br></pre></td></tr></table></figure>
+<p>该语句的任务是执行进程上下文的切换。对于不同的CPU指令集，进程上下文切换的步骤也不同，因此<code>switch_to</code>是存放在<code>arch</code>目录中的。对于x86指令集，该函数位于<code>arch/x86/include/asm/switch_to.h</code>，其源码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> switch_to(prev, next, last)					\</span><br><span class="line">do &#123;									\</span><br><span class="line">	unsigned long ebx, ecx, edx, esi, edi;				\</span><br><span class="line">	asm volatile(<span class="string">"pushfl\n\t"</span>		<span class="comment">/* 保存进程标志 */</span>	\</span><br><span class="line">		     <span class="string">"pushl %%ebp\n\t"</span>		<span class="comment">/* 保存prev进程的堆栈底端   */</span>	\</span><br><span class="line">		     <span class="string">"movl %%esp,%[prev_sp]\n\t"</span>	<span class="comment">/* 将prev进程的堆栈信息存入prev的进程控制块中   */</span> \</span><br><span class="line">		     <span class="string">"movl %[next_sp],%%esp\n\t"</span>	<span class="comment">/* 从next进程的进程控制块中调出堆栈位置信息   */</span> \</span><br><span class="line">		     <span class="string">"movl $1f,%[prev_ip]\n\t"</span>	<span class="comment">/* 将$1位置存入prev的进程控制块，作为下次调用的起点   */</span>	\</span><br><span class="line">		     <span class="string">"pushl %[next_ip]\n\t"</span>	<span class="comment">/* 将next进程的当前语句压栈   */</span>	\</span><br><span class="line">		     __switch_canary					\</span><br><span class="line">		     <span class="string">"jmp __switch_to\n"</span>	<span class="comment">/* 跳转到__switch_to函数，由于没有执行call语句，因此堆栈中的返回位置是next_ip  */</span>	\</span><br><span class="line">             <span class="comment">/* 从__switch_to中返回时，进程上下文已切换至next进程，并执行$1位置 */</span></span></span><br><span class="line">		     <span class="string">"1:\t"</span>					<span class="comment">/* $1位置，进程继续执行的位置 */</span>	\</span><br><span class="line">		     <span class="string">"popl %%ebp\n\t"</span>		<span class="comment">/* 弹出next进程的堆栈底端   */</span>	\</span><br><span class="line">		     <span class="string">"popfl\n"</span>			<span class="comment">/* 恢复进程标志 */</span>	\</span><br><span class="line">									\</span><br><span class="line">		     <span class="comment">/* output parameters */</span>				\</span><br><span class="line">		     : [prev_sp] <span class="string">"=m"</span> (prev-&gt;thread.sp),		\</span><br><span class="line">		       [prev_ip] <span class="string">"=m"</span> (prev-&gt;thread.ip),		\</span><br><span class="line">		       <span class="string">"=a"</span> (last),					\</span><br><span class="line">									\</span><br><span class="line">		       <span class="comment">/* clobbered output registers: */</span>		\</span><br><span class="line">		       <span class="string">"=b"</span> (ebx), <span class="string">"=c"</span> (ecx), <span class="string">"=d"</span> (edx),		\</span><br><span class="line">		       <span class="string">"=S"</span> (esi), <span class="string">"=D"</span> (edi)				\</span><br><span class="line">		       							\</span><br><span class="line">		       __switch_canary_oparam				\</span><br><span class="line">									\</span><br><span class="line">		       <span class="comment">/* input parameters: */</span>				\</span><br><span class="line">		     : [next_sp]  <span class="string">"m"</span> (next-&gt;thread.sp),		\</span><br><span class="line">		       [next_ip]  <span class="string">"m"</span> (next-&gt;thread.ip),		\</span><br><span class="line">		       							\</span><br><span class="line">		       <span class="comment">/* regparm parameters for __switch_to(): */</span>	\</span><br><span class="line">		       [prev]     <span class="string">"a"</span> (prev),				\</span><br><span class="line">		       [next]     <span class="string">"d"</span> (next)				\</span><br><span class="line">									\</span><br><span class="line">		       __switch_canary_iparam				\</span><br><span class="line">									\</span><br><span class="line">		     : <span class="comment">/* reloaded segment registers */</span>			\</span><br><span class="line">			<span class="string">"memory"</span>);					\</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>这段程序分为保存现场和恢复现场两部分。保存现场的内容包括：</p>
+<ol>
+<li>压栈保存flag</li>
+<li>压栈保存ebp信息</li>
+<li>将sp存入进程控制块的sp中</li>
+<li>将<code>$1</code>存入进程控制块的ip中</li>
+</ol>
+<p>这里值得注意的是：保存ip信息时，并没有把当前的ip存入进程控制块，这是因为，下次恢复现场的时候，并不希望从当前ip处执行，而是希望从当前ip的后面几句，即<code>$1</code>处开始执行。</p>
+<p>恢复现场的内容包括：</p>
+<ol>
+<li>从进程控制块中取出sp</li>
+<li>从进程控制块中取出ip并压栈</li>
+<li>用jmp而不是call调用__switch_to函数（用call时会将当前ip压栈，这并不是我们期望的，因为next_ip已经压栈了），在函数返回时的ret将栈顶的ip弹出到程序指针处</li>
+<li>弹栈恢复ebp信息</li>
+<li>弹栈恢复flag信息</li>
+</ol>
+<p>理解这段程序时，应该注意：next进程在上一次切换时，也执行了保存现场的语句，因此next进程的现场和prev进程的现场在结构上是相同的。</p>
+<h1 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h1><p>在linux系统中，进程调度是很重要的一部分。linux系统的一般执行过程即为“从一个进程切换到另一个进程”。进程切换通过调用schedule函数来完成，其中最主要的内容即为进程上下文的切换。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/articles/bilinear.html" rel="next" title="双线性约束的精确松弛">
+    上一篇：双线性约束的精确松弛
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/articles/linux-execve.html" rel="next" title="linux源码分析：execve加载可执行文件">
+    下一篇：linux源码分析：execve加载可执行文件
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.url = 'http://cxsmarkchan.com/articles/linux-schedule.html';
+                this.page.identifier = 'articles/linux-schedule.html';
+            };
+            (function() {
+                var d = document,
+                    s = d.createElement('script');
+                s.src = '//cxsmarkchan-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/cxsmarkchan" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 example.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

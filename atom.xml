@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.com/"/>
-  <updated>2017-11-26T04:23:26.124Z</updated>
+  <updated>2017-11-27T02:37:15.689Z</updated>
   <id>http://cxsmarkchan.com/</id>
   
   <author>
@@ -17,12 +17,36 @@
   
   <entry>
     <title>支持向量机：核方法</title>
-    <link href="http://cxsmarkchan.com/2017/11/25/ml-svm-kernel/"/>
-    <id>http://cxsmarkchan.com/2017/11/25/ml-svm-kernel/</id>
+    <link href="http://cxsmarkchan.com/articles/ml-svm-kernel.html"/>
+    <id>http://cxsmarkchan.com/articles/ml-svm-kernel.html</id>
     <published>2017-11-26T03:06:35.000Z</published>
-    <updated>2017-11-26T04:23:26.124Z</updated>
+    <updated>2017-11-27T02:37:15.689Z</updated>
     
     <content type="html">&lt;p&gt;利用支持向量机的对偶形式，可以把支持向量机推广到非线性模型中。由于对偶形式中仅出现了自变量的内积形式，因此在非线性支持向量机中，我们甚至不用定义具体的非线性映射，只需要定义“非线性内积”，也就是核函数。核方法使得非线性支持向量机仍然能用凸二次规划的方法来求解。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、核方法的基本思路&quot;&gt;&lt;a href=&quot;#一、核方法的基本思路&quot; class=&quot;headerlink&quot; title=&quot;一、核方法的基本思路&quot;&gt;&lt;/a&gt;一、核方法的基本思路&lt;/h1&gt;&lt;h2 id=&quot;1-1-非线性支持向量机&quot;&gt;&lt;a href=&quot;#1-1-非线性支持向量机&quot; class=&quot;headerlink&quot; title=&quot;1.1 非线性支持向量机&quot;&gt;&lt;/a&gt;1.1 非线性支持向量机&lt;/h2&gt;&lt;p&gt;线性支持向量机的基本思路是求一个分离超平面$w^Tx+b=0$，然后利用这个超平面将待预测样本空间分成两类。但实际问题中，常常会出现正负样本无法通过超平面分离的情形。非线性支持向量机的思路是通过一个非线性曲面将正负样本分离：&lt;/p&gt;
+&lt;p&gt;\[&lt;br&gt;\hat{y} = w^T\phi(x) + b&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;当$\hat{y}&amp;gt;0$时即为正样本，$\hat{y}&amp;lt;0$时即为负样本。这里$\phi(\cdot)$是一个给定的函数。此时，支持向量机的问题可以写成：&lt;br&gt;\[&lt;br&gt;\min_{w,b} C\sum_{i=1}^N\xi_i + \frac{1}{2}w^Tw \\&lt;br&gt;\text{s.t. } y_i\left( w^T\phi(x_i) + b \right) \geq 1 \\&lt;br&gt;\xi_i \geq 0&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;注意到$\phi(\cdot)$是给定的函数，$\phi(x_i)$的值也是给定的，可以看出，非线性支持向量机并没有在决策变量层面引入非线性，因此仍然是一个凸二次规划问题。&lt;/p&gt;
+&lt;h2 id=&quot;1-2-核方法&quot;&gt;&lt;a href=&quot;#1-2-核方法&quot; class=&quot;headerlink&quot; title=&quot;1.2 核方法&quot;&gt;&lt;/a&gt;1.2 核方法&lt;/h2&gt;&lt;p&gt;为了引入核方法，我们首先给出非线性支持向量机的对偶形式：&lt;br&gt;\[&lt;br&gt;\min \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j \phi(x_i)^T\phi(x_j) - \sum_{i=1}^N\alpha_i \\&lt;br&gt;\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;0\leq \alpha_i \leq C&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;在该形式下，支持向量机的预测为：&lt;br&gt;\[&lt;br&gt;\hat{y} = \sum_{i=1}^N\alpha_iy_i\phi(x_i)^T\phi(x) + b&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这里，线性支持向量机的$x_i^Tx_j$被替换为$\phi(x_i)^T\phi(x_j)$，其余部分都没有变。我们定义一个新的函数$K$：&lt;br&gt;\[&lt;br&gt;K(x,z) = \phi(x)^T\phi(z)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这样，非线性支持向量机就可以写成如下形式：&lt;br&gt;\[&lt;br&gt;\min \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j K(x_i, x_j) - \sum_{i=1}^N\alpha_i \\&lt;br&gt;\text{s.t. } \sum_{i=1}^N\alpha_iy_i=0 \\&lt;br&gt;0\leq \alpha_i \leq C&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;支持向量机的预测为：&lt;br&gt;\begin{equation} \label{eq:svm-kernel-predict}&lt;br&gt;\hat{y} = \sum_{i=1}^N\alpha_iy_iK(x_i,x) + b&lt;br&gt;\end{equation}&lt;/p&gt;
+&lt;p&gt;这里，函数$K(\cdot,\cdot)$被称为&lt;strong&gt;核函数&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;很容易注意到，在支持向量机的对偶形式中，从训练到预测，我们都只需要用到核函数$K$，而不需要用到映射$\phi$。这就意味着，&lt;strong&gt;在非线性支持向量机中，只需要知道核函数就可以进行训练和预测，完全不需要定义非线性映射$\phi$&lt;/strong&gt;。这一性质非常重要，因为在具体的问题中，映射$\phi$的定义相对困难，没有很明确的方法，而核函数$K$的定义和计算则相对容易。&lt;/p&gt;
+&lt;p&gt;核方法的基本思路即在于：只定义核函数$K$，不定义映射$\phi$，通过求解相应的二次规划，进行训练和预测。这种方法使得线性支持向量机的相关算法可以无缝推广到非线性支持向量机，从而拓宽了支持向量机的应用范围。&lt;/p&gt;
+&lt;h1 id=&quot;二、常用的核函数&quot;&gt;&lt;a href=&quot;#二、常用的核函数&quot; class=&quot;headerlink&quot; title=&quot;二、常用的核函数&quot;&gt;&lt;/a&gt;二、常用的核函数&lt;/h1&gt;&lt;p&gt;这里有一个不大的问题：给定一个函数$K$，它是否一定是某个映射$\phi$所对应的核函数？答案是否定的，即核函数需要满足一定的条件。我们可以通过一定的方法判断一个函数是否为核函数（此处不再介绍），但实际应用中，我们通常在一些已经被验证为核函数的函数族中选取合适的函数。&lt;/p&gt;
+&lt;h2 id=&quot;2-1-多项式核函数&quot;&gt;&lt;a href=&quot;#2-1-多项式核函数&quot; class=&quot;headerlink&quot; title=&quot;2.1 多项式核函数&quot;&gt;&lt;/a&gt;2.1 多项式核函数&lt;/h2&gt;&lt;p&gt;多项式核函数的基本形式为：&lt;br&gt;\[&lt;br&gt;K(x,z) = \left(1 + x^Tz\right)^p&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这里有一个特例：当$p=1$时，$K(x,z)=1+x^Tz$，这一形式和内积$x^Tz$非常相似。实际上，此时求出的结果和线性支持向量机的求解结果是相同的，因为多出来的$1$可以看做常数项，会被吸收进常数项$b$中。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-高斯核函数&quot;&gt;&lt;a href=&quot;#2-2-高斯核函数&quot; class=&quot;headerlink&quot; title=&quot;2.2 高斯核函数&quot;&gt;&lt;/a&gt;2.2 高斯核函数&lt;/h2&gt;&lt;p&gt;高斯核函数的定义为：&lt;br&gt;\[&lt;br&gt;K(x,z) = \exp\left(-\frac{(x-z)^T(x-z)}{2\sigma^2}\right)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这一核函数反映了样本点$x$和$z$的距离，距离越近则值越大。注意到支持向量机的预测式\eqref{eq:svm-kernel-predict}，$x_i$与$x$距离越近，$K(x_i,x)$越大，$y_i$的值对$\hat{y}$的影响越大。由此可见，高斯核函数是一种基于局部性的方法。而参数$\sigma$是调整局部性强弱的参数。$\sigma$越小，预测越偏重于附近的数据，$\sigma$越大，预测越偏重于全局。&lt;/p&gt;
+&lt;h1 id=&quot;三、小结&quot;&gt;&lt;a href=&quot;#三、小结&quot; class=&quot;headerlink&quot; title=&quot;三、小结&quot;&gt;&lt;/a&gt;三、小结&lt;/h1&gt;&lt;p&gt;这里我们用在吴恩达的&lt;a href=&quot;https://www.coursera.org/learn/machine-learning/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;机器学习&lt;/a&gt;课程中关于不同模型应用范围的阐述作为本文的结尾。&lt;/p&gt;
+&lt;p&gt;假设特征数量为$n$，训练样本数量为$m$，那么根据$n$和$m$的大小关系，可以按如下方法选择训练模型：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$n$相对于$m$很大时，说明样本较少，需要选择简单的模型，通常使用Logistic回归，或线性支持向量机。如果使用核方法引入非线性，可能会造成过拟合。&lt;/li&gt;
+&lt;li&gt;$n$和$m$大小相当，或$m$略大于$n$时，可以使用非线性支持向量机；&lt;/li&gt;
+&lt;li&gt;$n$较小，而$m$较大时，这时可以手动增加特征（如原始特征的非线性变换），然后使用Logistic回归或线性支持向量机。这里的考虑因素主要是核方法会引入更多的计算，增加训练成本。而线性方法训练会更快。&lt;/li&gt;
+&lt;/ol&gt;
 </content>
     
     <summary type="html">
@@ -50,8 +74,8 @@
   
   <entry>
     <title>支持向量机：对偶形式</title>
-    <link href="http://cxsmarkchan.com/2017/11/22/ml-svm-dual/"/>
-    <id>http://cxsmarkchan.com/2017/11/22/ml-svm-dual/</id>
+    <link href="http://cxsmarkchan.com/articles/ml-svm-dual.html"/>
+    <id>http://cxsmarkchan.com/articles/ml-svm-dual.html</id>
     <published>2017-11-22T05:45:27.000Z</published>
     <updated>2017-11-26T04:20:14.851Z</updated>
     
@@ -113,8 +137,8 @@
   
   <entry>
     <title>支持向量机：构造</title>
-    <link href="http://cxsmarkchan.com/2017/11/21/ml-svm-construction/"/>
-    <id>http://cxsmarkchan.com/2017/11/21/ml-svm-construction/</id>
+    <link href="http://cxsmarkchan.com/articles/ml-svm-construction.html"/>
+    <id>http://cxsmarkchan.com/articles/ml-svm-construction.html</id>
     <published>2017-11-21T18:04:34.000Z</published>
     <updated>2017-11-22T03:10:22.961Z</updated>
     
@@ -179,8 +203,8 @@
   
   <entry>
     <title>牛顿法</title>
-    <link href="http://cxsmarkchan.com/2017/11/18/optimization-newton/"/>
-    <id>http://cxsmarkchan.com/2017/11/18/optimization-newton/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-newton.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-newton.html</id>
     <published>2017-11-19T01:46:51.000Z</published>
     <updated>2017-11-19T03:21:39.107Z</updated>
     
@@ -214,8 +238,8 @@
   
   <entry>
     <title>梯度下降法及其收敛性</title>
-    <link href="http://cxsmarkchan.com/2017/11/12/optimization-gradient-descent/"/>
-    <id>http://cxsmarkchan.com/2017/11/12/optimization-gradient-descent/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-gradient-descent.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-gradient-descent.html</id>
     <published>2017-11-12T20:10:54.000Z</published>
     <updated>2017-11-22T03:10:37.765Z</updated>
     
@@ -275,8 +299,8 @@
   
   <entry>
     <title>一维搜索：0.618法与牛顿法</title>
-    <link href="http://cxsmarkchan.com/2017/11/05/optimization-line-search/"/>
-    <id>http://cxsmarkchan.com/2017/11/05/optimization-line-search/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-line-search.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-line-search.html</id>
     <published>2017-11-06T02:35:25.000Z</published>
     <updated>2017-11-06T05:50:32.349Z</updated>
     
@@ -321,8 +345,8 @@
   
   <entry>
     <title>对偶理论</title>
-    <link href="http://cxsmarkchan.com/2017/11/01/optimization-dual/"/>
-    <id>http://cxsmarkchan.com/2017/11/01/optimization-dual/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-dual.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-dual.html</id>
     <published>2017-11-02T02:27:08.000Z</published>
     <updated>2017-11-21T18:10:24.928Z</updated>
     
@@ -369,8 +393,8 @@
   
   <entry>
     <title>最优性条件：KKT</title>
-    <link href="http://cxsmarkchan.com/2017/10/31/optimization-kkt/"/>
-    <id>http://cxsmarkchan.com/2017/10/31/optimization-kkt/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-kkt.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-kkt.html</id>
     <published>2017-10-31T04:17:22.000Z</published>
     <updated>2017-11-21T18:10:11.668Z</updated>
     
@@ -425,8 +449,8 @@
   
   <entry>
     <title>凸性对于优化问题的意义</title>
-    <link href="http://cxsmarkchan.com/2017/10/20/optimization-convex/"/>
-    <id>http://cxsmarkchan.com/2017/10/20/optimization-convex/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-convex.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-convex.html</id>
     <published>2017-10-21T02:57:12.000Z</published>
     <updated>2017-11-21T18:09:05.996Z</updated>
     
@@ -469,8 +493,8 @@
   
   <entry>
     <title>优化模型（一）：优化的要素</title>
-    <link href="http://cxsmarkchan.com/2017/10/12/optimization-config/"/>
-    <id>http://cxsmarkchan.com/2017/10/12/optimization-config/</id>
+    <link href="http://cxsmarkchan.com/articles/optimization-config.html"/>
+    <id>http://cxsmarkchan.com/articles/optimization-config.html</id>
     <published>2017-10-12T04:39:11.000Z</published>
     <updated>2017-11-21T18:08:43.612Z</updated>
     
@@ -512,8 +536,8 @@
   
   <entry>
     <title>双线性约束的精确松弛</title>
-    <link href="http://cxsmarkchan.com/2016/05/12/bilinear/"/>
-    <id>http://cxsmarkchan.com/2016/05/12/bilinear/</id>
+    <link href="http://cxsmarkchan.com/articles/bilinear.html"/>
+    <id>http://cxsmarkchan.com/articles/bilinear.html</id>
     <published>2016-05-13T00:40:32.000Z</published>
     <updated>2017-11-21T18:09:53.360Z</updated>
     
@@ -584,8 +608,8 @@
   
   <entry>
     <title>linux源码分析：schedule进程调度</title>
-    <link href="http://cxsmarkchan.com/2016/04/18/linux-schedule/"/>
-    <id>http://cxsmarkchan.com/2016/04/18/linux-schedule/</id>
+    <link href="http://cxsmarkchan.com/articles/linux-schedule.html"/>
+    <id>http://cxsmarkchan.com/articles/linux-schedule.html</id>
     <published>2016-04-18T04:44:59.000Z</published>
     <updated>2017-09-25T22:52:56.978Z</updated>
     
@@ -661,8 +685,8 @@
   
   <entry>
     <title>linux源码分析：execve加载可执行文件</title>
-    <link href="http://cxsmarkchan.com/2016/04/10/linux-execve/"/>
-    <id>http://cxsmarkchan.com/2016/04/10/linux-execve/</id>
+    <link href="http://cxsmarkchan.com/articles/linux-execve.html"/>
+    <id>http://cxsmarkchan.com/articles/linux-execve.html</id>
     <published>2016-04-10T06:29:42.000Z</published>
     <updated>2017-09-25T22:52:56.950Z</updated>
     
@@ -729,8 +753,8 @@
   
   <entry>
     <title>linux源码分析：fork复制进程</title>
-    <link href="http://cxsmarkchan.com/2016/04/03/linux-fork/"/>
-    <id>http://cxsmarkchan.com/2016/04/03/linux-fork/</id>
+    <link href="http://cxsmarkchan.com/articles/linux-fork.html"/>
+    <id>http://cxsmarkchan.com/articles/linux-fork.html</id>
     <published>2016-04-04T01:04:54.000Z</published>
     <updated>2017-09-25T22:52:56.938Z</updated>
     
@@ -803,8 +827,8 @@
   
   <entry>
     <title>Linux系统调用：32位和64位的区别</title>
-    <link href="http://cxsmarkchan.com/2016/04/02/asm-syscall-64/"/>
-    <id>http://cxsmarkchan.com/2016/04/02/asm-syscall-64/</id>
+    <link href="http://cxsmarkchan.com/articles/asm-syscall-64.html"/>
+    <id>http://cxsmarkchan.com/articles/asm-syscall-64.html</id>
     <published>2016-04-02T14:45:20.000Z</published>
     <updated>2017-09-25T22:52:56.926Z</updated>
     
@@ -858,8 +882,8 @@
   
   <entry>
     <title>用asm内联汇编实现系统调用</title>
-    <link href="http://cxsmarkchan.com/2016/04/01/asm-syscall/"/>
-    <id>http://cxsmarkchan.com/2016/04/01/asm-syscall/</id>
+    <link href="http://cxsmarkchan.com/articles/asm-syscall.html"/>
+    <id>http://cxsmarkchan.com/articles/asm-syscall.html</id>
     <published>2016-04-01T20:23:12.000Z</published>
     <updated>2017-09-25T22:52:56.918Z</updated>
     
@@ -906,8 +930,8 @@
   
   <entry>
     <title>第一篇博客</title>
-    <link href="http://cxsmarkchan.com/2016/03/30/firstblog/"/>
-    <id>http://cxsmarkchan.com/2016/03/30/firstblog/</id>
+    <link href="http://cxsmarkchan.com/articles/firstblog.html"/>
+    <id>http://cxsmarkchan.com/articles/firstblog.html</id>
     <published>2016-03-30T04:27:55.000Z</published>
     <updated>2017-09-25T22:52:56.986Z</updated>
     

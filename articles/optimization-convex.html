@@ -1,0 +1,674 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="baidu-site-verification" content="iZA6IpYgQU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>凸性对于优化问题的意义 | cxsmarkchan的博客</title>
+    <meta name="author" content="cxsmarkchan">
+    
+    <meta name="description" content="Ph.D. Electrical Engineering">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="凸性对于优化问题的意义"/>
+    <meta property="og:site_name" content="cxsmarkchan的博客"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="cxsmarkchan的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">cxsmarkchan的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/about/cxs.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">cxsmarkchan</p>
+                        <p class="desc">电力系统/优化/随机</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活/">
+                    生活 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/linux/">
+                    linux <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/源码/">
+                    源码 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/内核/">
+                    内核 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/优化/">
+                    优化 <span class="right">8 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/模型/">
+                    模型 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/理论/">
+                    理论 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/算法/">
+                    算法 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/机器学习/">
+                    机器学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/机器学习/模型/">
+                    模型 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/优化/">优化</a><a class="breadcrumb" href="/categories/优化/理论/">理论</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>凸性对于优化问题的意义</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-10-21T02:57:12.000Z"><a href="/articles/optimization-convex.html">2017-10-20</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/优化/" class="chip pink lighten-1">优化</a>
+        
+            <a href="/tags/凸优化/" class="chip pink lighten-1">凸优化</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、凸性的基本定义"><span class="section table-of-contents-text">一、凸性的基本定义</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、凸优化问题的性质"><span class="section table-of-contents-text">二、凸优化问题的性质</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-局部最优和全局最优"><span class="section table-of-contents-text">2.1 局部最优和全局最优</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-局部最优和全局最优的关系"><span class="section table-of-contents-text">2.2 局部最优和全局最优的关系</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#三、非凸问题的NP性质"><span class="section table-of-contents-text">三、非凸问题的NP性质</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#3-1-非凸问题的全局最优解"><span class="section table-of-contents-text">3.1 非凸问题的全局最优解</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#3-2-含约束非凸问题的局部最优解"><span class="section table-of-contents-text">3.2 含约束非凸问题的局部最优解</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#3-3-无约束非凸问题的局部最优解"><span class="section table-of-contents-text">3.3 无约束非凸问题的局部最优解</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>在优化问题中，凸优化问题很重要的一类子问题。一般来说，凸优化问题的求解无论在理论上，还是在算法上，都比非凸优化问题要成熟很多。可以证明，凸优化问题的局部最优即为全局最优，这使得凸优化问题的全局最优解的寻找更为简单。但凸性的意义不止于此。一个有意思的结论是：一般的非凸问题不仅全局最优难以求解，甚至局部最优的求解也非常困难！这篇文章会简要介绍相关的结论。<br><a id="more"></a></p>
+<h1 id="一、凸性的基本定义"><a href="#一、凸性的基本定义" class="headerlink" title="一、凸性的基本定义"></a>一、凸性的基本定义</h1><p>优化问题的基本形式为：<br>\[<br>\min_x f(x) \\<br>\text{s.t. } g(x)\leq 0<br>\]</p>
+<p>以$f(x)$为例，我们可以按如下方式定义凸性：任取定义域中的两个点$x_1$和$x_2$，计算它们的函数值$f(x_1)$和$f(x_2)$，并计算它们的中点的函数值$f(\frac{x_1+x_2}{2})$，如果中点的函数值不大于两个端点的函数值的均值，即：<br>\[<br>f\left(\frac{x_1+x_2}{2}\right) \leq \frac{f(x_1)+f(x_2)}{2}<br>\]<br>我们就称$f(x)$为凸函数。凸函数的图像是一个向下凸出的图像。</p>
+<p>如果$f(x)$和$g(x)$都是凸函数，那么这个优化问题就称为凸优化问题。</p>
+<p>当然，对于$g(x)$，我们还有另一种更一般化的定义方式。观察$g(x)\leq 0$的图像，可以发现，如果任意两个点$x_1$和$x_2$在这个集合内，那么它们的中点同样在这个集合内部。满足这种性质的集合，我们称为凸集。事实上，凸优化问题可以定义为：约束为凸集，目标函数为凸函数的最小化问题。这个定义比前面的定义会更加广泛一些，因为有的时候，约束并不能写成$g(x)\leq 0$的形式。</p>
+<h1 id="二、凸优化问题的性质"><a href="#二、凸优化问题的性质" class="headerlink" title="二、凸优化问题的性质"></a>二、凸优化问题的性质</h1><h2 id="2-1-局部最优和全局最优"><a href="#2-1-局部最优和全局最优" class="headerlink" title="2.1 局部最优和全局最优"></a>2.1 局部最优和全局最优</h2><p>这里首先需要说明局部最优和全局最优的概念。</p>
+<p>全局最优的概念很简单，如果有一个$x_0$满足约束，并且在约束成立的范围内，没有其他$x$，使$f(x)&lt;f(x_0)$，就把$x_0$称为全局最优。简单来说，全局最优就是在约束满足的范围内的最小值。<br>局部最优的要求松一些，如果有一个$x_0$满足约束，并且在$x_0$附近（严格的说是<strong>邻域</strong>），没有其他满足约束的$x$，使$f(x)&lt;f(x_0)$，就把$x_0$称为局部最优。简单来说，局部最优只需要保证在该点附近（可能范围很小）保证最优即可。</p>
+<p>由此可见，为了确保局部最优，只需要在一个点的附近检查即可。如果目标函数满足一些可微性条件，这个“局部”甚至可以用该点的微分性质来判定。很容易想象，全局最优的判断要复杂很多，因为需要检查所有可能的解。但这里我想说的是，无论是局部最优还是全局最优，判定都不是一件简单的事情。当然，我所指的判定是<strong>充要条件</strong>。</p>
+<h2 id="2-2-局部最优和全局最优的关系"><a href="#2-2-局部最优和全局最优的关系" class="headerlink" title="2.2 局部最优和全局最优的关系"></a>2.2 局部最优和全局最优的关系</h2><p>对于全局最优的求解，并没有一个一般的方法，因为所有的分析学工具都是针对“局部”，或者说，微分性质的。一种比较直观的思路是：是否有一种优化问题，其局部最优就是全局最优？这个问题的答案是肯定的，凸优化就是其中的一种。</p>
+<p>我们这里不做严格证明，但可以简单论述一下。如果凸优化的局部最优不是全局最优，我们可以把该局部最优和全局最优连线。首先，由于约束是凸集，这条线必然在可行集内部。然后，从这个局部最优点看过去，这条线应该是“往下”的，因为全局最优解在它的“下方”（或者说，斜下方）。这就出现了矛盾：在局部最优的附近，所有的函数点都在它的“上方”，如果有函数值在下方，这个点也就不是局部最优解了！因此，凸优化的局部最优解也就是全局最优解。</p>
+<h1 id="三、非凸问题的NP性质"><a href="#三、非凸问题的NP性质" class="headerlink" title="三、非凸问题的NP性质"></a>三、非凸问题的NP性质</h1><p>我们已经知道，凸优化问题在某种程度上是“简单”的。一个很自然的问题是，非凸优化问题是不是真的“难”？或者说，是不是还有别的方式来找到非凸优化问题的局部最优解和全局最优解？当然，有可能有部分非凸优化问题可以在比较短的时间内求解，但我们关心的是一般的非凸问题。<br>当然，所谓“简单”和“难”都是相对的，我们这里可以说明，部分非凸问题的全局最优解、局部最优解的求解都是所谓的<strong>NP完全问题</strong>。至少到目前为止，NP完全问题在求解上还存在着极大的困难，因此，在NP完全问题被攻克前，我们不能奢求对于<strong>一般</strong>的非凸问题求解全局最优解，甚至求解局部最优解也是不可行的。</p>
+<h2 id="3-1-非凸问题的全局最优解"><a href="#3-1-非凸问题的全局最优解" class="headerlink" title="3.1 非凸问题的全局最优解"></a>3.1 非凸问题的全局最优解</h2><p>为了论述全局最优解的NP完全性，我们需要找一个已知的NP完全问题，并证明全局最优解的求解难度和这个已知问题相同。我们寻找的NP完全问题是<strong>部分和问题</strong>：给定一个数组和一个数字，该数组是否存在子数组，其和等于该数字？用数学语言叙述则为：给定数字$d_0$和一个数组$d_1,d_2,\dots,d_n$，问：是否存在$y_j\in{0,1},j=1,2,\dots,n$使得：<br>\[<br>\sum_{j=1}^nd_jy_j=d_0<br>\]</p>
+<p>我们把上述问题称为<strong>问题1</strong>。同时，我们考虑如下问题(<strong>问题2</strong>)：<br>\[<br>\min \left(\sum_{j=1}^nd_jy_j-d_0\right)^2+\sum_{j=1}^ny_j(1-y_j) \\<br>\text{s.t. } 0 \leq y_j \leq 1, j=1,2,\dots, n<br>\]<br>注意，在第一个问题中，我们假设了$y_j$是整数，而第二个问题中，我们并没有假设$y_j$是整数。不难看出，问题2的目标函数始终是不小于0的。当问题1有解的时候，把该解代入问题2，就可以得到目标函数的最小值0。反过来，当问题2的目标函数最小值为0时，$y_j$只能都取0或1（否则第二项大于0，第一项不小于0，目标函数不可能等于0），这个解也满足问题1。</p>
+<p>因此我们得出结论，问题1有解和问题2全局最优解为0是等价的。由于问题1是NP完全问题，问题2的全局最优解的求解也只能是NP完全问题。</p>
+<p>这里要注意，我们并没有求解问题2的全局最优解，而是验证全局最优解是否为0。如果这种验证都被证明是一件“困难”的事，那么全局最优解的求解只会更加困难。</p>
+<h2 id="3-2-含约束非凸问题的局部最优解"><a href="#3-2-含约束非凸问题的局部最优解" class="headerlink" title="3.2 含约束非凸问题的局部最优解"></a>3.2 含约束非凸问题的局部最优解</h2><p>这里我们考虑如下问题（<strong>问题3</strong>）：<br>\[<br>\min Q(x) = x^TDx, x\geq 0<br>\]<br>其中$D$是$n$阶矩阵，其元素均为整数。</p>
+<p>Murty证明了如下定理：验证0是否为问题3的局部最优解，是一个NP完全问题！这个定理非常有意思，我们将在另一篇博客中论述。但同样的，如果局部最优解的判定已经是NP完全问题，那么局部最优解的求解只可能更加困难。</p>
+<h2 id="3-3-无约束非凸问题的局部最优解"><a href="#3-3-无约束非凸问题的局部最优解" class="headerlink" title="3.3 无约束非凸问题的局部最优解"></a>3.3 无约束非凸问题的局部最优解</h2><p>3.2的条件中含有约束$x\geq 0$，也就是说，对于一般的含约束的非凸问题，没有有效的方法验证局部最优解。实际上，只要稍作修改，就可以发现，一般的无约束非凸问题也没有有效的方法验证局部最优解。我们只需要令$x=u^2$，则问题3转化为：<br>\[<br>\min Q(x) = [u^2]^TD[u^2]<br>\]<br>此时，对于u就是无约束优化问题了。显然，这个问题和问题3是等价的，它也是NP完全问题。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/articles/optimization-kkt.html" rel="next" title="最优性条件：KKT">
+    上一篇：最优性条件：KKT
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/articles/optimization-config.html" rel="next" title="优化模型（一）：优化的要素">
+    下一篇：优化模型（一）：优化的要素
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.url = 'http://cxsmarkchan.com/articles/optimization-convex.html';
+                this.page.identifier = 'articles/optimization-convex.html';
+            };
+            (function() {
+                var d = document,
+                    s = d.createElement('script');
+                s.src = '//cxsmarkchan-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/cxsmarkchan" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 example.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+</body>
+</html>
