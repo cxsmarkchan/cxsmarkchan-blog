@@ -43,11 +43,11 @@
         
         <tags>
             
-            <tag> 对偶 </tag>
-            
             <tag> 支持向量机 </tag>
             
             <tag> SVM </tag>
+            
+            <tag> 对偶 </tag>
             
             <tag> 核方法 </tag>
             
@@ -108,11 +108,11 @@
         
         <tags>
             
-            <tag> 对偶 </tag>
-            
             <tag> 支持向量机 </tag>
             
             <tag> SVM </tag>
+            
+            <tag> 对偶 </tag>
             
         </tags>
         
@@ -275,11 +275,11 @@
         
         <tags>
             
-            <tag> 导数 </tag>
-            
             <tag> 梯度 </tag>
             
             <tag> 收敛 </tag>
+            
+            <tag> 导数 </tag>
             
         </tags>
         

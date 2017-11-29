@@ -60,11 +60,11 @@
       <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
-    
       <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
       <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
+    
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
       <category term="核方法" scheme="http://cxsmarkchan.com/tags/%E6%A0%B8%E6%96%B9%E6%B3%95/"/>
     
@@ -127,11 +127,11 @@
       <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
-      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
-    
       <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
       <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
+    
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
   </entry>
   
@@ -300,11 +300,11 @@
       <category term="算法" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="导数" scheme="http://cxsmarkchan.com/tags/%E5%AF%BC%E6%95%B0/"/>
-    
       <category term="梯度" scheme="http://cxsmarkchan.com/tags/%E6%A2%AF%E5%BA%A6/"/>
     
       <category term="收敛" scheme="http://cxsmarkchan.com/tags/%E6%94%B6%E6%95%9B/"/>
+    
+      <category term="导数" scheme="http://cxsmarkchan.com/tags/%E5%AF%BC%E6%95%B0/"/>
     
   </entry>
   
