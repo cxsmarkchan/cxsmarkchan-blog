@@ -1,0 +1,709 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="baidu-site-verification" content="iZA6IpYgQU" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>正则化手段：Dropout | cxsmarkchan的博客</title>
+    <meta name="author" content="cxsmarkchan">
+    
+    <meta name="description" content="Ph.D. Electrical Engineering">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="正则化手段：Dropout"/>
+    <meta property="og:site_name" content="cxsmarkchan的博客"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="cxsmarkchan的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">cxsmarkchan的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/about/cxs.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">cxsmarkchan</p>
+                        <p class="desc">电力系统/优化/随机</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/生活/">
+                    生活 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/linux/">
+                    linux <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/源码/">
+                    源码 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/linux/内核/">
+                    内核 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/优化/">
+                    优化 <span class="right">8 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/算法/">
+                    算法 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/模型/">
+                    模型 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/优化/理论/">
+                    理论 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/机器学习/">
+                    机器学习 <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/机器学习/模型/">
+                    模型 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/机器学习/深度学习相关/">
+                    深度学习相关 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/机器学习/">机器学习</a><a class="breadcrumb" href="/categories/机器学习/深度学习相关/">深度学习相关</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>正则化手段：Dropout</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-12-02T02:15:40.000Z"><a href="/articles/ml-dl-dropout.html">2017-12-01</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/dropout/" class="chip pink lighten-1">dropout</a>
+        
+            <a href="/tags/过拟合/" class="chip pink lighten-1">过拟合</a>
+        
+            <a href="/tags/bagging/" class="chip pink lighten-1">bagging</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、Dropout的基本思想"><span class="section table-of-contents-text">一、Dropout的基本思想</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、Dropout的训练和预测方法"><span class="section table-of-contents-text">二、Dropout的训练和预测方法</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-训练"><span class="section table-of-contents-text">2.1 训练</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-预测"><span class="section table-of-contents-text">2.2 预测</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-3-Dropout的实用变形"><span class="section table-of-contents-text">2.3 Dropout的实用变形</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>Dropout是一种常见的正则化方法。它借用了集成学习的思想，近似实现了同时训练大量网络结构，并通过集成得出预测结果的功能。由于含有集成环节，Dropout可以有效地避免过拟合。<br><a id="more"></a></p>
+<h1 id="一、Dropout的基本思想"><a href="#一、Dropout的基本思想" class="headerlink" title="一、Dropout的基本思想"></a>一、Dropout的基本思想</h1><p>Dropout要解决的问题是：在同一个神经网络模型中，有没有可能通过一定的手段模拟出多个网络模型的效果，从而提升模型精度？针对这个问题，Dropout巧妙利用了一个事实：一个神经网络模型中，通过屏蔽部分神经元，就可以构建出不同的神经网络模型。如下图，原始神经网络的输入层有2个神经元，隐藏层有2个神经元。通过把部分神经元删去，我们可以得到$2^4=16$种不同的网络。当然，其中一部分网络是无效网络，例如第4行的所有网络，但这并不会造成太大影响，因为当特征数、网络层数增加的时候，这种无效网络的比例会急剧下降。</p>
+<div align="center"><br><img src="/images/ml-dl-dropout/subnetworks.jpg" alt=""><br></div>
+
+<p>和一般的Bagging模型不同，上述的所有网络只是网络结构不同，但所有的参数都是共享的。因此，这种方法的效果比直接训练同样数量的独立网络要差一些。但是，我们应该注意到，当有$n$个特征时，不同结构的数量可以达到$2^n$个！对于如此巨大的网络数量，训练独立网络本身就是一件不可能的事情。所以，结构不同、参数共享的网络已经是一种非常好的实现方法了。另外，指数级别的网络数量也保证了共享参数的网络能达到好的预测效果。</p>
+<p>接下来，Dropout还需要解决如下问题：</p>
+<ol>
+<li>如何同时训练不同结构的（参数共享）的网络？</li>
+<li>如何对不同结构的网络进行集成，从而得到预测结果？</li>
+</ol>
+<p>我们在下一节讨论这两个问题。</p>
+<h1 id="二、Dropout的训练和预测方法"><a href="#二、Dropout的训练和预测方法" class="headerlink" title="二、Dropout的训练和预测方法"></a>二、Dropout的训练和预测方法</h1><h2 id="2-1-训练"><a href="#2-1-训练" class="headerlink" title="2.1 训练"></a>2.1 训练</h2><p>一般来说，神经网络的训练会采用随机梯度下降法。该方法每次训练会选取一个batch的数据，通过BP算法计算梯度，并更新参数。为了训练不同结构的神经网络，我们需要屏蔽其中的一些神经元。实际上，神经网络的特殊结构使得我们屏蔽相关的神经元非常简单——只需要在该神经元的输出上乘以0即可。如下图，我们在输入层和隐含层的每个神经元上面乘以一个系数$\mu$，$\mu$只能为0或1。那么，$\mu=1$时，该神经元可以正常输出，而$\mu=0$时，该神经元就会被屏蔽。</p>
+<div align="center"><br><img src="/images/ml-dl-dropout/masking.jpg" alt=""><br></div>
+
+<p>值得注意的是，屏蔽神经元并不意味着我们会把该神经元的内容清空。神经元内部的参数仍然是保留的，只是在本次训练中，它的输出被外部变量$\mu=0$屏蔽了。这样，我们就能够实现一个子网络的训练。</p>
+<p>那么，屏蔽层$\mu$的数值是如何确定的呢？这就是在深度学习框架中的常见超参数：keep probability，即保留概率，在各种框架中一般记作keep_prob。在每次训练中，各个屏蔽系数$\mu$独立设置，设置为1的概率为keep_prob，设置为0的概率则为1-keep_prob。由此可见，保留概率为1时，神经网络不采用Dropout，而保留概率为0时，神经网络就不再工作（因为所有神经元都被屏蔽）。一般来说，保留概率可以选取0.5~0.8。</p>
+<p>由于参数共享，每次训练过程尽管只针对某一个网络，但所有网络的参数（除了本次被屏蔽的神经元参数）都会同步更新。Dropout的训练方法与不含Dropout的训练方法的区别在于，训练时会考虑到不同网络结构下最优参数的设置，因此最终训练出来的参数在每种网络结构下都会有一定的效果。可以看出，这种方法能够有效地避免过拟合，因为过拟合的本质在于网络参数对误差过于敏感，而一组参数如果在不同的网络结构下都能取得不错的效果，那么这组参数发生过拟合的概率也会降低。</p>
+<h2 id="2-2-预测"><a href="#2-2-预测" class="headerlink" title="2.2 预测"></a>2.2 预测</h2><p>集成预测方法一般需要计算每种网络结构下的预测值，并做加权平均。可惜的是，由于网络结构有$2^n$种，我们无法逐个计算。与训练不同的地方在于，训练时我们可以通过训练一种网络结构，实现其他网络结构的参数同步更新，而预测的时候，我们无法通过某一个网络结构下的预测结果，获取其他网络结构下的预测结果。实际上，到目前为止还没有什么方法能在数学意义上保证有效的预测，所以只能采用一些启发式的方法。</p>
+<p>一种最简单的思路是随机选取有限数量（如10~20组）网络，分别进行预测，再对预测结果按照概率进行加权平均。这种方法看上去只利用了很少的网络结构，但在实践中可以运行得很好。另一种方法是采用几何平均值代替算术加权平均值，作为Bagging后的结果。当然，几何平均值并不比算术平均值更容易求解，但是我们可以用一种有效的方法近似处理：只需考虑所有元素均未屏蔽的网络，在每个神经元的输出时乘以保留概率，最终得到的输出即可近似表示Bagging后的预测值。在一定条件下，可以证明这样处理得到的结果即为几何平均值，但在更多情况下，这只是一种简单的近似。</p>
+<h2 id="2-3-Dropout的实用变形"><a href="#2-3-Dropout的实用变形" class="headerlink" title="2.3 Dropout的实用变形"></a>2.3 Dropout的实用变形</h2><p>根据前两个小节的结果，我们可以看出Dropout的应用方法：</p>
+<ol>
+<li>在训练时，每个神经元以keep_prob的概率正常输出，以1-keep_prob的概率输出0，然后运行BP算法进行梯度计算。</li>
+<li>在预测时，每个神经元的输出乘以keep_prob后，进入下一层。</li>
+</ol>
+<p>为了更加方便地使用Dropout，我们通常做如下变形：</p>
+<ol>
+<li>在训练时，每个神经元以keep_prob的概率放大1/keep_prob倍输出。以1-keep_prob的概率输出0。这样，每个神经元的输出期望值和没有Dropout时的正常输出值相等。</li>
+<li>在预测时，直接按照全网络进行预测即可。</li>
+</ol>
+<p>这个变形实际上把预测时乘以keep_prob的过程转移到了训练中。这样，Dropout就完全成为训练参数。由于在深度学习中，训练和预测通常是分开的，这么处理使得预测时完全不用考虑Dropout的问题，为程序编写和运行带来了方便。</p>
+<p>作为小结，Dropout是深度学习中的常用技巧，通过同时训练结构不同、参数共享的网络，模拟Bagging的效果。同时，由于训练时每个神经元的输出不确定可能为正常值，也可能为零，因此训练出来的网络对于误差有更强的适应性，从而有效避免过拟合。Dropout原理的简易性使其可以适应于各种结构的网络。但应该注意到，Dropout本质上是一种正则化手段，因此引入Dropout有可能会降低模型的训练速度和精度。</p>
+
+                
+
+
+<p class="pink-link-context">
+    <a href="/articles/ml-svm-kernel.html" rel="next" title="支持向量机：核方法">
+    下一篇：支持向量机：核方法
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.url = 'http://cxsmarkchan.com/articles/ml-dl-dropout.html';
+                this.page.identifier = 'articles/ml-dl-dropout.html';
+            };
+            (function() {
+                var d = document,
+                    s = d.createElement('script');
+                s.src = '//cxsmarkchan-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/cxsmarkchan" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container" style="width: 800px">
+            © 2017 cxsmarkchan.com, All rights reserved.
+            <div class="right" style="margin-top: 0;">
+            本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a> | Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

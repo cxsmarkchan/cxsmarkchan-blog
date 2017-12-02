@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.com/"/>
-  <updated>2017-11-27T02:37:15.689Z</updated>
+  <updated>2017-12-02T05:48:56.222Z</updated>
   <id>http://cxsmarkchan.com/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>正则化手段：Dropout</title>
+    <link href="http://cxsmarkchan.com/articles/ml-dl-dropout.html"/>
+    <id>http://cxsmarkchan.com/articles/ml-dl-dropout.html</id>
+    <published>2017-12-02T02:15:40.000Z</published>
+    <updated>2017-12-02T05:48:56.222Z</updated>
+    
+    <content type="html">&lt;p&gt;Dropout是一种常见的正则化方法。它借用了集成学习的思想，近似实现了同时训练大量网络结构，并通过集成得出预测结果的功能。由于含有集成环节，Dropout可以有效地避免过拟合。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、Dropout的基本思想&quot;&gt;&lt;a href=&quot;#一、Dropout的基本思想&quot; class=&quot;headerlink&quot; title=&quot;一、Dropout的基本思想&quot;&gt;&lt;/a&gt;一、Dropout的基本思想&lt;/h1&gt;&lt;p&gt;Dropout要解决的问题是：在同一个神经网络模型中，有没有可能通过一定的手段模拟出多个网络模型的效果，从而提升模型精度？针对这个问题，Dropout巧妙利用了一个事实：一个神经网络模型中，通过屏蔽部分神经元，就可以构建出不同的神经网络模型。如下图，原始神经网络的输入层有2个神经元，隐藏层有2个神经元。通过把部分神经元删去，我们可以得到$2^4=16$种不同的网络。当然，其中一部分网络是无效网络，例如第4行的所有网络，但这并不会造成太大影响，因为当特征数、网络层数增加的时候，这种无效网络的比例会急剧下降。&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/ml-dl-dropout/subnetworks.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;/div&gt;
+
+&lt;p&gt;和一般的Bagging模型不同，上述的所有网络只是网络结构不同，但所有的参数都是共享的。因此，这种方法的效果比直接训练同样数量的独立网络要差一些。但是，我们应该注意到，当有$n$个特征时，不同结构的数量可以达到$2^n$个！对于如此巨大的网络数量，训练独立网络本身就是一件不可能的事情。所以，结构不同、参数共享的网络已经是一种非常好的实现方法了。另外，指数级别的网络数量也保证了共享参数的网络能达到好的预测效果。&lt;/p&gt;
+&lt;p&gt;接下来，Dropout还需要解决如下问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如何同时训练不同结构的（参数共享）的网络？&lt;/li&gt;
+&lt;li&gt;如何对不同结构的网络进行集成，从而得到预测结果？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们在下一节讨论这两个问题。&lt;/p&gt;
+&lt;h1 id=&quot;二、Dropout的训练和预测方法&quot;&gt;&lt;a href=&quot;#二、Dropout的训练和预测方法&quot; class=&quot;headerlink&quot; title=&quot;二、Dropout的训练和预测方法&quot;&gt;&lt;/a&gt;二、Dropout的训练和预测方法&lt;/h1&gt;&lt;h2 id=&quot;2-1-训练&quot;&gt;&lt;a href=&quot;#2-1-训练&quot; class=&quot;headerlink&quot; title=&quot;2.1 训练&quot;&gt;&lt;/a&gt;2.1 训练&lt;/h2&gt;&lt;p&gt;一般来说，神经网络的训练会采用随机梯度下降法。该方法每次训练会选取一个batch的数据，通过BP算法计算梯度，并更新参数。为了训练不同结构的神经网络，我们需要屏蔽其中的一些神经元。实际上，神经网络的特殊结构使得我们屏蔽相关的神经元非常简单——只需要在该神经元的输出上乘以0即可。如下图，我们在输入层和隐含层的每个神经元上面乘以一个系数$\mu$，$\mu$只能为0或1。那么，$\mu=1$时，该神经元可以正常输出，而$\mu=0$时，该神经元就会被屏蔽。&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/ml-dl-dropout/masking.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;/div&gt;
+
+&lt;p&gt;值得注意的是，屏蔽神经元并不意味着我们会把该神经元的内容清空。神经元内部的参数仍然是保留的，只是在本次训练中，它的输出被外部变量$\mu=0$屏蔽了。这样，我们就能够实现一个子网络的训练。&lt;/p&gt;
+&lt;p&gt;那么，屏蔽层$\mu$的数值是如何确定的呢？这就是在深度学习框架中的常见超参数：keep probability，即保留概率，在各种框架中一般记作keep_prob。在每次训练中，各个屏蔽系数$\mu$独立设置，设置为1的概率为keep_prob，设置为0的概率则为1-keep_prob。由此可见，保留概率为1时，神经网络不采用Dropout，而保留概率为0时，神经网络就不再工作（因为所有神经元都被屏蔽）。一般来说，保留概率可以选取0.5~0.8。&lt;/p&gt;
+&lt;p&gt;由于参数共享，每次训练过程尽管只针对某一个网络，但所有网络的参数（除了本次被屏蔽的神经元参数）都会同步更新。Dropout的训练方法与不含Dropout的训练方法的区别在于，训练时会考虑到不同网络结构下最优参数的设置，因此最终训练出来的参数在每种网络结构下都会有一定的效果。可以看出，这种方法能够有效地避免过拟合，因为过拟合的本质在于网络参数对误差过于敏感，而一组参数如果在不同的网络结构下都能取得不错的效果，那么这组参数发生过拟合的概率也会降低。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-预测&quot;&gt;&lt;a href=&quot;#2-2-预测&quot; class=&quot;headerlink&quot; title=&quot;2.2 预测&quot;&gt;&lt;/a&gt;2.2 预测&lt;/h2&gt;&lt;p&gt;集成预测方法一般需要计算每种网络结构下的预测值，并做加权平均。可惜的是，由于网络结构有$2^n$种，我们无法逐个计算。与训练不同的地方在于，训练时我们可以通过训练一种网络结构，实现其他网络结构的参数同步更新，而预测的时候，我们无法通过某一个网络结构下的预测结果，获取其他网络结构下的预测结果。实际上，到目前为止还没有什么方法能在数学意义上保证有效的预测，所以只能采用一些启发式的方法。&lt;/p&gt;
+&lt;p&gt;一种最简单的思路是随机选取有限数量（如10~20组）网络，分别进行预测，再对预测结果按照概率进行加权平均。这种方法看上去只利用了很少的网络结构，但在实践中可以运行得很好。另一种方法是采用几何平均值代替算术加权平均值，作为Bagging后的结果。当然，几何平均值并不比算术平均值更容易求解，但是我们可以用一种有效的方法近似处理：只需考虑所有元素均未屏蔽的网络，在每个神经元的输出时乘以保留概率，最终得到的输出即可近似表示Bagging后的预测值。在一定条件下，可以证明这样处理得到的结果即为几何平均值，但在更多情况下，这只是一种简单的近似。&lt;/p&gt;
+&lt;h2 id=&quot;2-3-Dropout的实用变形&quot;&gt;&lt;a href=&quot;#2-3-Dropout的实用变形&quot; class=&quot;headerlink&quot; title=&quot;2.3 Dropout的实用变形&quot;&gt;&lt;/a&gt;2.3 Dropout的实用变形&lt;/h2&gt;&lt;p&gt;根据前两个小节的结果，我们可以看出Dropout的应用方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在训练时，每个神经元以keep_prob的概率正常输出，以1-keep_prob的概率输出0，然后运行BP算法进行梯度计算。&lt;/li&gt;
+&lt;li&gt;在预测时，每个神经元的输出乘以keep_prob后，进入下一层。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为了更加方便地使用Dropout，我们通常做如下变形：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在训练时，每个神经元以keep_prob的概率放大1/keep_prob倍输出。以1-keep_prob的概率输出0。这样，每个神经元的输出期望值和没有Dropout时的正常输出值相等。&lt;/li&gt;
+&lt;li&gt;在预测时，直接按照全网络进行预测即可。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这个变形实际上把预测时乘以keep_prob的过程转移到了训练中。这样，Dropout就完全成为训练参数。由于在深度学习中，训练和预测通常是分开的，这么处理使得预测时完全不用考虑Dropout的问题，为程序编写和运行带来了方便。&lt;/p&gt;
+&lt;p&gt;作为小结，Dropout是深度学习中的常用技巧，通过同时训练结构不同、参数共享的网络，模拟Bagging的效果。同时，由于训练时每个神经元的输出不确定可能为正常值，也可能为零，因此训练出来的网络对于误差有更强的适应性，从而有效避免过拟合。Dropout原理的简易性使其可以适应于各种结构的网络。但应该注意到，Dropout本质上是一种正则化手段，因此引入Dropout有可能会降低模型的训练速度和精度。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Dropout是一种常见的正则化方法。它借用了集成学习的思想，近似实现了同时训练大量网络结构，并通过集成得出预测结果的功能。由于含有集成环节，Dropout可以有效地避免过拟合。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="深度学习相关" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="dropout" scheme="http://cxsmarkchan.com/tags/dropout/"/>
+    
+      <category term="过拟合" scheme="http://cxsmarkchan.com/tags/%E8%BF%87%E6%8B%9F%E5%90%88/"/>
+    
+      <category term="bagging" scheme="http://cxsmarkchan.com/tags/bagging/"/>
+    
+  </entry>
   
   <entry>
     <title>支持向量机：核方法</title>
