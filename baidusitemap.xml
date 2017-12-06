@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/ml-sgd.html</loc>
+    <lastmod>2017-12-06T06:33:23.782Z</lastmod>
+    <data>
+        <display>
+        <title>随机梯度下降法：机器学习中最常用的算法</title>
+        <pubTime>2017-12-06T02:56:54.000Z</pubTime>
+        
+        <tag>随机梯度下降</tag>
+         
+        <tag>机器学习算法</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="算法" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/ml-dl-dropout.html</loc>
+    <lastmod>2017-12-06T04:29:33.832Z</lastmod>
+    <data>
+        <display>
+        <title>正则化手段：Dropout</title>
+        <pubTime>2017-12-02T02:15:40.000Z</pubTime>
+        
+        <tag>dropout</tag>
+         
+        <tag>过拟合</tag>
+         
+        <tag>bagging</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="深度学习相关" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-newton.html</loc>
+    <lastmod>2017-11-28T05:52:51.120Z</lastmod>
+    <data>
+        <display>
+        <title>牛顿法</title>
+        <pubTime>2017-11-19T01:46:51.000Z</pubTime>
+        
+        <tag>优化</tag>
+         
+        <tag>二阶收敛</tag>
+         
+        <tag>牛顿法</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="算法" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/ml-svm-kernel.html</loc>
+    <lastmod>2017-11-27T02:37:15.689Z</lastmod>
+    <data>
+        <display>
+        <title>支持向量机：核方法</title>
+        <pubTime>2017-11-26T03:06:35.000Z</pubTime>
+        
+        <tag>对偶</tag>
+         
+        <tag>支持向量机</tag>
+         
+        <tag>SVM</tag>
+         
+        <tag>核方法</tag>
+         
+        <tag>非线性支持向量机</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="模型" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/ml-svm-dual.html</loc>
+    <lastmod>2017-11-26T04:20:14.851Z</lastmod>
+    <data>
+        <display>
+        <title>支持向量机：对偶形式</title>
+        <pubTime>2017-11-22T05:45:27.000Z</pubTime>
+        
+        <tag>对偶</tag>
+         
+        <tag>支持向量机</tag>
+         
+        <tag>SVM</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="模型" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-gradient-descent.html</loc>
+    <lastmod>2017-11-22T03:10:37.765Z</lastmod>
+    <data>
+        <display>
+        <title>梯度下降法及其收敛性</title>
+        <pubTime>2017-11-12T20:10:54.000Z</pubTime>
+        
+        <tag>导数</tag>
+         
+        <tag>梯度</tag>
+         
+        <tag>收敛</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="算法" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/ml-svm-construction.html</loc>
+    <lastmod>2017-11-22T03:10:22.961Z</lastmod>
+    <data>
+        <display>
+        <title>支持向量机：构造</title>
+        <pubTime>2017-11-21T18:04:34.000Z</pubTime>
+        
+        <tag>支持向量机</tag>
+         
+        <tag>SVM</tag>
+         
+        <tag>合页损失函数</tag>
+         
+        <tag>最大间隔</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="模型" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-dual.html</loc>
+    <lastmod>2017-11-21T18:10:24.928Z</lastmod>
+    <data>
+        <display>
+        <title>对偶理论</title>
+        <pubTime>2017-11-02T02:27:08.000Z</pubTime>
+        
+        <tag>对偶</tag>
+         
+        <tag>互补松弛</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="理论" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-kkt.html</loc>
+    <lastmod>2017-11-21T18:10:11.668Z</lastmod>
+    <data>
+        <display>
+        <title>最优性条件：KKT</title>
+        <pubTime>2017-10-31T04:17:22.000Z</pubTime>
+        
+        <tag>导数</tag>
+         
+        <tag>约束</tag>
+         
+        <tag>KKT条件</tag>
+         
+        <tag>极值</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="理论" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/bilinear.html</loc>
+    <lastmod>2017-11-21T18:09:53.360Z</lastmod>
+    <data>
+        <display>
+        <title>双线性约束的精确松弛</title>
+        <pubTime>2016-05-13T00:40:32.000Z</pubTime>
+        
+        <tag>双线性</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>松弛</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="模型" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-convex.html</loc>
+    <lastmod>2017-11-21T18:09:05.996Z</lastmod>
+    <data>
+        <display>
+        <title>凸性对于优化问题的意义</title>
+        <pubTime>2017-10-21T02:57:12.000Z</pubTime>
+        
+        <tag>优化</tag>
+         
+        <tag>凸优化</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="理论" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%90%86%E8%AE%BA/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-config.html</loc>
+    <lastmod>2017-11-21T18:08:43.612Z</lastmod>
+    <data>
+        <display>
+        <title>优化模型（一）：优化的要素</title>
+        <pubTime>2017-10-12T04:39:11.000Z</pubTime>
+        
+        <tag>优化</tag>
+         
+        <tag>模型</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="模型" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E6%A8%A1%E5%9E%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/optimization-line-search.html</loc>
+    <lastmod>2017-11-06T05:50:32.349Z</lastmod>
+    <data>
+        <display>
+        <title>一维搜索：0.618法与牛顿法</title>
+        <pubTime>2017-11-06T02:35:25.000Z</pubTime>
+        
+        <tag>优选法</tag>
+         
+        <tag>0.618</tag>
+         
+        <tag>黄金分割</tag>
+         
+         
+           
+             
+              <breadCrumb title="优化" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="算法" url="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/firstblog.html</loc>
+    <lastmod>2017-09-25T22:52:56.986Z</lastmod>
+    <data>
+        <display>
+        <title>第一篇博客</title>
+        <pubTime>2016-03-30T04:27:55.000Z</pubTime>
+        
+        <tag>博客</tag>
+         
+        <tag>hexo</tag>
+         
+         
+           
+             
+              <breadCrumb title="生活" url="http://cxsmarkchan.com/categories/%E7%94%9F%E6%B4%BB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/linux-schedule.html</loc>
+    <lastmod>2017-09-25T22:52:56.978Z</lastmod>
+    <data>
+        <display>
+        <title>linux源码分析：schedule进程调度</title>
+        <pubTime>2016-04-18T04:44:59.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>源码</tag>
+         
+        <tag>schedule</tag>
+         
+        <tag>进程</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://cxsmarkchan.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="源码" url="http://cxsmarkchan.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/linux-execve.html</loc>
+    <lastmod>2017-09-25T22:52:56.950Z</lastmod>
+    <data>
+        <display>
+        <title>linux源码分析：execve加载可执行文件</title>
+        <pubTime>2016-04-10T06:29:42.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>源码</tag>
+         
+        <tag>进程</tag>
+         
+        <tag>execve</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://cxsmarkchan.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="源码" url="http://cxsmarkchan.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/linux-fork.html</loc>
+    <lastmod>2017-09-25T22:52:56.938Z</lastmod>
+    <data>
+        <display>
+        <title>linux源码分析：fork复制进程</title>
+        <pubTime>2016-04-04T01:04:54.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>源码</tag>
+         
+        <tag>fork</tag>
+         
+        <tag>进程创建</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://cxsmarkchan.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="源码" url="http://cxsmarkchan.com/categories/linux/%E6%BA%90%E7%A0%81/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/asm-syscall-64.html</loc>
+    <lastmod>2017-09-25T22:52:56.926Z</lastmod>
+    <data>
+        <display>
+        <title>Linux系统调用：32位和64位的区别</title>
+        <pubTime>2016-04-02T14:45:20.000Z</pubTime>
+        
+        <tag>asm</tag>
+         
+        <tag>系统调用</tag>
+         
+        <tag>linux</tag>
+         
+        <tag>64位</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://cxsmarkchan.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="内核" url="http://cxsmarkchan.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://cxsmarkchan.com/articles/asm-syscall.html</loc>
+    <lastmod>2017-09-25T22:52:56.918Z</lastmod>
+    <data>
+        <display>
+        <title>用asm内联汇编实现系统调用</title>
+        <pubTime>2016-04-01T20:23:12.000Z</pubTime>
+        
+        <tag>操作系统</tag>
+         
+        <tag>汇编</tag>
+         
+        <tag>asm</tag>
+         
+        <tag>系统调用</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://cxsmarkchan.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="内核" url="http://cxsmarkchan.com/categories/linux/%E5%86%85%E6%A0%B8/"/>
+          
+        </display>
+    </data>
+    </url>
+
+</urlset>
