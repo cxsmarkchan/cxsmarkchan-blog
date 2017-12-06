@@ -8,7 +8,7 @@
 
     
 
-    <title>bagging | cxsmarkchan的博客</title>
+    <title>随机梯度下降法：机器学习中最常用的算法 | cxsmarkchan的博客</title>
     <meta name="author" content="cxsmarkchan">
     
     <meta name="description" content="Ph.D. Electrical Engineering">
@@ -16,7 +16,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="随机梯度下降法：机器学习中最常用的算法"/>
     <meta property="og:site_name" content="cxsmarkchan的博客"/>
 
     
@@ -274,30 +274,126 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper indigo">
-        <span class="breadcrumb">当前位置（标签）</span>
+        <span class="breadcrumb">当前位置（分类目录）</span>
         
+            
+    
+    
+    <a class="breadcrumb" href="/categories/机器学习/">机器学习</a><a class="breadcrumb" href="/categories/机器学习/算法/">算法</a>
+
 
         
-            <a class="breadcrumb" href="/tags/bagging/">bagging</a>
+
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>随机梯度下降法：机器学习中最常用的算法</h1>
+    
 
 
-    <div class="collection mt-0">
+            </div>
+            <time class="pink-link-context" datetime="2017-12-06T02:56:54.000Z"><a href="/articles/ml-sgd.html">2017-12-05</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
         
-            <a href="/articles/ml-dl-dropout.html" class="collection-item grey-text text-darken-1">
-                <time datetime="2017-12-02T02:15:40.000Z">2017-12-01</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                正则化手段：Dropout
-            </a>
+            <a href="/tags/随机梯度下降/" class="chip pink lighten-1">随机梯度下降</a>
+        
+            <a href="/tags/机器学习算法/" class="chip pink lighten-1">机器学习算法</a>
         
     </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一、-传统梯度下降法及其问题"><span class="section table-of-contents-text">一、 传统梯度下降法及其问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#二、随机梯度下降法"><span class="section table-of-contents-text">二、随机梯度下降法</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-1-构造"><span class="section table-of-contents-text">2.1 构造</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-2-效果分析"><span class="section table-of-contents-text">2.2 效果分析</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>求解优化问题是机器学习中很重要的内容。理论上说，一般的优化算法都可以用到机器学习中，但事实上并不是这样。机器学习问题通常有大量的样本，因此一般的优化算法会因为计算量过大而难以应用。随机梯度下降法是梯度下降法在机器学习领域的一个变种，它通过抽样的梯度来近似表示真实的梯度，从而避免大量的计算。这篇文章主要从直观概念的角度回答以下问题：什么是随机梯度下降法？和传统梯度下降法相比，随机梯度下降法的效果如何？<br><a id="more"></a></p>
+<h1 id="一、-传统梯度下降法及其问题"><a href="#一、-传统梯度下降法及其问题" class="headerlink" title="一、 传统梯度下降法及其问题"></a>一、 传统梯度下降法及其问题</h1><p>在监督学习中，我们确定了一个模型后，会选择一组参数$\omega$，通过优化，降低模型的训练误差（这里我们不讨论泛化能力，因此不讨论预测误差）。这时，我们可以构建如下优化问题：<br>\[<br>\min_\omega R(\omega)= \frac{1}{N}\sum_{i=1}^Nf_i(\omega)<br>\]</p>
+<p>这里，$f_i(\omega)$代表模型在样本$i$上的损失函数。针对不同的机器学习问题，当然也有不同的误差形式。例如我们采用线性回归模型，就有：<br>\[<br>f_i(\omega) = \left(y_i-w^Tx_i\right)^2<br>\]</p>
+<p>而如果采用Logistic回归，则目标函数应为：<br>\[<br>f_i(\omega) = -y_ih_\omega(x_i) - (1-y_i)\left(1-h_\omega(x_i)\right)<br>\]</p>
+<p>其中$h_\omega$为sigmoid函数。</p>
+<p>这里我们不再涉及具体的误差形式，统一用$f_i(\omega)$代替。我们的目标是让$N$个样本的平均误差最小。一个很自然的想法是采用梯度下降法，即<strong>求出目标函数的梯度，因为梯度是最快上升方向，所以沿着梯度的反方向搜索，即可降低函数值</strong>。如果用公式表达则为：<br>\[<br>\omega_{k+1}=\omega_k - \alpha_k \nabla R(\omega_k)<br>\]</p>
+<p>其中$\alpha_k$是搜索步长。可以证明，在一定的条件下，梯度下降法有<strong>线性收敛速度</strong>，这个收敛速度是可以接受的。</p>
+<p>如下图，梯度下降法通过迭代逐步逼近最优解：</p>
+<div align="center"><br><img src="/images/ml-sgd/gd-illustrate.jpg" alt=""><br></div>
+
+<p>但是，一个很重要的问题是：如何求得梯度？根据前面$R(\omega)$的定义，我们有：<br>\[<br>\nabla R(\omega) = \frac{1}{N} \nabla f_i(\omega)<br>\]</p>
+<p>直观上看，我们只需要对每一个$i$，求得$f_i$的梯度，然后再对这$N$个梯度求平均值就可以了。这个方法在小规模的数据中没有问题，但如果数据量$N$非常大呢？这个时候，每一步迭代都需要算$N$个梯度，这个计算量是难以接受的。我们应该注意到，机器学习问题的样本数量通常都比较大，因为我们通常认为，充足的样本数量是保证训练效果的最重要的手段。在这种情况下，梯度下降法就难以应用了。</p>
+<h1 id="二、随机梯度下降法"><a href="#二、随机梯度下降法" class="headerlink" title="二、随机梯度下降法"></a>二、随机梯度下降法</h1><h2 id="2-1-构造"><a href="#2-1-构造" class="headerlink" title="2.1 构造"></a>2.1 构造</h2><p>针对梯度下降法的问题，我们自然要问：有没有可能通过较少的计算量，估计出梯度下降法所需要的梯度？而随机梯度下降法的核心则是：<strong>每次迭代时，只取一个样本，计算其梯度，将其作为实际梯度的估计值，进行迭代</strong>。如果用公式描述，则为：<br>\[<br>\omega_{k+1} = \omega_k - \alpha_k \nabla f_{i_k}(\omega_k)<br>\]</p>
+<p>这里$i_k$是我们在第$k$次迭代中抽取的样本。抽取第$i_k$个样本后，我们用该样本的梯度作为$R(\omega)$梯度的估计值，并进行迭代。这样，每次迭代时只需要计算一个样本的梯度，和传统方法要计算$N$个样本的梯度相比，其速度显然快了很多。</p>
+<h2 id="2-2-效果分析"><a href="#2-2-效果分析" class="headerlink" title="2.2 效果分析"></a>2.2 效果分析</h2><p>随机梯度下降法每次只用一个样本梯度来代替整体的梯度，尽管速度很快，但这样计算出来的梯度必然是有误差的。因此，直观来看，随机梯度下降法每次迭代的效果并不如传统梯度下降方法。但是，可以注意到，传统梯度下降法一次迭代的时间，大约可以执行$N$次随机梯度下降法的迭代。因此我们需要比较的是：$N$次随机梯度下降法的效果和1次传统梯度下降法的效果，哪个更好一些呢？</p>
+<p>在这篇文章里面，我们不做理论分析，仅通过一个小例子直观说明，这个例子的来源详见参考文献。在这个例子里，我们考虑一个一维问题，损失函数为<br>\[<br>f_i(\omega) = \left(\omega - a_i\right)^2<br>\]</p>
+<p>其中每个样本的损失函数取决于$a_i$。我们假定$a_i$均匀分布在-1到1之间。可以看出，对于每个样本来说，在$a_i$处损失函数达到最小。那么在平均意义上，损失函数$R(\omega)$应该在$\omega=0$处达到最小。每个样本的损失函数如下图：</p>
+<div align="center"><br><img src="/images/ml-sgd/sgd-example.jpg" alt=""><br></div>
+
+<p>如果采用传统的梯度下降法，那么当$\omega<0$时，由梯度得出的下降方向为正，而如果$\\\omega>0$，由梯度得出的下降方向则为负。如果采用随机梯度下降法，每次取样本时，如果$\omega&lt;a_i$，那么下降方向为正，否则下降方向为负。</0$时，由梯度得出的下降方向为正，而如果$\\\omega></p>
+<p>由此可以看出，如果我们在某次迭代中$\omega_k&lt;-1$，则无论选取的样本是多少，下降方向都为正。同样地，如果$\omega_k&gt;1$，下降方向总是为负。然而，如果$-1&lt;\omega_k&lt;1$，则通过随机梯度下降法计算出的下降方向则与抽取的样本有关。从概率上说，如果$-1&lt;\omega_k&lt;0$，则抽取到下降方向为正的概率较大，而如果$0&lt;\omega&lt;1$则抽取到下降方向为负的概率较大。</p>
+<p>从这个例子我们可以直观地得出如下结论：<strong>随机梯度下降法在参数远离最优解时，其对梯度方向的估计相对准确，迭代时目标函数下降很快，但参数逼近最优解时，随机梯度下降法进一步收敛的效果会变差</strong>。实际上可以证明：<strong>在固定搜索步长$\alpha_k=\alpha$时，随机梯度下降法只能保证到达最优解附近，不能保证收敛到最优解；在可变搜索步长时，随机梯度下降法可以收敛到最优解，但达不到线性收敛速度</strong>。</p>
+<p>尽管随机梯度下降法在收敛性和收敛速度上存在这样的问题，这并不妨碍其成为最重要的机器学习方法，其主要原因是：</p>
+<ol>
+<li>即使收敛速度达不到线性，其整体计算效率仍然明显优于传统梯度下降法。另外，传统梯度下降法在数据量巨大的时候，甚至无法运行。</li>
+<li>在机器学习中，我们有时不会追求严格意义上的最优解，因为我们关心的不是训练误差，而是泛化能力。模型在接近最优解时，其在预测数据上的表现通常不会有太大差别。</li>
+</ol>
+<p>参考文献：<br>Bottou, Léon, Frank E. Curtis, and Jorge Nocedal. “Optimization methods for large-scale machine learning.” arXiv preprint arXiv:1606.04838 (2016).</p>
+
+                
+
+
+<p class="pink-link-context">
+    <a href="/articles/ml-dl-dropout.html" rel="next" title="正则化手段：Dropout">
+    下一篇：正则化手段：Dropout
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.url = 'http://cxsmarkchan.com/articles/ml-sgd.html';
+                this.page.identifier = 'articles/ml-sgd.html';
+            };
+            (function() {
+                var d = document,
+                    s = d.createElement('script');
+                s.src = '//cxsmarkchan-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </section>
+
 
 
 </div>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cxsmarkchan.com/"/>
-  <updated>2017-12-02T05:48:56.222Z</updated>
+  <updated>2017-12-06T06:33:23.782Z</updated>
   <id>http://cxsmarkchan.com/</id>
   
   <author>
@@ -16,11 +16,65 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>随机梯度下降法：机器学习中最常用的算法</title>
+    <link href="http://cxsmarkchan.com/articles/ml-sgd.html"/>
+    <id>http://cxsmarkchan.com/articles/ml-sgd.html</id>
+    <published>2017-12-06T02:56:54.000Z</published>
+    <updated>2017-12-06T06:33:23.782Z</updated>
+    
+    <content type="html">&lt;p&gt;求解优化问题是机器学习中很重要的内容。理论上说，一般的优化算法都可以用到机器学习中，但事实上并不是这样。机器学习问题通常有大量的样本，因此一般的优化算法会因为计算量过大而难以应用。随机梯度下降法是梯度下降法在机器学习领域的一个变种，它通过抽样的梯度来近似表示真实的梯度，从而避免大量的计算。这篇文章主要从直观概念的角度回答以下问题：什么是随机梯度下降法？和传统梯度下降法相比，随机梯度下降法的效果如何？&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;一、-传统梯度下降法及其问题&quot;&gt;&lt;a href=&quot;#一、-传统梯度下降法及其问题&quot; class=&quot;headerlink&quot; title=&quot;一、 传统梯度下降法及其问题&quot;&gt;&lt;/a&gt;一、 传统梯度下降法及其问题&lt;/h1&gt;&lt;p&gt;在监督学习中，我们确定了一个模型后，会选择一组参数$\omega$，通过优化，降低模型的训练误差（这里我们不讨论泛化能力，因此不讨论预测误差）。这时，我们可以构建如下优化问题：&lt;br&gt;\[&lt;br&gt;\min_\omega R(\omega)= \frac{1}{N}\sum_{i=1}^Nf_i(\omega)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这里，$f_i(\omega)$代表模型在样本$i$上的损失函数。针对不同的机器学习问题，当然也有不同的误差形式。例如我们采用线性回归模型，就有：&lt;br&gt;\[&lt;br&gt;f_i(\omega) = \left(y_i-w^Tx_i\right)^2&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;而如果采用Logistic回归，则目标函数应为：&lt;br&gt;\[&lt;br&gt;f_i(\omega) = -y_ih_\omega(x_i) - (1-y_i)\left(1-h_\omega(x_i)\right)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$h_\omega$为sigmoid函数。&lt;/p&gt;
+&lt;p&gt;这里我们不再涉及具体的误差形式，统一用$f_i(\omega)$代替。我们的目标是让$N$个样本的平均误差最小。一个很自然的想法是采用梯度下降法，即&lt;strong&gt;求出目标函数的梯度，因为梯度是最快上升方向，所以沿着梯度的反方向搜索，即可降低函数值&lt;/strong&gt;。如果用公式表达则为：&lt;br&gt;\[&lt;br&gt;\omega_{k+1}=\omega_k - \alpha_k \nabla R(\omega_k)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中$\alpha_k$是搜索步长。可以证明，在一定的条件下，梯度下降法有&lt;strong&gt;线性收敛速度&lt;/strong&gt;，这个收敛速度是可以接受的。&lt;/p&gt;
+&lt;p&gt;如下图，梯度下降法通过迭代逐步逼近最优解：&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/ml-sgd/gd-illustrate.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;/div&gt;
+
+&lt;p&gt;但是，一个很重要的问题是：如何求得梯度？根据前面$R(\omega)$的定义，我们有：&lt;br&gt;\[&lt;br&gt;\nabla R(\omega) = \frac{1}{N} \nabla f_i(\omega)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;直观上看，我们只需要对每一个$i$，求得$f_i$的梯度，然后再对这$N$个梯度求平均值就可以了。这个方法在小规模的数据中没有问题，但如果数据量$N$非常大呢？这个时候，每一步迭代都需要算$N$个梯度，这个计算量是难以接受的。我们应该注意到，机器学习问题的样本数量通常都比较大，因为我们通常认为，充足的样本数量是保证训练效果的最重要的手段。在这种情况下，梯度下降法就难以应用了。&lt;/p&gt;
+&lt;h1 id=&quot;二、随机梯度下降法&quot;&gt;&lt;a href=&quot;#二、随机梯度下降法&quot; class=&quot;headerlink&quot; title=&quot;二、随机梯度下降法&quot;&gt;&lt;/a&gt;二、随机梯度下降法&lt;/h1&gt;&lt;h2 id=&quot;2-1-构造&quot;&gt;&lt;a href=&quot;#2-1-构造&quot; class=&quot;headerlink&quot; title=&quot;2.1 构造&quot;&gt;&lt;/a&gt;2.1 构造&lt;/h2&gt;&lt;p&gt;针对梯度下降法的问题，我们自然要问：有没有可能通过较少的计算量，估计出梯度下降法所需要的梯度？而随机梯度下降法的核心则是：&lt;strong&gt;每次迭代时，只取一个样本，计算其梯度，将其作为实际梯度的估计值，进行迭代&lt;/strong&gt;。如果用公式描述，则为：&lt;br&gt;\[&lt;br&gt;\omega_{k+1} = \omega_k - \alpha_k \nabla f_{i_k}(\omega_k)&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;这里$i_k$是我们在第$k$次迭代中抽取的样本。抽取第$i_k$个样本后，我们用该样本的梯度作为$R(\omega)$梯度的估计值，并进行迭代。这样，每次迭代时只需要计算一个样本的梯度，和传统方法要计算$N$个样本的梯度相比，其速度显然快了很多。&lt;/p&gt;
+&lt;h2 id=&quot;2-2-效果分析&quot;&gt;&lt;a href=&quot;#2-2-效果分析&quot; class=&quot;headerlink&quot; title=&quot;2.2 效果分析&quot;&gt;&lt;/a&gt;2.2 效果分析&lt;/h2&gt;&lt;p&gt;随机梯度下降法每次只用一个样本梯度来代替整体的梯度，尽管速度很快，但这样计算出来的梯度必然是有误差的。因此，直观来看，随机梯度下降法每次迭代的效果并不如传统梯度下降方法。但是，可以注意到，传统梯度下降法一次迭代的时间，大约可以执行$N$次随机梯度下降法的迭代。因此我们需要比较的是：$N$次随机梯度下降法的效果和1次传统梯度下降法的效果，哪个更好一些呢？&lt;/p&gt;
+&lt;p&gt;在这篇文章里面，我们不做理论分析，仅通过一个小例子直观说明，这个例子的来源详见参考文献。在这个例子里，我们考虑一个一维问题，损失函数为&lt;br&gt;\[&lt;br&gt;f_i(\omega) = \left(\omega - a_i\right)^2&lt;br&gt;\]&lt;/p&gt;
+&lt;p&gt;其中每个样本的损失函数取决于$a_i$。我们假定$a_i$均匀分布在-1到1之间。可以看出，对于每个样本来说，在$a_i$处损失函数达到最小。那么在平均意义上，损失函数$R(\omega)$应该在$\omega=0$处达到最小。每个样本的损失函数如下图：&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/ml-sgd/sgd-example.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;/div&gt;
+
+&lt;p&gt;如果采用传统的梯度下降法，那么当$\omega&lt;0$时，由梯度得出的下降方向为正，而如果$\\\omega&gt;0$，由梯度得出的下降方向则为负。如果采用随机梯度下降法，每次取样本时，如果$\omega&amp;lt;a_i$，那么下降方向为正，否则下降方向为负。&lt;/0$时，由梯度得出的下降方向为正，而如果$\\\omega&gt;&lt;/p&gt;
+&lt;p&gt;由此可以看出，如果我们在某次迭代中$\omega_k&amp;lt;-1$，则无论选取的样本是多少，下降方向都为正。同样地，如果$\omega_k&amp;gt;1$，下降方向总是为负。然而，如果$-1&amp;lt;\omega_k&amp;lt;1$，则通过随机梯度下降法计算出的下降方向则与抽取的样本有关。从概率上说，如果$-1&amp;lt;\omega_k&amp;lt;0$，则抽取到下降方向为正的概率较大，而如果$0&amp;lt;\omega&amp;lt;1$则抽取到下降方向为负的概率较大。&lt;/p&gt;
+&lt;p&gt;从这个例子我们可以直观地得出如下结论：&lt;strong&gt;随机梯度下降法在参数远离最优解时，其对梯度方向的估计相对准确，迭代时目标函数下降很快，但参数逼近最优解时，随机梯度下降法进一步收敛的效果会变差&lt;/strong&gt;。实际上可以证明：&lt;strong&gt;在固定搜索步长$\alpha_k=\alpha$时，随机梯度下降法只能保证到达最优解附近，不能保证收敛到最优解；在可变搜索步长时，随机梯度下降法可以收敛到最优解，但达不到线性收敛速度&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;尽管随机梯度下降法在收敛性和收敛速度上存在这样的问题，这并不妨碍其成为最重要的机器学习方法，其主要原因是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;即使收敛速度达不到线性，其整体计算效率仍然明显优于传统梯度下降法。另外，传统梯度下降法在数据量巨大的时候，甚至无法运行。&lt;/li&gt;
+&lt;li&gt;在机器学习中，我们有时不会追求严格意义上的最优解，因为我们关心的不是训练误差，而是泛化能力。模型在接近最优解时，其在预测数据上的表现通常不会有太大差别。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;参考文献：&lt;br&gt;Bottou, Léon, Frank E. Curtis, and Jorge Nocedal. “Optimization methods for large-scale machine learning.” arXiv preprint arXiv:1606.04838 (2016).&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;求解优化问题是机器学习中很重要的内容。理论上说，一般的优化算法都可以用到机器学习中，但事实上并不是这样。机器学习问题通常有大量的样本，因此一般的优化算法会因为计算量过大而难以应用。随机梯度下降法是梯度下降法在机器学习领域的一个变种，它通过抽样的梯度来近似表示真实的梯度，从而避免大量的计算。这篇文章主要从直观概念的角度回答以下问题：什么是随机梯度下降法？和传统梯度下降法相比，随机梯度下降法的效果如何？&lt;br&gt;
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="算法" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="随机梯度下降" scheme="http://cxsmarkchan.com/tags/%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/"/>
+    
+      <category term="机器学习算法" scheme="http://cxsmarkchan.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>正则化手段：Dropout</title>
     <link href="http://cxsmarkchan.com/articles/ml-dl-dropout.html"/>
     <id>http://cxsmarkchan.com/articles/ml-dl-dropout.html</id>
     <published>2017-12-02T02:15:40.000Z</published>
-    <updated>2017-12-02T05:48:56.222Z</updated>
+    <updated>2017-12-06T04:29:33.832Z</updated>
     
     <content type="html">&lt;p&gt;Dropout是一种常见的正则化方法。它借用了集成学习的思想，近似实现了同时训练大量网络结构，并通过集成得出预测结果的功能。由于含有集成环节，Dropout可以有效地避免过拟合。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;一、Dropout的基本思想&quot;&gt;&lt;a href=&quot;#一、Dropout的基本思想&quot; class=&quot;headerlink&quot; title=&quot;一、Dropout的基本思想&quot;&gt;&lt;/a&gt;一、Dropout的基本思想&lt;/h1&gt;&lt;p&gt;Dropout要解决的问题是：在同一个神经网络模型中，有没有可能通过一定的手段模拟出多个网络模型的效果，从而提升模型精度？针对这个问题，Dropout巧妙利用了一个事实：一个神经网络模型中，通过屏蔽部分神经元，就可以构建出不同的神经网络模型。如下图，原始神经网络的输入层有2个神经元，隐藏层有2个神经元。通过把部分神经元删去，我们可以得到$2^4=16$种不同的网络。当然，其中一部分网络是无效网络，例如第4行的所有网络，但这并不会造成太大影响，因为当特征数、网络层数增加的时候，这种无效网络的比例会急剧下降。&lt;/p&gt;
@@ -119,11 +173,11 @@
       <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
+    
       <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
       <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
-    
-      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
       <category term="核方法" scheme="http://cxsmarkchan.com/tags/%E6%A0%B8%E6%96%B9%E6%B3%95/"/>
     
@@ -186,11 +240,11 @@
       <category term="模型" scheme="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B/"/>
     
     
+      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
+    
       <category term="支持向量机" scheme="http://cxsmarkchan.com/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     
       <category term="SVM" scheme="http://cxsmarkchan.com/tags/SVM/"/>
-    
-      <category term="对偶" scheme="http://cxsmarkchan.com/tags/%E5%AF%B9%E5%81%B6/"/>
     
   </entry>
   
@@ -359,11 +413,11 @@
       <category term="算法" scheme="http://cxsmarkchan.com/categories/%E4%BC%98%E5%8C%96/%E7%AE%97%E6%B3%95/"/>
     
     
+      <category term="导数" scheme="http://cxsmarkchan.com/tags/%E5%AF%BC%E6%95%B0/"/>
+    
       <category term="梯度" scheme="http://cxsmarkchan.com/tags/%E6%A2%AF%E5%BA%A6/"/>
     
       <category term="收敛" scheme="http://cxsmarkchan.com/tags/%E6%94%B6%E6%95%9B/"/>
-    
-      <category term="导数" scheme="http://cxsmarkchan.com/tags/%E5%AF%BC%E6%95%B0/"/>
     
   </entry>
   
@@ -747,9 +801,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="进程" scheme="http://cxsmarkchan.com/tags/%E8%BF%9B%E7%A8%8B/"/>
-    
       <category term="schedule" scheme="http://cxsmarkchan.com/tags/schedule/"/>
+    
+      <category term="进程" scheme="http://cxsmarkchan.com/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
@@ -815,9 +869,9 @@
     
       <category term="源码" scheme="http://cxsmarkchan.com/tags/%E6%BA%90%E7%A0%81/"/>
     
-      <category term="execve" scheme="http://cxsmarkchan.com/tags/execve/"/>
-    
       <category term="进程" scheme="http://cxsmarkchan.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+      <category term="execve" scheme="http://cxsmarkchan.com/tags/execve/"/>
     
   </entry>
   
