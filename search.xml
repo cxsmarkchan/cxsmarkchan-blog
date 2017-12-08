@@ -3,6 +3,41 @@
   
     
     <entry>
+      <title><![CDATA[正则化方法：标签平滑]]></title>
+      <url>/articles/ml-regularization-label-smoothing.html</url>
+      <content type="html"><![CDATA[<p>机器学习的样本中通常会存在少量错误标签，这些错误标签会影响到预测的效果。标签平滑采用如下思路解决这个问题：在训练时即假设标签可能存在错误，避免“过分”相信训练样本的标签。当目标函数为交叉熵时，这一思想有非常简单的实现，称为标签平滑（Label Smoothing）。<br><a id="more"></a></p>
+<p>我们以2类分类问题为例，此时训练样本为$(x_i,y_i)$，其中$y_i$是样本标签，为0或1。在训练样本中，我们并不能保证所有的样本标签都标注正确，如果某个样本的标注是错误的，那么在训练时，该样本就有可能对训练结果产生负面影响。一个很自然的想法是，如果我们有办法“告诉”模型，样本的标签不一定正确，那么训练出来的模型对于少量的样本错误就会有“免疫力”。</p>
+<p>为了达到这个目标，我们的方法是：<strong>在每次迭代时，并不直接将$(x_i, y_i)$放入训练集，而是设置一个错误率$\epsilon$，以$1-\epsilon$的概率将$(x_i,y_i)$代入训练，以$\epsilon$的概率将$(x_i, 1-y_i)$代入训练。</strong>这样，模型在训练时，既有正确标签输入，又有错误标签输入，可以想象，如此训练出来的模型不会“全力匹配”每一个标签，而是在一定程度（$1-\epsilon$）上匹配。这样，如果真的出现错误标签，模型受到的影响就会更小。</p>
+<p>那么，这是否意味着我们在每次训练时，都需要对标签进行随机化处理呢？答案是否定的，我们有更好的方法来解决，也就是<strong>标签平滑</strong>。下面我们介绍标签平滑的具体思路。</p>
+<p>当我们采用交叉熵来描述损失函数时，对于每一个样本$i$，损失函数为：<br>\[<br>L_i=-y_iP\left(\hat{y}_i=1|x_i\right)-\left(1-y_i\right)P\left(\hat{y}_i=0|x_i\right)<br>\]</p>
+<p>经过随机化之后，新的标签有$1-\epsilon$的概率与$y_i$相同，有$\epsilon$的概率不同（即1-y_i）。所以，采用随机化的标签作为训练数据时，损失函数有$1-\epsilon$的概率与上面的式子相同，有$\epsilon$的概率为：<br>\[<br>L_i=-\left(1-y_i\right)P\left(\hat{y}_i=1|x_i\right)-y_iP\left(\hat{y}_i=0|x_i\right)<br>\]</p>
+<p>我们把上面两个式子按概率加权平均，就可以得到：<br>\[<br>L_i=-\left[\epsilon\left(1-y_i\right) + (1-\epsilon)y_i\right]P\left(\hat{y}_i=1|x_i\right)-\left[\epsilon y_i+(1-\epsilon)\left(1-y_i\right)\right]P\left(\hat{y}_i=0|x_i\right)<br>\]</p>
+<p>为了简化上面的式子，我们令$y_i’=\epsilon\left(1-y_i\right)+ (1-\epsilon)y_i$，可以得到：<br>\[<br>L_i=-y_i’P\left(\hat{y}_i=1|x_i\right)-\left(1-y_i’\right)P\left(\hat{y}_i=0|x_i\right)<br>\]</p>
+<p>这个式子和原先的交叉熵表达式相比，只有$y_i$被替换成了$y_i’$，其他的内容全部都没有变。这实际上等价于：<strong>把每个标签$y_i$替换成$\epsilon \left(1-y_i\right)+(1-\epsilon)y_i$，再进行常规的训练过程</strong>。因此，我们并不需要在训练前进行随机化处理，只需要把每个标签替换一下即可。</p>
+<p>为什么这个过程被成为标签平滑呢？我们可以从下面的式子看出来：<br>\[<br>y_i’=\left\{\begin{split}\epsilon,y_i=0\\1-\epsilon,y_i=1\end{split}\right.<br>\]</p>
+<p>也就是说，当标签为0时，我们并不把0直接放入训练，而是将其替换为一个比较小的数$\epsilon$. 同样地，如果标签为1，我们也将其替换为较接近的数$1-\epsilon$。为了方便看出效果，我们可以给出交叉熵模型的表达式：<br>\[<br>\hat{y}_i=\frac{1}{1+\exp\left(-w^Tx_i\right)}<br>\]</p>
+<p>由此可见，在交叉熵模型中，模型输出永远不可能达到0和1，因此模型会不断增大$w$，使得预测输出尽可能逼近0或1，而这个过程与正则化是矛盾的，或者说，有可能出现过拟合。如果我们把标签0和1分别替换成$\epsilon$和$1-\epsilon$，模型的输出在达到这个值之后，就不会继续优化。因此，所谓平滑，指的就是把两个极端值0和1变成两个不那么极端的值。</p>
+<p>当然，标签平滑也可以用在多类分类问题中，仍然是假设标签值在一定概率下不变，以一定概率变为其他值。只不过此时有多个其他值，我们可以假设均匀分布，也可以按一定的先验分布处理。如果假设均匀分布，那么标签平滑只需要把所有的标签1变为$1-\epsilon$，把所有的标签0变为$\epsilon/(k-1)$即可，其中$k$是类别的数量。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 机器学习 </category>
+            
+            <category> 技巧 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 正则化 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[随机梯度下降法：机器学习中最常用的算法]]></title>
       <url>/articles/ml-sgd.html</url>
       <content type="html"><![CDATA[<p>求解优化问题是机器学习中很重要的内容。理论上说，一般的优化算法都可以用到机器学习中，但事实上并不是这样。机器学习问题通常有大量的样本，因此一般的优化算法会因为计算量过大而难以应用。随机梯度下降法是梯度下降法在机器学习领域的一个变种，它通过抽样的梯度来近似表示真实的梯度，从而避免大量的计算。这篇文章主要从直观概念的角度回答以下问题：什么是随机梯度下降法？和传统梯度下降法相比，随机梯度下降法的效果如何？<br><a id="more"></a></p>
@@ -758,9 +793,9 @@
             
             <tag> 源码 </tag>
             
-            <tag> schedule </tag>
-            
             <tag> 进程 </tag>
+            
+            <tag> schedule </tag>
             
         </tags>
         
@@ -824,9 +859,9 @@
             
             <tag> 源码 </tag>
             
-            <tag> 进程 </tag>
-            
             <tag> execve </tag>
+            
+            <tag> 进程 </tag>
             
         </tags>
         
@@ -945,13 +980,13 @@
         
         <tags>
             
-            <tag> asm </tag>
+            <tag> linux </tag>
             
             <tag> 系统调用 </tag>
             
-            <tag> linux </tag>
-            
             <tag> 64位 </tag>
+            
+            <tag> asm </tag>
             
         </tags>
         
@@ -991,13 +1026,13 @@
         
         <tags>
             
-            <tag> 操作系统 </tag>
-            
-            <tag> 汇编 </tag>
+            <tag> 系统调用 </tag>
             
             <tag> asm </tag>
             
-            <tag> 系统调用 </tag>
+            <tag> 操作系统 </tag>
+            
+            <tag> 汇编 </tag>
             
         </tags>
         
@@ -1036,15 +1071,15 @@
     
     <entry>
       <title></title>
-      <url>/baidu_verify_iZA6IpYgQU.html</url>
-      <content type="html"><![CDATA[iZA6IpYgQU
+      <url>/baidu_verify_K2nP6IxHJn.html</url>
+      <content type="html"><![CDATA[K2nP6IxHJn
 ]]></content>
     </entry>
     
     <entry>
       <title></title>
-      <url>/baidu_verify_K2nP6IxHJn.html</url>
-      <content type="html"><![CDATA[K2nP6IxHJn
+      <url>/baidu_verify_iZA6IpYgQU.html</url>
+      <content type="html"><![CDATA[iZA6IpYgQU
 ]]></content>
     </entry>
     

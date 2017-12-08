@@ -1,3 +1,4 @@
+http://cxsmarkchan.com/articles/ml-regularization-label-smoothing.html
 http://cxsmarkchan.com/articles/ml-sgd.html
 http://cxsmarkchan.com/articles/ml-dl-dropout.html
 http://cxsmarkchan.com/articles/ml-svm-kernel.html

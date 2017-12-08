@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>http://cxsmarkchan.com/articles/ml-regularization-label-smoothing.html</loc>
+    <lastmod>2017-12-08T02:46:38.682Z</lastmod>
+    <data>
+        <display>
+        <title>正则化方法：标签平滑</title>
+        <pubTime>2017-12-07T22:58:52.000Z</pubTime>
+        
+        <tag>正则化</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="技巧" url="http://cxsmarkchan.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8A%80%E5%B7%A7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://cxsmarkchan.com/articles/ml-sgd.html</loc>
     <lastmod>2017-12-06T06:33:23.782Z</lastmod>
     <data>
@@ -392,9 +415,9 @@
          
         <tag>源码</tag>
          
-        <tag>schedule</tag>
-         
         <tag>进程</tag>
+         
+        <tag>schedule</tag>
          
          
            
@@ -421,9 +444,9 @@
          
         <tag>源码</tag>
          
-        <tag>进程</tag>
-         
         <tag>execve</tag>
+         
+        <tag>进程</tag>
          
          
            
@@ -475,13 +498,13 @@
         <title>Linux系统调用：32位和64位的区别</title>
         <pubTime>2016-04-02T14:45:20.000Z</pubTime>
         
-        <tag>asm</tag>
+        <tag>linux</tag>
          
         <tag>系统调用</tag>
          
-        <tag>linux</tag>
-         
         <tag>64位</tag>
+         
+        <tag>asm</tag>
          
          
            
@@ -504,13 +527,13 @@
         <title>用asm内联汇编实现系统调用</title>
         <pubTime>2016-04-01T20:23:12.000Z</pubTime>
         
-        <tag>操作系统</tag>
-         
-        <tag>汇编</tag>
+        <tag>系统调用</tag>
          
         <tag>asm</tag>
          
-        <tag>系统调用</tag>
+        <tag>操作系统</tag>
+         
+        <tag>汇编</tag>
          
          
            

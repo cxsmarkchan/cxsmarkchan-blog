@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cxsmarkchan.com/articles/ml-regularization-label-smoothing.html</loc>
+    
+    <lastmod>2017-12-08T02:46:38.682Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cxsmarkchan.com/articles/ml-sgd.html</loc>
     
     <lastmod>2017-12-06T06:33:23.782Z</lastmod>
